@@ -38,8 +38,7 @@ public class ComingAdapter extends RecyclerView.Adapter<ComingAdapter.ComingView
         return comingList.size();
     }
 
-    public class ComingViewHolder extends RecyclerView.ViewHolder{
-
+    public class ComingViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImageview;
         private TextView mName;
         public ComingViewHolder(@NonNull View itemView) {

@@ -4,19 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 
-import com.example.ecoapp.Adapter.AdviceAdapter;
-import com.example.ecoapp.Adapter.NearbyAdapter;
-import com.example.ecoapp.Model.Advice;
-import com.example.ecoapp.Model.Nearby;
 import com.example.ecoapp.databinding.ActivityMainBinding;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
