@@ -1,7 +1,5 @@
 package com.example.ecoapp.data.api;
 
-import android.content.Context;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -9,15 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitService {
     private Retrofit retrofit;
-    private Context ctx;
     public String BASE_URL = "https://ecoappserver.up.railway.app";
-
-    public RetrofitService() {
-    }
-
-    public RetrofitService(Context ctx) {
-        this.ctx = ctx;
-    }
 
     public HttpLoggingInterceptor getHttpLoggingInterceptor() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();

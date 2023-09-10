@@ -1,4 +1,4 @@
-package com.example.ecoapp;
+package com.example.ecoapp.fragments;
 
 import android.os.Bundle;
 
@@ -10,8 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ecoapp.Adapter.ComingAdapter;
-import com.example.ecoapp.Model.Coming;
+import com.example.ecoapp.adapters.ComingAdapter;
+import com.example.ecoapp.models.Coming;
+import com.example.ecoapp.R;
 
 import java.util.ArrayList;
 import java.util.List;

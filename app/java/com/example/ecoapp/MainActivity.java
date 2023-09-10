@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
-import com.example.ecoapp.Adapter.AdviceAdapter;
-import com.example.ecoapp.Adapter.NearbyAdapter;
-import com.example.ecoapp.Model.Advice;
-import com.example.ecoapp.Model.Nearby;
+import com.example.ecoapp.adapters.AdviceAdapter;
+import com.example.ecoapp.adapters.NearbyAdapter;
+import com.example.ecoapp.models.Advice;
+import com.example.ecoapp.models.Nearby;
 import com.example.ecoapp.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;

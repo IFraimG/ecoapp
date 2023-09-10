@@ -1,6 +1,6 @@
 package com.example.ecoapp.data.api.users;
 
-import com.example.ecoapp.Model.User;
+import com.example.ecoapp.models.User;
 import com.example.ecoapp.data.api.users.dto.ChangeScoresDTO;
 import com.example.ecoapp.data.api.users.dto.EditProfileDTO;
 import com.example.ecoapp.data.api.users.dto.HabitDTO;

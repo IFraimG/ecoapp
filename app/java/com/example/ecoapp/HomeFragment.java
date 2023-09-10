@@ -10,12 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ecoapp.Adapter.AdviceAdapter;
-import com.example.ecoapp.Adapter.NearbyAdapter;
-import com.example.ecoapp.Adapter.TasksAdapter;
-import com.example.ecoapp.Model.Advice;
-import com.example.ecoapp.Model.Nearby;
-import com.example.ecoapp.Model.Tasks;
+import com.example.ecoapp.adapters.AdviceAdapter;
+import com.example.ecoapp.adapters.NearbyAdapter;
+import com.example.ecoapp.adapters.TasksAdapter;
+import com.example.ecoapp.models.Advice;
+import com.example.ecoapp.models.Nearby;
+import com.example.ecoapp.models.Tasks;
 
 import java.util.ArrayList;
 import java.util.List;

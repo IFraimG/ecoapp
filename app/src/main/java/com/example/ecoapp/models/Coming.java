@@ -1,4 +1,4 @@
-package com.example.ecoapp.Model;
+package com.example.ecoapp.models;
 
 public class Coming {
     private int image;

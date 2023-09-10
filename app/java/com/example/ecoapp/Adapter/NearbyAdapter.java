@@ -1,4 +1,4 @@
-package com.example.ecoapp.Adapter;
+package com.example.ecoapp.adapters;
 
 import android.media.Image;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ecoapp.Model.Nearby;
+import com.example.ecoapp.models.Nearby;
 import com.example.ecoapp.R;
 
 import java.util.List;
