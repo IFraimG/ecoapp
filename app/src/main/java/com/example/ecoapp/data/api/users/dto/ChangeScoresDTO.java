@@ -9,6 +9,11 @@ public class ChangeScoresDTO {
     @SerializedName("scores")
     private Integer scores;
 
+    public ChangeScoresDTO(String id, Integer scores) {
+        this.id = id;
+        this.scores = scores;
+    }
+
     public String getId() {
         return id;
     }

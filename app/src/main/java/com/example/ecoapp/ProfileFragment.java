@@ -60,8 +60,6 @@ public class ProfileFragment extends Fragment {
                 try {
                     Bitmap originalBitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), uri);
                     photoProfileImageView.setImageBitmap(originalBitmap);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

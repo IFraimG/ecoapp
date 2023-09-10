@@ -27,6 +27,12 @@ public class User {
     @SerializedName("habitsList")
     private ArrayList<String> habitsList;
 
+    public User(String name, String email, String password, String id) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.id = id;
+    }
 
     public User(int image, String name) {
         this.photo = image;

@@ -17,27 +17,27 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface UserAPI {
-    @PUT("/edit_profile")
+    @PUT("/users/edit_profile")
     @Multipart
     Call<User> editProfile(@Header("Authorization") String token, @Body EditProfileDTO editProfileDTO,
                            @Part MultipartBody.Part img);
 
-    @PUT("/change_scores")
+    @PUT("/users/change_scores")
     Call<User> changeScores(@Header("Authorization") String token, @Body ChangeScoresDTO changeScoresDTO);
 
-    @GET("/get_user")
+    @GET("/users/get_user")
     Call<User> getUser(@Header("Authorization") String token, @Query("id") String id);
 
-    @PUT("/add_photo")
+    @PUT("/users/add_photo")
     @Multipart
     Call<User> addPhoto(@Header("Authorization") String token, @Body String id, @Part MultipartBody.Part img);
 
-    @PUT("/add_habit")
+    @PUT("/users/add_habit")
     Call<User> addHabit(@Header("Authorization") String token, @Body HabitDTO habitDTO);
 
-    @DELETE("/remove_habit")
+    @DELETE("/users/remove_habit")
     Call<User> removeHabit(@Header("Authorization") String token, @Body HabitDTO habitDTO);
 
-    @GET("/get_habit_by_title")
+    @GET("/users/get_habit_by_title")
     Call<User> getHabitByTitle(@Header("Authorization") String token, @Body String title);
 }

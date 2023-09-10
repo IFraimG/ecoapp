@@ -10,6 +10,12 @@ public class HabitDTO {
     @SerializedName("id")
     private String id;
 
+    public HabitDTO(String id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
+
     public String getTitle() {
         return title;
     }
