@@ -146,5 +146,14 @@
             android:layout_height="match_parent" />
 
     </androidx.cardview.widget.CardView>
-
+    <TextView
+        android:id="@+id/login_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text=""
+        android:textColorHint="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/login_card_view"
+        app:layout_constraintTop_toTopOf="@+id/login_card_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,6 @@ import android.view.View;
 
 import com.example.ecoapp.databinding.ActivityMainBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -29,9 +28,7 @@ public class MainActivity extends AppCompatActivity {
         if (storageHandler.getAuth()) {
             changeMenu(true);
             navController.navigate(R.id.action_authSignupFragment_to_homeFragment);
-        } else {
-            changeMenu(false);
-        }
+        } else changeMenu(false);
     }
 
     public void changeMenu(boolean isShow) {

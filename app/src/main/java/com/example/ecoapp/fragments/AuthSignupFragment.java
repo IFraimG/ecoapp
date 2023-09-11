@@ -47,17 +47,19 @@ public class AuthSignupFragment extends Fragment {
            } else {
                binding.registrationError.setText("");
 
-               viewModel.signup(name + lastname, password, email).observe(requireActivity(), authResponseDTO -> {
-                   if (viewModel.getStatusCode() == 400) {
-                       binding.registrationError.setText("Пользователь с данным email уже существует");
-                   } else {
-                       binding.firstNameEditText.setText("");
-                       binding.lastNameEditText.setText("");
-                       binding.emailEditText.setText("");
-                       binding.passwordEditText.setText("");
-                       binding.confirmPasswordEditText.setText("");
+               viewModel.signup(name + lastname, password, email).observe(requireActivity(), statusCode -> {
+                   if (statusCode != 0) {
+                       if (statusCode >= 400) {
+                           binding.registrationError.setText("Пользователь с данным email уже существует");
+                       } else {
+                           binding.firstNameEditText.setText("");
+                           binding.lastNameEditText.setText("");
+                           binding.emailEditText.setText("");
+                           binding.passwordEditText.setText("");
+                           binding.confirmPasswordEditText.setText("");
 
-                       pushData();
+                           pushData();
+                       }
                    }
                });
            }

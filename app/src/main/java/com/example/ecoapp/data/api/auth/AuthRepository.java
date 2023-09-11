@@ -14,8 +14,8 @@ public class AuthRepository {
         authAPI = new AuthAPIService(new RetrofitService()).getAuthAPI();
     }
 
-    public Call<AuthResponseDTO> login(String name, String password) {
-        return authAPI.login(new AuthLoginDTO(name, password));
+    public Call<AuthResponseDTO> login(String email, String password) {
+        return authAPI.login(new AuthLoginDTO(email, password));
     }
 
     public Call<AuthResponseDTO> signup(String name, String password, String email) {

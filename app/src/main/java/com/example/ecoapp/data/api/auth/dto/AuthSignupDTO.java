@@ -3,19 +3,19 @@ package com.example.ecoapp.data.api.auth.dto;
 import com.google.gson.annotations.SerializedName;
 
 public class AuthSignupDTO extends AuthLoginDTO {
-    @SerializedName("email")
-    private String email;
+    @SerializedName("name")
+    private String name;
 
     public AuthSignupDTO(String name, String password, String email) {
-        super(name, password);
-        this.email = email;
+        super(email, password);
+        this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 }

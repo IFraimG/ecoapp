@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class AuthViewModel extends AndroidViewModel {
     private final MutableLiveData<AuthResponseDTO> userData = new MutableLiveData<>();
-    private int statusCode = 0;
+    private MutableLiveData<Integer> statusCode = new MutableLiveData<>(0);
     private final AuthRepository authRepository;
     private final StorageHandler storageHandler;
 
@@ -29,11 +29,11 @@ public class AuthViewModel extends AndroidViewModel {
         storageHandler = new StorageHandler(application.getApplicationContext());
     }
 
-    public LiveData<AuthResponseDTO> signup(String name, String password, String email) {
+    public LiveData<Integer> signup(String name, String password, String email) {
         authRepository.signup(name, password, email).enqueue(new Callback<AuthResponseDTO>() {
             @Override
             public void onResponse(@NotNull Call<AuthResponseDTO> call, @NotNull Response<AuthResponseDTO> response) {
-                statusCode = response.code();
+                statusCode.setValue(response.code());
                 if (response.isSuccessful() && response.body() != null) {
                     userData.setValue(response.body());
                     storageHandler.setToken(response.body().getToken());
@@ -44,36 +44,33 @@ public class AuthViewModel extends AndroidViewModel {
             public void onFailure(@NotNull Call<AuthResponseDTO> call, @NotNull Throwable t) {
                 t.printStackTrace();
                 userData.setValue(null);
-                statusCode = 400;
+                statusCode.setValue(400);
             }
         });
 
-        return userData;
-    }
-
-    public LiveData<AuthResponseDTO> login(String name, String password) {
-        authRepository.login(name, password).enqueue(new Callback<AuthResponseDTO>() {
-            @Override
-            public void onResponse(@NotNull Call<AuthResponseDTO> call, @NotNull Response<AuthResponseDTO> response) {
-                statusCode = response.code();
-                if (response.isSuccessful() && response.body() != null) {
-                    userData.setValue(response.body());
-                    storageHandler.setToken(response.body().getToken());
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<AuthResponseDTO> call, @NotNull Throwable t) {
-                t.printStackTrace();
-                userData.setValue(null);
-                statusCode = 400;
-            }
-        });
-
-        return userData;
-    }
-
-    public int getStatusCode() {
         return statusCode;
     }
+
+    public LiveData<Integer> login(String email, String password) {
+        authRepository.login(email, password).enqueue(new Callback<AuthResponseDTO>() {
+            @Override
+            public void onResponse(@NotNull Call<AuthResponseDTO> call, @NotNull Response<AuthResponseDTO> response) {
+                statusCode.setValue(response.code());
+                if (response.isSuccessful() && response.body() != null) {
+                    userData.setValue(response.body());
+                    storageHandler.setToken(response.body().getToken());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<AuthResponseDTO> call, @NotNull Throwable t) {
+                t.printStackTrace();
+                userData.setValue(null);
+                statusCode.setValue(400);
+            }
+        });
+
+        return statusCode;
+    }
+
 }
