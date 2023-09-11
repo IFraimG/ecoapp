@@ -11,8 +11,8 @@ import retrofit2.http.POST;
 
 public interface AuthAPI {
         @POST("/auth/users/login")
-        Call<AuthResponseDTO> login(@Header("Authorization") String token, @Body AuthLoginDTO authLoginDTO);
+        Call<AuthResponseDTO> login(@Body AuthLoginDTO authLoginDTO);
 
         @POST("/auth/users/signup")
-        Call<AuthResponseDTO> signup(@Header("Authorization") String token, @Body AuthSignupDTO authSignupDTO);
+        Call<AuthResponseDTO> signup(@Body AuthSignupDTO authSignupDTO);
 }

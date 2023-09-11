@@ -37,7 +37,7 @@ public class AuthLoginFragment extends Fragment {
             if (getActivity() instanceof MainActivity) {
                 ((MainActivity) requireActivity()).changeMenu(true);
             }
-            storageHandler.setAuth(true);
+
             Navigation.findNavController(v).navigate(R.id.action_authLoginFragment_to_homeFragment);
         });
 

@@ -15,12 +15,16 @@ public class StorageHandler {
     }
 
     public boolean getAuth() {
-        return sharedPreferences.getBoolean("isAuth", false);
+        return !sharedPreferences.getString("token", "").isEmpty();
     }
 
-    public void setAuth(boolean isAuth) {
+    public void setToken(String token) {
         SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putBoolean("isAuth", isAuth);
+        edit.putString("token", token);
         edit.apply();
+    }
+
+    public String getToken() {
+        return sharedPreferences.getString("token", "");
     }
 }
