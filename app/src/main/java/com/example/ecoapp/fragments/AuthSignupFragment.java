@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.ecoapp.MainActivity;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentRegistrationBinding;
+import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.viewmodels.AuthViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -26,6 +27,8 @@ public class AuthSignupFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        binding = FragmentRegistrationBinding.inflate(getLayoutInflater());
+
+        if (new StorageHandler(requireContext()).getAuth()) pushData();
 
         viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 

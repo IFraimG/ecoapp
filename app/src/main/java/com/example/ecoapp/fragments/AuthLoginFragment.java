@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -34,6 +35,9 @@ public class AuthLoginFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentLoginBinding.inflate(getLayoutInflater());
 
+        if (new StorageHandler(requireContext()).getAuth()) pushData();
+
+
         viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
         binding.registrationTextView.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_authLoginFragment_to_authSignupFragment));
@@ -56,16 +60,20 @@ public class AuthLoginFragment extends Fragment {
                         binding.emailEditText.setText("");
                         binding.passwordEditText.setText("");
 
-                        if (getActivity() instanceof MainActivity) {
-                            ((MainActivity) requireActivity()).changeMenu(true);
-                        }
-
-                        Navigation.findNavController(v).navigate(R.id.homeFragment);
+                        pushData();
                     }
                 });
             }
         });
 
         return binding.getRoot();
+    }
+
+    private void pushData() {
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(true);
+            NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
+            navHostFragment.getNavController().navigate(R.id.homeFragment);
+        }
     }
 }
