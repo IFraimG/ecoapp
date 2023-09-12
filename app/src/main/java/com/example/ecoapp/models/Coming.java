@@ -4,6 +4,8 @@ public class Coming {
     private int image;
     private String name;
 
+    public Coming() {}
+
     public Coming(int image, String name) {
         this.image = image;
         this.name = name;

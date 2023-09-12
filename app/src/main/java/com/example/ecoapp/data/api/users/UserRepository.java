@@ -10,8 +10,8 @@ import retrofit2.Call;
 public class UserRepository {
     private final UserAPI userAPI;
 
-    public UserRepository(UserAPIService giverApiService) {
-        userAPI = giverApiService.getUserAPI();
+    public UserRepository(UserAPIService userApiService) {
+        userAPI = userApiService.getUserAPI();
     }
 
     public Call<User> editProfile(String token, String id, String name, String old_password, String new_password) {
