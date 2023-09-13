@@ -7,8 +7,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitService {
     private Retrofit retrofit;
-//    public String BASE_URL = "https://ecoappserver.up.railway.app";
-    public String BASE_URL = "http://192.168.0.100:8080";
+    public String BASE_URL = "https://ecoappserver.up.railway.app";
+//    public String BASE_URL = "http://192.168.0.100:8080";
 
     public HttpLoggingInterceptor getHttpLoggingInterceptor() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
