@@ -3,6 +3,8 @@ package com.example.ecoapp.domain.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.ecoapp.models.User;
+
 public class StorageHandler {
     private SharedPreferences sharedPreferences;
 
@@ -26,5 +28,15 @@ public class StorageHandler {
 
     public String getToken() {
         return sharedPreferences.getString("token", "");
+    }
+
+    public void saveUserID(String userID) {
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString("userID", userID);
+        edit.apply();
+    }
+
+    public String getUserID() {
+        return sharedPreferences.getString("userID", "");
     }
 }

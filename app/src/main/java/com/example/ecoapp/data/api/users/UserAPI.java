@@ -5,15 +5,21 @@ import com.example.ecoapp.data.api.users.dto.ChangeScoresDTO;
 import com.example.ecoapp.data.api.users.dto.EditProfileDTO;
 import com.example.ecoapp.data.api.users.dto.HabitDTO;
 
+import java.io.File;
+
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface UserAPI {
@@ -28,9 +34,9 @@ public interface UserAPI {
     @GET("/users/get_user")
     Call<User> getUser(@Header("Authorization") String token, @Query("id") String id);
 
-    @PUT("/users/add_photo")
     @Multipart
-    Call<User> addPhoto(@Header("Authorization") String token, @Body String id, @Part MultipartBody.Part img);
+    @POST("/users/add_photo")
+    Call<User> addPhoto(@Header("Authorization") String token, @Part MultipartBody.Part file);
 
     @PUT("/users/add_habit")
     Call<User> addHabit(@Header("Authorization") String token, @Body HabitDTO habitDTO);
@@ -40,4 +46,7 @@ public interface UserAPI {
 
     @GET("/users/get_habit_by_title")
     Call<User> getHabitByTitle(@Header("Authorization") String token, @Body String title);
+
+    @GET("/image/{image}")
+    Call<ResponseBody> getImage(@Header("Authorization") String token, @Path("image") String imageURL);
 }

@@ -5,6 +5,11 @@ import com.example.ecoapp.data.api.users.dto.ChangeScoresDTO;
 import com.example.ecoapp.data.api.users.dto.EditProfileDTO;
 import com.example.ecoapp.data.api.users.dto.HabitDTO;
 
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 
 public class UserRepository {
@@ -26,8 +31,11 @@ public class UserRepository {
         return userAPI.getUser(token, id);
     }
 
-    public Call<User> addPhoto(String token, String id) {
-        return userAPI.addPhoto(token, id,null);
+    public Call<User> addPhoto(String token, String id, File photo) {
+        RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), photo);
+        MultipartBody.Part file = MultipartBody.Part.createFormData("img", photo.getName(), fileReqBody);
+
+        return userAPI.addPhoto(token, file);
     }
 
     public Call<User> addHabit(String token, String id, String title) {
@@ -41,4 +49,8 @@ public class UserRepository {
     public Call<User> getHabitByTitle(String token, String title) {
         return userAPI.getHabitByTitle(token, title);
     }
+
+//    public Call<File> getImage(String token, String imageURL) {
+//        return userAPI.getImage(token, imageURL);
+//    }
 }

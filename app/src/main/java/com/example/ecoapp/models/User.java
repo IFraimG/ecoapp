@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class User {
 
     @SerializedName("photo")
-    private int photo;
+    private String photo;
 
     @SerializedName("scores")
     private int scores;
@@ -36,16 +36,16 @@ public class User {
         this.id = id;
     }
 
-    public User(int image, String name) {
+    public User(String image, String name) {
         this.photo = image;
         this.name = name;
     }
 
-    public int getImage() {
+    public String getImage() {
         return photo;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.photo = image;
     }
 
@@ -59,14 +59,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(int photo) {
-        this.photo = photo;
     }
 
     public String getId() {

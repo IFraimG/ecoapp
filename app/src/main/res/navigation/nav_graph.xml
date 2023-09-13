@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_authSignupFragment"
-            app:destination="@id/authSignupFragment" />
+            app:destination="@id/authSignupFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"/>
     </fragment>
     <fragment
         android:id="@+id/authSignupFragment"
@@ -21,10 +25,20 @@
         tools:layout="@layout/fragment_registration" >
         <action
             android:id="@+id/action_authSignupFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
         <action
             android:id="@+id/action_authSignupFragment_to_authLoginFragment"
-            app:destination="@id/authLoginFragment" />
+            app:destination="@id/authLoginFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
     </fragment>
     <fragment
         android:id="@+id/authLoginFragment"
@@ -33,10 +47,20 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_authLoginFragment_to_authSignupFragment"
-            app:destination="@id/authSignupFragment" />
+            app:destination="@id/authSignupFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
         <action
             android:id="@+id/action_authLoginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
     </fragment>
     <fragment
         android:id="@+id/eventsFragment"
@@ -55,6 +79,11 @@
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_authSignupFragment"
-            app:destination="@id/authSignupFragment" />
+            app:destination="@id/authSignupFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
     </fragment>
 </navigation>

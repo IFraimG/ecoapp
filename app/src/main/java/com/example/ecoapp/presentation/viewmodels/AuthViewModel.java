@@ -37,6 +37,7 @@ public class AuthViewModel extends AndroidViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     userData.setValue(response.body());
                     storageHandler.setToken(response.body().getToken());
+                    storageHandler.saveUserID(response.body().getShortUser().getId());
                 }
             }
 
@@ -59,6 +60,7 @@ public class AuthViewModel extends AndroidViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     userData.setValue(response.body());
                     storageHandler.setToken(response.body().getToken());
+                    storageHandler.saveUserID(response.body().getShortUser().getId());
                 }
             }
 
