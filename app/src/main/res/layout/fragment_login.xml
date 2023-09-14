@@ -105,18 +105,6 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/registration_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Регистрация"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/password_card_view"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <androidx.cardview.widget.CardView
         android:id="@+id/login_card_view"
         android:layout_width="match_parent"
@@ -129,7 +117,7 @@
         app:cardElevation="0dp"
         android:elevation="0dp"
         app:cardBackgroundColor="@color/green"
-        app:layout_constraintTop_toBottomOf="@id/registration_text_view"
+        app:layout_constraintTop_toBottomOf="@id/password_card_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -146,6 +134,19 @@
             android:layout_height="match_parent" />
 
     </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/registration_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Регистрация"
+        android:textColor="@color/home_titles_gray"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/login_card_view"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <TextView
         android:id="@+id/login_error"
         android:layout_width="match_parent"
