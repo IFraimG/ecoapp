@@ -6,35 +6,30 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.example.ecoapp.MainActivity;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentProfileBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
-import com.example.ecoapp.models.User;
 import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -58,15 +53,25 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(getLayoutInflater());
 
+        storageHandler = new StorageHandler(requireContext());
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
         viewModel.getUserData(storageHandler.getToken(), storageHandler.getUserID()).observe(requireActivity(), user -> {
+            if (user != null) {
+                binding.personName.setText(user.getName());
+                binding.personPoints.setText("Баллы: " + user.getScores());
+            }
             if (user != null && !user.getImage().isEmpty()) {
                 // update text values ...
-                String url = "http://192.168.0.100:8080/image/" + user.getImage();
+                binding.profileImageButton.setVisibility(View.VISIBLE);
+                binding.profileLoadImage.setVisibility(View.GONE);
+                String url = "http://192.168.0.101:8080/image/" + user.getImage();
                 Picasso.get().load(url).into(binding.profileImageButton);
-//                Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-//                photoProfileImageView.setImageBitmap(bitmap);
+
+
+            } else if (user == null) {
+                NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
+                navHostFragment.getNavController().navigate(R.id.noNetworkFragment);
             }
         });
 
@@ -83,7 +88,6 @@ public class ProfileFragment extends Fragment {
             startActivityForResult(chooserIntent, SELECT_PHOTO_PROFILE);
         });
 
-        storageHandler = new StorageHandler(requireContext());
 
         binding.logout.setOnClickListener(v -> {
             storageHandler.logout();
@@ -93,8 +97,11 @@ public class ProfileFragment extends Fragment {
 
             Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_authSignupFragment);
             Navigation.findNavController(v).popBackStack(R.id.profileFragment, true);
-
         });
+
+        binding.whiteTheme.setOnClickListener(View -> storageHandler.setTheme(0));
+        binding.blackTheme.setOnClickListener(View -> storageHandler.setTheme(1));
+        binding.greenTheme.setOnClickListener(View -> storageHandler.setTheme(2));
 
         return binding.getRoot();
     }
@@ -119,11 +126,22 @@ public class ProfileFragment extends Fragment {
 
                     viewModel.savePhoto(storageHandler.getToken(), file, storageHandler.getUserID()).observe(requireActivity(), statusCode -> {
                         if (statusCode == 0) {
+                            binding.profileImageButton.setVisibility(View.GONE);
+                            binding.profileLoadImage.setVisibility(View.VISIBLE);
 //                            photoProfileImageView.setImageBitmap();
 
                         } else if (statusCode < 400) {
                             binding.profileImageButton.setImageBitmap(originalBitmap);
-                        } else Snackbar.make(requireView(), "Произошла ошибка", Snackbar.LENGTH_SHORT).show();
+                            binding.profileImageButton.setVisibility(View.VISIBLE);
+                            binding.profileLoadImage.setVisibility(View.GONE);
+
+                            NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
+                            navHostFragment.getNavController().navigate(R.id.noNetworkFragment);
+                        } else {
+                            Snackbar.make(requireView(), "Произошла ошибка", Snackbar.LENGTH_SHORT).show();
+                            binding.profileImageButton.setVisibility(View.VISIBLE);
+                            binding.profileLoadImage.setVisibility(View.GONE);
+                        }
                     });
                 } catch (IOException e) {
                     throw new RuntimeException(e);

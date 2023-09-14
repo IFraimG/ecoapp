@@ -40,6 +40,19 @@
                 android:src="@drawable/default_photo_profile"
                 android:layout_gravity="center_horizontal"
                 />
+            <ProgressBar
+                android:id="@+id/profile_load_image"
+                android:layout_gravity="center"
+                android:layout_width="230dp"
+                android:visibility="gone"
+                android:layout_height="230dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:indeterminateTint="@color/green"
+                />
+
 
             <TextView
                 android:id="@+id/person_name"
@@ -48,7 +61,6 @@
                 android:layout_marginTop="20dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Бойко София"
                 android:textColor="@color/text_gray"
                 android:textSize="20sp"
                 android:layout_gravity="center_horizontal" />
@@ -60,7 +72,6 @@
                 android:layout_marginTop="16dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Баллы: 256"
                 android:textColor="@color/text_gray"
                 android:textSize="20sp"
                 android:layout_gravity="center_horizontal" />

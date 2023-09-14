@@ -39,4 +39,14 @@ public class StorageHandler {
     public String getUserID() {
         return sharedPreferences.getString("userID", "");
     }
+
+    public void setTheme(int themeNum) {
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt("theme", themeNum);
+        edit.apply();
+    }
+
+    public int getTheme() {
+        return sharedPreferences.getInt("theme", 0);
+    }
 }

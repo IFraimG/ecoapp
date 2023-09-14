@@ -1,20 +1,27 @@
 package com.example.ecoapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.ecoapp.databinding.ActivityMainBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
+import com.example.ecoapp.fragments.NoNetworkFragment;
+import com.example.ecoapp.presentation.services.NetworkChangeReceiver;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private NavController navController;
     private StorageHandler storageHandler;
+    private NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,20 +33,32 @@ public class MainActivity extends AppCompatActivity {
         navController = navHostFragment.getNavController();
 
         storageHandler = new StorageHandler(getApplicationContext());
-        if (storageHandler.getAuth()) {
-            changeMenu(true);
-            navController.navigate(R.id.homeFragment);
-        } else changeMenu(false);
+
+        networkChangeReceiver = new NetworkChangeReceiver(new NetworkChangeReceiver.NetworkChangeListener() {
+            @Override
+            public void onNetworkConnected() {
+                if (storageHandler.getAuth()) {
+                    if (navController.getCurrentDestination().getId() == R.id.noNetworkFragment) {
+                        changeMenu(true);
+                        navController.navigate(R.id.homeFragment);
+                    }
+                } else changeMenu(false);
+            }
+
+            @Override
+            public void onNetworkDisconnected() {
+                changeMenu(false);
+                navController.navigate(R.id.noNetworkFragment);
+            }
+        });
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        if (!storageHandler.getAuth()) {
-//            changeMenu(false);
-//            navController.navigate(R.id.authSignupFragment);
-//        }
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, intentFilter);
+    }
 
     public void changeMenu(boolean isShow) {
         binding.bottomNavigationView.setVisibility(isShow ? View.VISIBLE : View.GONE);
