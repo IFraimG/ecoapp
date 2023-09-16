@@ -70,6 +70,9 @@
         <action
             android:id="@+id/action_eventsFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_eventsFragment_to_createEventFragment"
+            app:destination="@id/createEventFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -114,9 +117,31 @@
             app:popExitAnim="@anim/nav_pop_exit" />
         <action
             android:id="@+id/action_mapFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"/>
         <action
             android:id="@+id/action_mapFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"/>
+    </fragment>
+    <fragment
+        android:id="@+id/createEventFragment"
+        android:name="com.example.ecoapp.fragments.CreateEventFragment"
+        android:label="fragment_create_event"
+        tools:layout="@layout/fragment_create_event">
+        <action
+            android:id="@+id/action_createEventFragment_to_eventsFragment"
+            app:destination="@id/eventsFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
     </fragment>
 </navigation>
