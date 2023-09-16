@@ -103,5 +103,5 @@ public class MapFragment extends Fragment {
 //            checkEnabled();
 //            showLocation(locationManager.getLastKnownLocation(provider));
         }
-    }
+    };
 }

@@ -33,6 +33,10 @@ public class EventsFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_mapFragment);
         });
 
+        fragmentEventsBinding.addEventCardView.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_createEventFragment);
+        });
+
         fragmentEventsBinding.comingRecyclerView.setHasFixedSize(true);
         fragmentEventsBinding.comingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 

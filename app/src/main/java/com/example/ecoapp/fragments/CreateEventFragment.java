@@ -26,8 +26,7 @@ public class CreateEventFragment extends Fragment {
                              Bundle savedInstanceState) {
         fragmentCreateEventBinding = FragmentCreateEventBinding.inflate(getLayoutInflater());
 
-        fragmentCreateEventBinding.createEventButtonFragmentCreateEvent.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_mapFragment);
+        fragmentCreateEventBinding.createEventButtonFragmentCreateEvent.setOnClickListener(v -> {;
         });
 
         return fragmentCreateEventBinding.getRoot();
