@@ -222,6 +222,7 @@
                             app:cardCornerRadius="24dp">
 
                             <TextView
+                                android:id="@+id/map_open"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Посмотреть на карте"

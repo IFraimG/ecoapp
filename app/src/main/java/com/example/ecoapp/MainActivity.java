@@ -16,18 +16,27 @@ import com.example.ecoapp.databinding.ActivityMainBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.fragments.NoNetworkFragment;
 import com.example.ecoapp.presentation.services.NetworkChangeReceiver;
+import com.squareup.picasso.BuildConfig;
+import com.yandex.mapkit.MapKitFactory;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private NavController navController;
     private StorageHandler storageHandler;
     private NetworkChangeReceiver networkChangeReceiver;
+    private boolean isInitMap = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        if (!isInitMap) {
+//            MapKitFactory.setApiKey(BuildConfig.apiKey);
+//            MapKitFactory.initialize(getApplicationContext());
+//            isInitMap = true;
+        }
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
         navController = navHostFragment.getNavController();
@@ -70,6 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         });
-
     }
+
 }
