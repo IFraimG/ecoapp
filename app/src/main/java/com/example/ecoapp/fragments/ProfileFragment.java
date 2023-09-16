@@ -32,7 +32,9 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
@@ -67,9 +69,8 @@ public class ProfileFragment extends Fragment {
                 // update text values ...
                 binding.profileImageButton.setVisibility(View.VISIBLE);
                 binding.profileLoadImage.setVisibility(View.GONE);
-                String url = "https://test123-production-e08e.up.railway.app/" + user.getImage();
+                String url = "https://test123-production-e08e.up.railway.app/image/" + user.getImage();
                 Picasso.get().load(url).into(binding.profileImageButton);
-
             } else if (user == null) {
                 NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
                 navHostFragment.getNavController().navigate(R.id.noNetworkFragment);
@@ -110,7 +111,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SELECT_PHOTO_PROFILE && resultCode == RESULT_OK && data != null) {
+        if (((requestCode == SELECT_PHOTO_PROFILE && resultCode == RESULT_OK)) && data != null) {
             if (data.getData() != null) {
                 uri = data.getData();
                 String[] filePathColumn = { MediaStore.Images.Media.DATA };
@@ -125,35 +126,50 @@ public class ProfileFragment extends Fragment {
                     Bitmap originalBitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), uri);
                     File file = new File(imagePath);
 
-                    viewModel.savePhoto(storageHandler.getToken(), file, storageHandler.getUserID()).observe(requireActivity(), statusCode -> {
-                        if (statusCode == 0) {
-                            binding.profileImageButton.setVisibility(View.GONE);
-                            binding.profileLoadImage.setVisibility(View.VISIBLE);
-//                            photoProfileImageView.setImageBitmap();
-
-                        } else if (statusCode < 400) {
-                            binding.profileImageButton.setImageBitmap(originalBitmap);
-                            binding.profileImageButton.setVisibility(View.VISIBLE);
-                            binding.profileLoadImage.setVisibility(View.GONE);
-
-                            NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
-                            navHostFragment.getNavController().navigate(R.id.noNetworkFragment);
-                        } else {
-                            Toast.makeText(requireContext(),"Произошла ошибка" + Integer.toString(statusCode), Toast.LENGTH_SHORT).show();
-                            binding.profileImageButton.setVisibility(View.VISIBLE);
-                            binding.profileLoadImage.setVisibility(View.GONE);
-                        }
-                    });
+                    saveImage(file, originalBitmap);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             } else {
                 Bundle extras = data.getExtras();
-                if (extras != null) {
-                    Bitmap bitmap = (Bitmap) extras.get("data");
-                    binding.profileImageButton.setImageBitmap(bitmap);
+                Bitmap bitmap = (Bitmap) extras.get("data");
+                File f = new File(requireContext().getCacheDir(), "test");
+                try {
+                    f.createNewFile();
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+
+                    byte[] bitmapdata = bos.toByteArray();
+
+                    FileOutputStream fos = new FileOutputStream(f);
+                    fos.write(bitmapdata);
+                    fos.flush();
+                    fos.close();
+
+                    saveImage(f, bitmap);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
+    }
+
+    public void saveImage(File file, Bitmap originalBitmap) {
+        viewModel.savePhoto(storageHandler.getToken(), file, storageHandler.getUserID()).observe(requireActivity(), statusCode -> {
+            if (statusCode == 0) {
+                binding.profileImageButton.setVisibility(View.GONE);
+                binding.profileLoadImage.setVisibility(View.VISIBLE);
+//                            photoProfileImageView.setImageBitmap();
+
+            } else if (statusCode < 400) {
+                binding.profileImageButton.setImageBitmap(originalBitmap);
+                binding.profileImageButton.setVisibility(View.VISIBLE);
+                binding.profileLoadImage.setVisibility(View.GONE);
+            } else {
+                Toast.makeText(requireContext(),"Произошла ошибка" + Integer.toString(statusCode), Toast.LENGTH_SHORT).show();
+                binding.profileImageButton.setVisibility(View.VISIBLE);
+                binding.profileLoadImage.setVisibility(View.GONE);
+            }
+        });
     }
 }
