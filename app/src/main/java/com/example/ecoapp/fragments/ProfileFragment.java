@@ -6,6 +6,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -36,6 +37,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
@@ -114,18 +116,20 @@ public class ProfileFragment extends Fragment {
         if (((requestCode == SELECT_PHOTO_PROFILE && resultCode == RESULT_OK)) && data != null) {
             if (data.getData() != null) {
                 uri = data.getData();
-                String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                Cursor cursor = requireActivity().getContentResolver().query(uri, filePathColumn, null, null, null);
-                cursor.moveToFirst();
-
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String imagePath = cursor.getString(columnIndex);
-                cursor.close();
 
                 try {
-                    Bitmap originalBitmap = MediaStore.Images.Media.getBitmap(requireContext().getContentResolver(), uri);
-                    File file = new File(imagePath);
+                    final InputStream imageStream = requireActivity().getContentResolver().openInputStream(uri);
+                    final Bitmap originalBitmap = BitmapFactory.decodeStream(imageStream);
 
+                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                    Cursor cursor = requireActivity().getContentResolver().query(uri, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String imagePath = cursor.getString(columnIndex);
+                    cursor.close();
+
+                    File file = new File(imagePath);
                     saveImage(file, originalBitmap);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
