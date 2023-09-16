@@ -19,6 +19,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.ecoapp.MainActivity;
 import com.example.ecoapp.R;
@@ -137,7 +138,7 @@ public class ProfileFragment extends Fragment {
                             NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
                             navHostFragment.getNavController().navigate(R.id.noNetworkFragment);
                         } else {
-                            Snackbar.make(requireView(), "Произошла ошибка", Snackbar.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(),"Произошла ошибка", Toast.LENGTH_SHORT).show();
                             binding.profileImageButton.setVisibility(View.VISIBLE);
                             binding.profileLoadImage.setVisibility(View.GONE);
                         }

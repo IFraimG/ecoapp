@@ -54,7 +54,7 @@ public class AuthLoginFragment extends Fragment {
                 binding.loginError.setText("");
 
                 viewModel.login(email, password).observe(requireActivity(), statusCode -> {
-                    if (statusCode >= 400 || statusCode == 0) {
+                    if (statusCode >= 400) {
                         binding.loginError.setText("Вы ввели неправильные данные");
                     } else {
                         binding.emailEditText.setText("");
