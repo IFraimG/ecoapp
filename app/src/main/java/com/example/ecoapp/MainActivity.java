@@ -1,7 +1,6 @@
 package com.example.ecoapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -9,14 +8,11 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.example.ecoapp.databinding.ActivityMainBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
-import com.example.ecoapp.fragments.NoNetworkFragment;
 import com.example.ecoapp.presentation.services.NetworkChangeReceiver;
-import com.squareup.picasso.BuildConfig;
 import com.yandex.mapkit.MapKitFactory;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         if (!isInitMap) {
-//            MapKitFactory.setApiKey(BuildConfig.apiKey);
-//            MapKitFactory.initialize(getApplicationContext());
-//            isInitMap = true;
+            MapKitFactory.setApiKey(BuildConfig.apiKey);
+            MapKitFactory.initialize(getApplicationContext());
+            isInitMap = true;
         }
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
