@@ -74,22 +74,22 @@ public class MapFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ActivityCompat.requestPermissions(requireActivity(),
-                new String[]{
-                        android.Manifest.permission.ACCESS_FINE_LOCATION,
-                        android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                }, 200);
-
-        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(),
-                    new String[]{ android.Manifest.permission.ACCESS_BACKGROUND_LOCATION }, 201);
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000 * 10, 10, locationListener);
-        locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 1000 * 10, 10,
-                locationListener);
+//        ActivityCompat.requestPermissions(requireActivity(),
+//                new String[]{
+//                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+//                        android.Manifest.permission.ACCESS_COARSE_LOCATION,
+//                }, 200);
+//
+//        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(requireActivity(),
+//                    new String[]{ android.Manifest.permission.ACCESS_BACKGROUND_LOCATION }, 201);
+//        }
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+//                1000 * 10, 10, locationListener);
+//        locationManager.requestLocationUpdates(
+//                LocationManager.NETWORK_PROVIDER, 1000 * 10, 10,
+//                locationListener);
     }
 
     private LocationListener locationListener = new LocationListener() {
