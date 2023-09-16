@@ -61,13 +61,12 @@ public class ProfileFragment extends Fragment {
                 binding.personName.setText(user.getName());
                 binding.personPoints.setText("Баллы: " + user.getScores());
             }
-            if (user != null && !user.getImage().isEmpty()) {
+            if (user != null && user.getImage() != null) {
                 // update text values ...
                 binding.profileImageButton.setVisibility(View.VISIBLE);
                 binding.profileLoadImage.setVisibility(View.GONE);
                 String url = "http://192.168.0.101:8080/image/" + user.getImage();
                 Picasso.get().load(url).into(binding.profileImageButton);
-
 
             } else if (user == null) {
                 NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
