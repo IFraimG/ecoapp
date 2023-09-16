@@ -159,8 +159,6 @@ public class ProfileFragment extends Fragment {
             if (statusCode == 0) {
                 binding.profileImageButton.setVisibility(View.GONE);
                 binding.profileLoadImage.setVisibility(View.VISIBLE);
-//                            photoProfileImageView.setImageBitmap();
-
             } else if (statusCode < 400) {
                 binding.profileImageButton.setImageBitmap(originalBitmap);
                 binding.profileImageButton.setVisibility(View.VISIBLE);

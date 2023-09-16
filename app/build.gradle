@@ -2,6 +2,12 @@ plugins {
     id 'com.android.application'
 }
 
+Properties properties = new Properties();
+File localPropertiesFile = rootProject.file('local.properties');
+if (localPropertiesFile.exists()) {
+    properties.load(localPropertiesFile.newDataInputStream());
+}
+
 android {
     namespace 'com.example.ecoapp'
     compileSdk 33
@@ -14,6 +20,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "apiKey", "\"${properties.getProperty('apiKey')}\""
     }
 
     buildTypes {
@@ -25,6 +32,7 @@ android {
 
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 
     compileOptions {
@@ -32,6 +40,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
+
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -52,4 +61,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
 
     implementation 'com.squareup.picasso:picasso:2.8'
+
+    implementation 'com.yandex.android:maps.mobile:4.3.1-full'
 }
