@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class ProfileFragment extends Fragment {
                 // update text values ...
                 binding.profileImageButton.setVisibility(View.VISIBLE);
                 binding.profileLoadImage.setVisibility(View.GONE);
-                String url = "http://192.168.0.101:8080/image/" + user.getImage();
+                String url = "https://ecoappserver.up.railway.app/" + user.getImage();
                 Picasso.get().load(url).into(binding.profileImageButton);
 
             } else if (user == null) {
