@@ -50,7 +50,7 @@ public class AuthSignupFragment extends Fragment {
            } else {
                binding.registrationError.setText("");
 
-               viewModel.signup(name + lastname, password, email).observe(requireActivity(), statusCode -> {
+               viewModel.signup(name + " " + lastname, password, email).observe(requireActivity(), statusCode -> {
                    if (statusCode != 0) {
                        if (statusCode >= 400) {
                            binding.registrationError.setText("Пользователь с данным email уже существует");
