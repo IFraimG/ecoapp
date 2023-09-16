@@ -67,7 +67,7 @@ public class ProfileFragment extends Fragment {
                 // update text values ...
                 binding.profileImageButton.setVisibility(View.VISIBLE);
                 binding.profileLoadImage.setVisibility(View.GONE);
-                String url = "https://ecoappserver.up.railway.app/" + user.getImage();
+                String url = "https://test123-production-e08e.up.railway.app/" + user.getImage();
                 Picasso.get().load(url).into(binding.profileImageButton);
 
             } else if (user == null) {
@@ -139,7 +139,7 @@ public class ProfileFragment extends Fragment {
                             NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
                             navHostFragment.getNavController().navigate(R.id.noNetworkFragment);
                         } else {
-                            Toast.makeText(requireContext(),"Произошла ошибка", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(),"Произошла ошибка" + Integer.toString(statusCode), Toast.LENGTH_SHORT).show();
                             binding.profileImageButton.setVisibility(View.VISIBLE);
                             binding.profileLoadImage.setVisibility(View.GONE);
                         }
