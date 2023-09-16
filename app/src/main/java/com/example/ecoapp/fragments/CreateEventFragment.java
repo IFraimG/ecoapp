@@ -3,6 +3,7 @@ package com.example.ecoapp.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,11 @@ public class CreateEventFragment extends Fragment {
                              Bundle savedInstanceState) {
         fragmentCreateEventBinding = FragmentCreateEventBinding.inflate(getLayoutInflater());
 
-        fragmentCreateEventBinding.createEventButtonFragmentCreateEvent.setOnClickListener(v -> {;
+        fragmentCreateEventBinding.createEventButtonFragmentCreateEvent.setOnClickListener(v -> {
+        });
+
+        fragmentCreateEventBinding.createEventBackToEventFragmentButton.setOnClickListener(v -> {
+            Navigation.findNavController(v).popBackStack();
         });
 
         return fragmentCreateEventBinding.getRoot();
