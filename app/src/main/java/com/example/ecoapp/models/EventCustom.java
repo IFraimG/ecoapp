@@ -40,7 +40,7 @@ public class EventCustom {
 
     public EventCustom() {}
 
-    public EventCustom(String title, String photo, String description, String time, String place, String authorID, Integer scores, Integer maxUsers, Integer currentUsers, String eventID, ArrayList<String> usersList) {
+    public EventCustom(String title, String photo, String description, String time, String place, String authorID, Integer scores, Integer maxUsers) {
         this.title = title;
         this.photo = photo;
         this.description = description;
@@ -49,9 +49,6 @@ public class EventCustom {
         this.authorID = authorID;
         this.scores = scores;
         this.maxUsers = maxUsers;
-        this.currentUsers = currentUsers;
-        this.eventID = eventID;
-        this.usersList = usersList;
     }
 
     public String getTitle() {

@@ -129,6 +129,9 @@
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit"/>
+        <action
+            android:id="@+id/action_mapFragment_to_createEventFragment"
+            app:destination="@id/createEventFragment" />
     </fragment>
     <fragment
         android:id="@+id/createEventFragment"
@@ -143,5 +146,8 @@
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit"
             />
+        <action
+            android:id="@+id/action_createEventFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
 </navigation>

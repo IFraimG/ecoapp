@@ -14,8 +14,8 @@ public class EventRepository {
         eventAPI = eventAPIService.getEventAPI();
     }
 
-    public Call<EventCustom> createEvent(String token, String title, String photo, String description, String time, String place, String authorID, Integer scores, Integer maxUsers, Integer currentUsers, String eventID, ArrayList<String> usersList) {
-        return eventAPI.createEvent(token, new EventCustom(title, photo, description, time, place, authorID, scores, maxUsers, currentUsers, eventID, usersList), null);
+    public Call<EventCustom> createEvent(String token, String title, String photo, String description, String time, String place, String authorID, Integer scores, Integer maxUsers) {
+        return eventAPI.createEvent(token, new EventCustom(title, photo, description, time, place, authorID, scores, maxUsers), null);
     }
 
     public Call<String> deleteEvent(String token, String eventID) {

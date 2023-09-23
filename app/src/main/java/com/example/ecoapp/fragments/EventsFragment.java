@@ -32,7 +32,6 @@ public class EventsFragment extends Fragment {
         fragmentEventsBinding.mapOpen.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_mapFragment);
         });
-
         fragmentEventsBinding.addEventCardView.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_createEventFragment);
         });
