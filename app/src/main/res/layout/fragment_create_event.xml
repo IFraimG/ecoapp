@@ -63,16 +63,53 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/create_event_photo_card_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardElevation="0dp"
+                android:elevation="0dp"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fragment_create_event_person_points">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/create_event_photo_inner_card_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="0dp"
+                    android:elevation="0dp"
+                    android:layout_margin="6dp"
+                    app:cardCornerRadius="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_create_event_person_points">
+
+                    <ImageButton
+                        android:id="@+id/create_event_photo"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:src="@drawable/default_photo_event"
+                        android:contentDescription="Обложка события"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_create_event_person_points"/>
+
+                </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/creating_event_fields_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:cardElevation="0dp"
                 android:elevation="0dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_create_event_person_points">
+                app:layout_constraintTop_toBottomOf="@id/create_event_photo_card_view">
 
 
                 <LinearLayout
@@ -99,7 +136,7 @@
                                 android:layout_marginLeft="16dp"
                                 android:layout_marginRight="16dp"
                                 android:hint="Название мероприятия"
-                                android:textSize="20dp"
+                                android:textSize="16sp"
                                 android:textColorHint="@color/reglogin_text"
                                 android:fontFamily="@font/montserrat_regular"
                                 android:backgroundTint="@color/background_search"
@@ -130,7 +167,7 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="4dp"
                             android:hint="Описание..."
-                            android:textSize="20sp"
+                            android:textSize="16sp"
                             android:textColorHint="@color/reglogin_text"
                             android:fontFamily="@font/montserrat_regular"
                             android:backgroundTint="@color/background_search"
@@ -163,7 +200,7 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="16dp"
                             android:hint="Дата"
-                            android:textSize="20dp"
+                            android:textSize="16sp"
                             android:textColorHint="@color/reglogin_text"
                             android:fontFamily="@font/montserrat_regular"
                             android:backgroundTint="@color/background_search"
@@ -190,12 +227,39 @@
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="16dp"
                             android:hint="Время"
-                            android:textSize="20dp"
+                            android:textSize="16sp"
                             android:textColorHint="@color/reglogin_text"
                             android:fontFamily="@font/montserrat_regular"
                             android:backgroundTint="@color/background_search"
                             android:background="@color/background_search"
                             android:inputType="time"
+                            android:layout_height="48dp" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/event_people_card_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_marginBottom="16dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        android:elevation="0dp"
+                        app:cardBackgroundColor="@color/background_search">
+
+                        <EditText
+                            android:id="@+id/event_people_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:hint="Количество человек"
+                            android:textSize="16sp"
+                            android:textColorHint="@color/reglogin_text"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:backgroundTint="@color/background_search"
+                            android:background="@color/background_search"
+                            android:inputType="number"
                             android:layout_height="48dp" />
                     </androidx.cardview.widget.CardView>
 
@@ -287,22 +351,35 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintVertical_bias="0.0"/>
 
-            <Button
+            <androidx.cardview.widget.CardView
                 android:id="@+id/create_event_button_fragment_create_event"
-                android:layout_width="250dp"
-                android:layout_height="55dp"
-                android:backgroundTint="@color/green"
-                android:background="@drawable/green_button"
-                android:fontFamily="@font/montserrat_light"
-                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
                 android:layout_marginTop="20dp"
-                android:text="Создать"
-                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                android:elevation="0dp"
+                app:cardBackgroundColor="@color/green"
                 app:layout_constraintTop_toBottomOf="@id/create_event_required_points"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_bias="0.0"/>
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/login_text_view"
+                    android:layout_width="match_parent"
+                    android:hint="Создать"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColorHint="@color/white"
+                    android:fontFamily="@font/montserrat_light"
+                    android:backgroundTint="@color/green"
+                    android:background="@color/green"
+                    android:layout_height="match_parent" />
+
+            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
