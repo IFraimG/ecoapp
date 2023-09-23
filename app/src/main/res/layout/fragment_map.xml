@@ -8,6 +8,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:id="@+id/map_card_view">
 
         <TextView
@@ -15,8 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:layout_marginBottom="150dp"
-            android:text="11.11 11.11" />
+            android:layout_marginBottom="150dp" />
         <Button
             android:id="@+id/map_button"
             android:layout_width="match_parent"

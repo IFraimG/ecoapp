@@ -15,6 +15,8 @@ import com.example.ecoapp.models.EventCustom;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,8 +33,8 @@ public class EventViewModel extends AndroidViewModel {
         eventRepository = new EventRepository(new EventAPIService(new RetrofitService()));
     }
 
-    public LiveData<Integer> sendData(String title, String description, String date, String time) {
-        eventRepository.createEvent(storageHandler.getToken(), title, null, description, date + " " + time, null, storageHandler.getUserID(), null, null).enqueue(new Callback<EventCustom>() {
+    public LiveData<Integer> sendData(String title, String description, String date, String time, File file, String maxPeople, String address) {
+        eventRepository.createEvent(storageHandler.getToken(), title, file, description, date + " " + time, address, storageHandler.getUserID(), 300, maxPeople.isEmpty() ? 0 : Integer.parseInt(maxPeople)).enqueue(new Callback<EventCustom>() {
             @Override
             public void onResponse(@NotNull Call<EventCustom> call, @NotNull Response<EventCustom> response) {
                 statusCode.setValue(response.code());
@@ -47,4 +49,6 @@ public class EventViewModel extends AndroidViewModel {
 
         return statusCode;
     }
+
+
 }

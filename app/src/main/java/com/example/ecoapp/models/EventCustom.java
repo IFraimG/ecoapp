@@ -38,6 +38,8 @@ public class EventCustom {
     @SerializedName("usersList")
     private ArrayList<String> usersList;
 
+    private String date;
+
     public EventCustom() {}
 
     public EventCustom(String title, String photo, String description, String time, String place, String authorID, Integer scores, Integer maxUsers) {
@@ -49,6 +51,7 @@ public class EventCustom {
         this.authorID = authorID;
         this.scores = scores;
         this.maxUsers = maxUsers;
+        this.currentUsers = 1;
     }
 
     public String getTitle() {
@@ -137,5 +140,13 @@ public class EventCustom {
 
     public void setUsersList(ArrayList<String> usersList) {
         this.usersList = usersList;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String data) {
+        this.date = data;
     }
 }

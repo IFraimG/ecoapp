@@ -1,6 +1,8 @@
 package com.example.ecoapp.fragments;
 
 import android.graphics.PointF;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -55,9 +57,11 @@ import com.yandex.runtime.image.ImageProvider;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MapFragment extends Fragment implements UserLocationObjectListener, DrivingSession.DrivingRouteListener {
 
@@ -78,17 +82,34 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
     private ArrayAdapter<String> adapter = null;
     //    private MapRepository mapRepository;
     private PermissionHandler permissionHandler;
+    private Bundle bundle;
+    private Geocoder geoCoder;
     private final InputListener listener = new InputListener() {
         @Override
         public void onMapTap(@NonNull Map map, @NonNull Point point) {
             double latitude = point.getLatitude();
             double longitude = point.getLongitude();
 
-            Bundle bundle = new Bundle();
+            if (bundle != null) bundle.clear();
+            bundle = new Bundle();
             bundle.putDouble("lat", latitude);
             bundle.putDouble("long", longitude);
-            
-            Navigation.findNavController(requireView()).navigate(R.id.action_mapFragment_to_createEventFragment, bundle);
+
+            try {
+                List<Address> addresses = geoCoder.getFromLocation(latitude, longitude, 1);
+
+                if (addresses != null && !addresses.isEmpty()) {
+                    Address address = addresses.get(0);
+                    String fullAddress = address.getAddressLine(0);
+                    bundle.putString("address", fullAddress);
+
+                    binding.mapCardView.setVisibility(View.VISIBLE);
+                    binding.mapCoords.setText(fullAddress);
+
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -180,11 +201,19 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
 
         drivingRouter = DirectionsFactory.getInstance().createDrivingRouter();
 
+        binding.mapButton.setOnClickListener(v -> {
+            if (bundle != null) {
+                Navigation.findNavController(v).navigate(R.id.createEventFragment, bundle);
+            }
+        });
+
 //        ImageProvider imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.add_guide_icon);
 //        for (Point point : viewModel.getMarketPoints()) {
 //            PlacemarkMapObject placemark = mapObjects.addPlacemark(point, imageProvider);
 //            placemark.addTapListener(this);
 //        }
+
+        geoCoder = new Geocoder(requireContext(), Locale.getDefault());
     }
 
     @Override

@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.example.ecoapp.databinding.FragmentCreateEventBinding;
 import com.example.ecoapp.R;
+import com.example.ecoapp.domain.helpers.StorageHandler;
+import com.example.ecoapp.models.EventCustom;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,25 +35,68 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class CreateEventFragment extends Fragment {
     private FragmentCreateEventBinding fragmentCreateEventBinding;
     private EventViewModel eventViewModel;
+    private StorageHandler storageHandler;
 
     private int SELECT_PHOTO_PROFILE = 1;
+    private String address;
 
     private Uri uri;
+    private File fileImage;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         fragmentCreateEventBinding = FragmentCreateEventBinding.inflate(getLayoutInflater());
+        storageHandler = new StorageHandler(requireContext());
+
+        Bundle args = getArguments();
+        if (args != null) {
+            address = args.getString("address");
+            double longt = args.getDouble("long");
+            double lat = args.getDouble("lat");
+            if (address != null) {
+                fragmentCreateEventBinding.eventAddressText.setVisibility(View.VISIBLE);
+                fragmentCreateEventBinding.eventAddressText.setText(address);
+            }
+
+            EventCustom eventCustom = storageHandler.getIntermediateData();
+            String title = eventCustom.getTitle();
+            String description = eventCustom.getDescription();
+            String date = eventCustom.getDate();
+            String time = eventCustom.getTime();
+            Integer peopleLen = eventCustom.getMaxUsers();
+            String link = eventCustom.getPhoto();
+            if (!title.isEmpty()) fragmentCreateEventBinding.createEventTitle.setText(title);
+            if (!description.isEmpty()) fragmentCreateEventBinding.eventDescriptionEditText.setText(description);
+            if (!date.isEmpty()) fragmentCreateEventBinding.eventDateEditText.setText(date);
+            if (!time.isEmpty()) fragmentCreateEventBinding.eventPeopleEditText.setText(time);
+            if (peopleLen > 0) fragmentCreateEventBinding.createEventTitle.setText(peopleLen);
+            if (!link.isEmpty()) {
+                fileImage = new File(eventCustom.getPhoto());
+                String filePath = fileImage.getPath();
+                Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+                fragmentCreateEventBinding.createEventPhoto.setImageBitmap(bitmap);
+            }
+        }
 
         eventViewModel = new ViewModelProvider(requireActivity()).get(EventViewModel.class);
+        fragmentCreateEventBinding.createEventBackToEventFragmentButton.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
         fragmentCreateEventBinding.eventFindMap.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_createEventFragment_to_mapFragment);
+            String title = fragmentCreateEventBinding.createEventTitle.getText().toString();
+            String description = fragmentCreateEventBinding.eventDescriptionEditText.getText().toString();
+            String date = fragmentCreateEventBinding.eventDateEditText.getText().toString();
+            String time = fragmentCreateEventBinding.eventTimeEditText.getText().toString();
+            String peopleLen = fragmentCreateEventBinding.eventPeopleEditText.getText().toString().isEmpty() ? "0" : fragmentCreateEventBinding.eventPeopleEditText.getText().toString();
+            storageHandler.saveIntermediateData(title, description, date, time, Integer.parseInt(peopleLen), fileImage == null ? "" : fileImage.getAbsolutePath());
+
+            Navigation.findNavController(v).navigate(R.id.mapFragment);
         });
 
         fragmentCreateEventBinding.createEventButtonFragmentCreateEvent.setOnClickListener(v -> {;
@@ -59,19 +104,20 @@ public class CreateEventFragment extends Fragment {
             String description = fragmentCreateEventBinding.eventDescriptionEditText.getText().toString();
             String date = fragmentCreateEventBinding.eventDateEditText.getText().toString();
             String time = fragmentCreateEventBinding.eventTimeEditText.getText().toString();
+            String lenPeople = fragmentCreateEventBinding.eventPeopleEditText.getText().toString();
 
-            if (title.isEmpty() || date.isEmpty() || description.isEmpty() || time.isEmpty()) {
+            if (title.isEmpty() || date.isEmpty() || description.isEmpty() || time.isEmpty() || lenPeople.isEmpty() || address.isEmpty() || fileImage == null) {
                 Toast.makeText(requireContext(), "Вы не заполнили все данные", Toast.LENGTH_LONG).show();
-            } else if (isValidDateFormat(date)) {
+            } else if (!isValidDateFormat(date)) {
                 Toast.makeText(requireContext(), "Вы ввели дату в неправильном формате", Toast.LENGTH_LONG).show();
-            } else if(isValidTimeFormat(time)) {
+            } else if(!isValidTimeFormat(time)) {
                 Toast.makeText(requireContext(), "Вы ввели время в неправильном формате", Toast.LENGTH_LONG).show();
             } else {
-               eventViewModel.sendData(title, description, date, time).observe(requireActivity(), statusCode -> {
+               eventViewModel.sendData(title, description, date, time, fileImage, lenPeople, address).observe(requireActivity(), statusCode -> {
                    if (statusCode < 400 && statusCode != 0) {
                        Toast.makeText(requireContext(), "Успешно!", Toast.LENGTH_SHORT).show();
                        Navigation.findNavController(v).navigate(R.id.action_createEventFragment_to_eventsFragment);
-                   } else {
+                   } else if (statusCode != 0) {
                        Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
                    }
                });
@@ -112,28 +158,28 @@ public class CreateEventFragment extends Fragment {
                     String imagePath = cursor.getString(columnIndex);
                     cursor.close();
 
-                    File file = new File(imagePath);
-                    //saveImage(file, originalBitmap);
+                    fileImage = new File(imagePath);
+                    fragmentCreateEventBinding.createEventPhoto.setImageBitmap(originalBitmap);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             } else {
                 Bundle extras = data.getExtras();
                 Bitmap bitmap = (Bitmap) extras.get("data");
-                File f = new File(requireContext().getCacheDir(), "test");
+                fileImage = new File(requireContext().getCacheDir(), "test");
                 try {
-                    f.createNewFile();
+                    fileImage.createNewFile();
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
 
                     byte[] bitmapdata = bos.toByteArray();
 
-                    FileOutputStream fos = new FileOutputStream(f);
+                    FileOutputStream fos = new FileOutputStream(fileImage);
                     fos.write(bitmapdata);
                     fos.flush();
                     fos.close();
 
-                    //saveImage(f, bitmap);
+                    fragmentCreateEventBinding.createEventPhoto.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -141,24 +187,24 @@ public class CreateEventFragment extends Fragment {
         }
     }
 
-    public boolean isValidDateFormat(String inputDate) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
-        dateFormat.setLenient(false);
+    public boolean isValidDateFormat(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
         try {
-            dateFormat.parse(inputDate);
+            Date date = dateFormat.parse(dateString);
+
             return true;
         } catch (ParseException e) {
             return false;
         }
     }
 
-    public boolean isValidTimeFormat(String inputTime) {
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        timeFormat.setLenient(false);
+    public boolean isValidTimeFormat(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
         try {
-            timeFormat.parse(inputTime);
+            Date date = dateFormat.parse(dateString);
+
             return true;
         } catch (ParseException e) {
             return false;

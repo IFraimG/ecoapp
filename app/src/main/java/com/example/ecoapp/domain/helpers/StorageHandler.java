@@ -3,6 +3,7 @@ package com.example.ecoapp.domain.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.ecoapp.models.EventCustom;
 import com.example.ecoapp.models.User;
 
 public class StorageHandler {
@@ -48,5 +49,29 @@ public class StorageHandler {
 
     public int getTheme() {
         return sharedPreferences.getInt("theme", 0);
+    }
+
+    public void saveIntermediateData(String title, String description, String data, String time, int peopleLen, String pathImage) {
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString("eventTitle", title);
+        edit.putString("eventDescription", description);
+        edit.putString("eventData", data);
+        edit.putString("eventTime", time);
+        edit.putInt("eventPeopleLen", peopleLen);
+        edit.putString("eventImagePath", pathImage);
+
+        edit.apply();
+    }
+
+    public EventCustom getIntermediateData() {
+        EventCustom eventCustom = new EventCustom();
+        eventCustom.setTitle(sharedPreferences.getString("eventTitle", ""));
+        eventCustom.setDescription(sharedPreferences.getString("eventDescription", ""));
+        eventCustom.setDate(sharedPreferences.getString("eventData", ""));
+        eventCustom.setTime(sharedPreferences.getString("eventTime", ""));
+        eventCustom.setMaxUsers(sharedPreferences.getInt("eventPeopleLen", 0));
+        eventCustom.setPhoto(sharedPreferences.getString("eventImagePath", ""));
+
+        return eventCustom;
     }
 }
