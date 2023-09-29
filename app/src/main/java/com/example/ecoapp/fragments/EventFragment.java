@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 public class EventFragment extends Fragment {
     private FragmentEventBinding binding;
     private EventViewModel viewModel;
+    private EventCustom eventCustom;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,8 @@ public class EventFragment extends Fragment {
         else {
             viewModel.getEventByID(args.getString("id", "")).observe(requireActivity(), eventCustom -> {
                 if (eventCustom != null) {
+                    this.eventCustom = eventCustom;
+
                     String url = "https://test123-production-e08e.up.railway.app/image/" + eventCustom.getPhoto();
 
                     binding.eventTitle.setText(eventCustom.getTitle());
@@ -50,11 +53,28 @@ public class EventFragment extends Fragment {
                     binding.theEventAwardPoints.setText(String.valueOf("Баллы в награду: " + eventCustom.getScores()));
                     binding.theEventCurrentPeopleAmount.setText(String.valueOf(eventCustom.getCurrentUsers()) + " / " + String.valueOf(eventCustom.getMaxUsers()));
                     Picasso.get().load(url).into(binding.eventImage);
-
                 }
+            });
+
+            binding.takePartInButton.setOnClickListener(View -> {
+                viewModel.enroll(eventCustom.getEventID()).observe(requireActivity(), statusCode -> {
+                    if (statusCode != 0) {
+                        if (statusCode >= 200 && statusCode < 400) {
+                            showButton(true);
+                        }
+                    }
+                });
             });
         }
 
         return binding.getRoot();
+    }
+
+    public void showButton(boolean isJoined) {
+        if (isJoined) {
+            binding.takePartInButton.setVisibility(View.GONE);
+        } else {
+            binding.takePartInButton.setVisibility(View.VISIBLE);
+        }
     }
 }

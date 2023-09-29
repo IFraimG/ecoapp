@@ -16,18 +16,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/the_event_return_button"
-                    android:contentDescription="back"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/baseline_arrow_back_24"
-                    />
-
             <TextView
-                android:id="@+id/the_event_title"
                 android:layout_width="wrap_content"
                 android:maxWidth="270dp"
                 android:id="@+id/event_title"
@@ -38,7 +27,7 @@
                 android:textSize="28sp"
                 android:textColor="@color/black"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="-46dp"
+                android:layout_marginTop="12dp"
                 />
 
             <ImageView
