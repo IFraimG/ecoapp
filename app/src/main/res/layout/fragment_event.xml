@@ -180,8 +180,9 @@
                 android:textColor="@color/text_gray"
                 android:textSize="20sp"
                 android:layout_gravity="center_horizontal"/>
-            
+
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/take_part_in_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -195,6 +196,25 @@
                 android:text="Стать участником"
                 android:elevation="0dp"
                 android:background="@drawable/green_rounded_button"
+                android:stateListAnimator="@null"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/refuse_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat_light"
+                android:text="Не участвовать"
+                android:elevation="0dp"
+                android:backgroundTint="@color/home_titles_gray"
+                android:background="@drawable/green_rounded_button"
+                android:visibility="gone"
                 android:stateListAnimator="@null"/>
         </LinearLayout>
     </ScrollView>
