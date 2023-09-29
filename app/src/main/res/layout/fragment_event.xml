@@ -16,7 +16,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+                <ImageButton
+                    android:id="@+id/the_event_return_button"
+                    android:contentDescription="back"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/baseline_arrow_back_24"
+                    />
+
             <TextView
+                android:id="@+id/the_event_title"
                 android:layout_width="wrap_content"
                 android:maxWidth="270dp"
                 android:id="@+id/event_title"
@@ -27,7 +38,7 @@
                 android:textSize="28sp"
                 android:textColor="@color/black"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="-46dp"
                 />
 
             <ImageView
@@ -170,8 +181,9 @@
                 android:textColor="@color/text_gray"
                 android:textSize="20sp"
                 android:layout_gravity="center_horizontal"/>
-            
+
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/take_part_in_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -185,6 +197,25 @@
                 android:text="Стать участником"
                 android:elevation="0dp"
                 android:background="@drawable/green_rounded_button"
+                android:stateListAnimator="@null"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/refuse_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:fontFamily="@font/montserrat_light"
+                android:text="Не участвовать"
+                android:elevation="0dp"
+                android:backgroundTint="@color/home_titles_gray"
+                android:background="@drawable/green_rounded_button"
+                android:visibility="gone"
                 android:stateListAnimator="@null"/>
         </LinearLayout>
     </ScrollView>
