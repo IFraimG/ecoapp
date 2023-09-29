@@ -1,6 +1,7 @@
 package com.example.ecoapp.data.api.events;
 
 import com.example.ecoapp.data.api.events.dto.AddUserToEventDTO;
+import com.example.ecoapp.data.api.events.dto.EventsListDTO;
 import com.example.ecoapp.models.EventCustom;
 
 import java.io.File;
@@ -18,7 +19,7 @@ public class EventRepository {
         eventAPI = eventAPIService.getEventAPI();
     }
 
-    public Call<EventCustom> createEvent(String token, String title, File photo, String description, String time, String place, String authorID, Integer scores, Integer maxUsers) {
+    public Call<EventCustom> createEvent(String token, String title, File photo, String description, String time, String place, String authorID, Integer scores, Integer maxUsers, double lat, double longt) {
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), photo);
         MultipartBody.Part file = MultipartBody.Part.createFormData("img", photo.getName(), fileReqBody);
 
@@ -30,8 +31,10 @@ public class EventRepository {
         RequestBody scoresBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(scores));
         RequestBody maxUsersBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(maxUsers));
         RequestBody currentUsersBody = RequestBody.create(MediaType.parse("text/plain"), "1");
+        RequestBody latBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(lat));
+        RequestBody longtBody = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(longt));
 
-        return eventAPI.createEvent(token, titleBody, descriptionBody, timeBody, placeBody, authorIDBody, scoresBody, maxUsersBody, currentUsersBody, file);
+        return eventAPI.createEvent(token, titleBody, descriptionBody, timeBody, placeBody, authorIDBody, scoresBody, maxUsersBody, currentUsersBody, latBody, longtBody, file);
     }
 
     public Call<String> deleteEvent(String token, String eventID) {
@@ -44,5 +47,9 @@ public class EventRepository {
 
     public Call<EventCustom> addUserToEvent(String token, String eventID, String authorID) {
         return eventAPI.addUserToEvent(token, new AddUserToEventDTO(eventID, authorID));
+    }
+
+    public Call<EventsListDTO> getEventsList(String token) {
+        return eventAPI.getEventsList(token);
     }
 }

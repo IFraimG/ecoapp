@@ -51,13 +51,14 @@ public class StorageHandler {
         return sharedPreferences.getInt("theme", 0);
     }
 
-    public void saveIntermediateData(String title, String description, String data, String time, int peopleLen, String pathImage) {
+    public void saveIntermediateData(String title, String description, String data, String time, int peopleLen, String pathImage, int scores) {
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putString("eventTitle", title);
         edit.putString("eventDescription", description);
         edit.putString("eventData", data);
         edit.putString("eventTime", time);
         edit.putInt("eventPeopleLen", peopleLen);
+        edit.putInt("eventScores", scores);
         edit.putString("eventImagePath", pathImage);
 
         edit.apply();
@@ -70,6 +71,7 @@ public class StorageHandler {
         eventCustom.setDate(sharedPreferences.getString("eventData", ""));
         eventCustom.setTime(sharedPreferences.getString("eventTime", ""));
         eventCustom.setMaxUsers(sharedPreferences.getInt("eventPeopleLen", 0));
+        eventCustom.setScores(sharedPreferences.getInt("eventScores", 0));
         eventCustom.setPhoto(sharedPreferences.getString("eventImagePath", ""));
 
         return eventCustom;

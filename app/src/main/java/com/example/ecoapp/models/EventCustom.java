@@ -38,6 +38,12 @@ public class EventCustom {
     @SerializedName("usersList")
     private ArrayList<String> usersList;
 
+    @SerializedName("lat")
+    private double lat;
+
+    @SerializedName("longt")
+    private double longt;
+
     private String date;
 
     public EventCustom() {}
@@ -148,5 +154,21 @@ public class EventCustom {
 
     public void setDate(String data) {
         this.date = data;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLongt() {
+        return longt;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setLongt(double longt) {
+        this.longt = longt;
     }
 }

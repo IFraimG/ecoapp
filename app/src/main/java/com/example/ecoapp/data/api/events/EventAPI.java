@@ -1,7 +1,10 @@
 package com.example.ecoapp.data.api.events;
 
 import com.example.ecoapp.data.api.events.dto.AddUserToEventDTO;
+import com.example.ecoapp.data.api.events.dto.EventsListDTO;
 import com.example.ecoapp.models.EventCustom;
+
+import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -20,7 +23,7 @@ public interface EventAPI {
 
     @Multipart
     @POST("/events/create")
-    Call<EventCustom> createEvent(@Header("Authorization") String token, @Part("title") RequestBody titleBody, @Part("description") RequestBody descriptionBody, @Part("time") RequestBody timeBody, @Part("place") RequestBody placeBody, @Part("authorID") RequestBody authorIDBody, @Part("scores") RequestBody scoresBody, @Part("maxUsers") RequestBody maxUsersBody, @Part("currentUsers") RequestBody currentUsersBody, @Part MultipartBody.Part img);
+    Call<EventCustom> createEvent(@Header("Authorization") String token, @Part("title") RequestBody titleBody, @Part("description") RequestBody descriptionBody, @Part("time") RequestBody timeBody, @Part("place") RequestBody placeBody, @Part("authorID") RequestBody authorIDBody, @Part("scores") RequestBody scoresBody, @Part("maxUsers") RequestBody maxUsersBody, @Part("currentUsers") RequestBody currentUsersBody, @Part("lat") RequestBody latBody, @Part("longt") RequestBody longtBody, @Part MultipartBody.Part img);
 
     @DELETE("/events/delete")
     Call<String> deleteEvent(@Header("Authorization") String token, @Query("id") String eventID);
@@ -30,4 +33,7 @@ public interface EventAPI {
 
     @PUT("/events/addUserToEvent")
     Call<EventCustom> addUserToEvent(@Header("Authorization") String token, AddUserToEventDTO addUserToEventDTO);
+
+    @GET("/events/all")
+    Call<EventsListDTO> getEventsList(@Header("Authorization") String token);
 }

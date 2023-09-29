@@ -48,6 +48,8 @@ public class CreateEventFragment extends Fragment {
 
     private Uri uri;
     private File fileImage;
+    private double longt;
+    private double lat;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -58,8 +60,8 @@ public class CreateEventFragment extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             address = args.getString("address");
-            double longt = args.getDouble("long");
-            double lat = args.getDouble("lat");
+            longt = args.getDouble("long");
+            lat = args.getDouble("lat");
             if (address != null) {
                 fragmentCreateEventBinding.eventAddressText.setVisibility(View.VISIBLE);
                 fragmentCreateEventBinding.eventAddressText.setText(address);
@@ -71,12 +73,14 @@ public class CreateEventFragment extends Fragment {
             String date = eventCustom.getDate();
             String time = eventCustom.getTime();
             Integer peopleLen = eventCustom.getMaxUsers();
+            Integer scores = eventCustom.getScores();
             String link = eventCustom.getPhoto();
-            if (!title.isEmpty()) fragmentCreateEventBinding.createEventTitle.setText(title);
+            if (!title.isEmpty()) fragmentCreateEventBinding.eventNameEditText.setText(title);
             if (!description.isEmpty()) fragmentCreateEventBinding.eventDescriptionEditText.setText(description);
             if (!date.isEmpty()) fragmentCreateEventBinding.eventDateEditText.setText(date);
-            if (!time.isEmpty()) fragmentCreateEventBinding.eventPeopleEditText.setText(time);
-            if (peopleLen > 0) fragmentCreateEventBinding.createEventTitle.setText(peopleLen);
+            if (!time.isEmpty()) fragmentCreateEventBinding.eventTimeEditText.setText(time);
+            if (peopleLen > 0) fragmentCreateEventBinding.eventPeopleEditText.setText(String.valueOf(peopleLen));
+            if (scores > 0) fragmentCreateEventBinding.eventPointsToAPersonEditText.setText(String.valueOf(scores));
             if (!link.isEmpty()) {
                 fileImage = new File(eventCustom.getPhoto());
                 String filePath = fileImage.getPath();
@@ -89,31 +93,36 @@ public class CreateEventFragment extends Fragment {
         fragmentCreateEventBinding.createEventBackToEventFragmentButton.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
         fragmentCreateEventBinding.eventFindMap.setOnClickListener(v -> {
-            String title = fragmentCreateEventBinding.createEventTitle.getText().toString();
+            String title = fragmentCreateEventBinding.eventNameEditText.getText().toString();
             String description = fragmentCreateEventBinding.eventDescriptionEditText.getText().toString();
             String date = fragmentCreateEventBinding.eventDateEditText.getText().toString();
             String time = fragmentCreateEventBinding.eventTimeEditText.getText().toString();
             String peopleLen = fragmentCreateEventBinding.eventPeopleEditText.getText().toString().isEmpty() ? "0" : fragmentCreateEventBinding.eventPeopleEditText.getText().toString();
-            storageHandler.saveIntermediateData(title, description, date, time, Integer.parseInt(peopleLen), fileImage == null ? "" : fileImage.getAbsolutePath());
+            String scores = fragmentCreateEventBinding.eventPointsToAPersonEditText.getText().toString();
+
+            storageHandler.saveIntermediateData(title, description, date, time, Integer.parseInt(peopleLen), fileImage == null ? "" : fileImage.getAbsolutePath(), Integer.parseInt(scores));
 
             Navigation.findNavController(v).navigate(R.id.mapFragment);
         });
 
         fragmentCreateEventBinding.createEventButtonFragmentCreateEvent.setOnClickListener(v -> {;
-            String title = fragmentCreateEventBinding.createEventTitle.getText().toString();
+            String title = fragmentCreateEventBinding.eventNameEditText.getText().toString();
             String description = fragmentCreateEventBinding.eventDescriptionEditText.getText().toString();
             String date = fragmentCreateEventBinding.eventDateEditText.getText().toString();
             String time = fragmentCreateEventBinding.eventTimeEditText.getText().toString();
             String lenPeople = fragmentCreateEventBinding.eventPeopleEditText.getText().toString();
+            String scores = fragmentCreateEventBinding.eventPointsToAPersonEditText.getText().toString();
 
-            if (title.isEmpty() || date.isEmpty() || description.isEmpty() || time.isEmpty() || lenPeople.isEmpty() || address.isEmpty() || fileImage == null) {
+            if (title.isEmpty() || date.isEmpty() || description.isEmpty() || time.isEmpty() || lenPeople.isEmpty() || address.isEmpty() || fileImage == null || scores.isEmpty()) {
                 Toast.makeText(requireContext(), "Вы не заполнили все данные", Toast.LENGTH_LONG).show();
             } else if (!isValidDateFormat(date)) {
                 Toast.makeText(requireContext(), "Вы ввели дату в неправильном формате", Toast.LENGTH_LONG).show();
-            } else if(!isValidTimeFormat(time)) {
+            } else if (!isValidTimeFormat(time)) {
                 Toast.makeText(requireContext(), "Вы ввели время в неправильном формате", Toast.LENGTH_LONG).show();
+            } else if (Integer.parseInt(scores) < 100) {
+                Toast.makeText(requireContext(), "Вы ввели слишком маленькое количество баллов", Toast.LENGTH_LONG).show();
             } else {
-               eventViewModel.sendData(title, description, date, time, fileImage, lenPeople, address).observe(requireActivity(), statusCode -> {
+               eventViewModel.sendData(title, description, date, time, fileImage, lenPeople, address, lat, longt, Integer.parseInt(scores)).observe(requireActivity(), statusCode -> {
                    if (statusCode < 400 && statusCode != 0) {
                        Toast.makeText(requireContext(), "Успешно!", Toast.LENGTH_SHORT).show();
                        Navigation.findNavController(v).navigate(R.id.action_createEventFragment_to_eventsFragment);
