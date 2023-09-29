@@ -409,7 +409,7 @@
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <TextView
-                    android:id="@+id/login_text_view"
+                    android:id="@+id/button_create_event_text_view"
                     android:layout_width="match_parent"
                     android:hint="Создать"
                     android:gravity="center"
