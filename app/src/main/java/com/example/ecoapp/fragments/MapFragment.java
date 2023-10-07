@@ -261,8 +261,7 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
                 new PointF((float)(mapView.getWidth() * 0.5), (float)
                         (mapView.getHeight() * 0.83)));
 
-        userLocationView.getArrow().setIcon(ImageProvider.fromResource(
-                requireContext(), R.drawable.add_guide_icon));
+        userLocationView.getArrow().setIcon(ImageProvider.fromResource(requireContext(), R.drawable.baseline_place_24));
 
         CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
 
