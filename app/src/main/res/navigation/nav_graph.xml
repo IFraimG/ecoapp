@@ -165,5 +165,17 @@
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
+        <action
+            android:id="@+id/action_eventFragment_to_secondMapFragment"
+            app:destination="@id/secondMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/secondMapFragment"
+        android:name="com.example.ecoapp.fragments.SecondMapFragment"
+        android:label="fragment_second_map"
+        tools:layout="@layout/fragment_second_map" >
+        <action
+            android:id="@+id/action_secondMapFragment_to_eventFragment"
+            app:destination="@id/eventFragment" />
     </fragment>
 </navigation>

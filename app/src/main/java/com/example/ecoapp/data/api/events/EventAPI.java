@@ -32,8 +32,11 @@ public interface EventAPI {
     Call<EventCustom> getEventByID(@Header("Authorization") String token, @Query("id") String eventID);
 
     @PUT("/events/addUserToEvent")
-    Call<EventCustom> addUserToEvent(@Header("Authorization") String token, AddUserToEventDTO addUserToEventDTO);
+    Call<EventCustom> addUserToEvent(@Header("Authorization") String token, @Body AddUserToEventDTO addUserToEventDTO);
 
     @GET("/events/all")
     Call<EventsListDTO> getEventsList(@Header("Authorization") String token);
+
+    @PUT("/events/removeUserToEvent")
+    Call<EventCustom> removeUserToEvent(@Header("Authorization") String token, @Body AddUserToEventDTO removeUserToEventDTO);
 }

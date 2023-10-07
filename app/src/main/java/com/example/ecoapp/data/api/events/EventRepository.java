@@ -49,6 +49,10 @@ public class EventRepository {
         return eventAPI.addUserToEvent(token, new AddUserToEventDTO(eventID, authorID));
     }
 
+    public Call<EventCustom> removeUserToEvent(String token, String eventID, String authorID) {
+        return eventAPI.removeUserToEvent(token, new AddUserToEventDTO(eventID, authorID));
+    }
+
     public Call<EventsListDTO> getEventsList(String token) {
         return eventAPI.getEventsList(token);
     }
