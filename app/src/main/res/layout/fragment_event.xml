@@ -16,6 +16,17 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <ImageButton
+                android:id="@+id/the_event_back_to_previous_fragment_button"
+                android:contentDescription="back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="-60dp"
+                android:background="@drawable/baseline_arrow_back_24"
+                />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:maxWidth="270dp"
