@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_gray"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ScrollView
@@ -39,7 +40,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/habits_layout_habits_card_view"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="wrap_content"
                 app:cardElevation="0dp"
                 android:elevation="0dp"
                 android:layout_marginTop="16dp"
