@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.ecoapp.data.api.RetrofitService;
 import com.example.ecoapp.data.api.habits.HabitAPIService;
 import com.example.ecoapp.data.api.habits.HabitRepository;
+import com.example.ecoapp.data.api.habits.dto.HabitsListDTO;
 import com.example.ecoapp.data.models.Habit;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 
@@ -50,5 +51,23 @@ public class HabitViewModel extends AndroidViewModel {
         });
 
         return statusCode;
+    }
+
+    public LiveData<ArrayList<Habit>> getHabitsList() {
+        habitRepository.getListHabits(storageHandler.getToken(), storageHandler.getUserID()).enqueue(new Callback<HabitsListDTO>() {
+            @Override
+            public void onResponse(@NotNull Call<HabitsListDTO> call, @NotNull Response<HabitsListDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    habitsList.setValue(response.body().getHabitsList());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<HabitsListDTO> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return habitsList;
     }
 }

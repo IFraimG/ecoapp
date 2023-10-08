@@ -3,20 +3,29 @@ package com.example.ecoapp.presentation.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ecoapp.R;
+import com.example.ecoapp.data.models.Habit;
 import com.example.ecoapp.databinding.FragmentHabitsBinding;
+import com.example.ecoapp.presentation.adapters.ComingAdapter;
+import com.example.ecoapp.presentation.adapters.HabitsAdapter;
+import com.example.ecoapp.presentation.viewmodels.HabitViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 public class HabitFragment extends Fragment {
     private FragmentHabitsBinding binding;
-
+    private HabitViewModel viewModel;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -26,6 +35,8 @@ public class HabitFragment extends Fragment {
         binding.fragmentHabitsBackToPreviousFragmentButton.setOnClickListener(v -> {
             Navigation.findNavController(v).popBackStack();
         });
+
+        viewModel = new ViewModelProvider(requireActivity()).get(HabitViewModel.class);
 
         Bundle args = getArguments();
         if (args != null) {
@@ -43,6 +54,16 @@ public class HabitFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("type", type);
                 Navigation.findNavController(v).navigate(R.id.addHabitFragment, bundle);
+            });
+
+            binding.habitsRecyclerView.setHasFixedSize(true);
+            binding.habitsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+            viewModel.getHabitsList().observe(requireActivity(), habits -> {
+                if (habits != null) {
+                    HabitsAdapter habitsAdapter = new HabitsAdapter(habits);
+                    binding.habitsRecyclerView.setAdapter(habitsAdapter);
+                }
             });
         }
 

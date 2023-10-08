@@ -3,6 +3,7 @@ package com.example.ecoapp.presentation.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,9 @@ public class HabitsAdapter extends RecyclerView.Adapter<HabitsAdapter.HabitsView
     @Override
     public void onBindViewHolder(@NonNull HabitsViewHolder holder, int position) {
         holder.mName.setText(habitsList.get(position).getTitle());
+        holder.circle.setOnClickListener(v -> {
+
+        });
     }
 
     @Override
@@ -41,10 +45,13 @@ public class HabitsAdapter extends RecyclerView.Adapter<HabitsAdapter.HabitsView
     public class HabitsViewHolder extends RecyclerView.ViewHolder{
 
         private TextView mName;
+        private ImageView circle;
+
         public HabitsViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mName = itemView.findViewById(R.id.habit_tv);
+            circle = itemView.findViewById(R.id.habit_circle_check);
         }
     }
 }
