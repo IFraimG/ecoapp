@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="140dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/events_card_view_my"
+    android:layout_marginStart="0dp"
+    android:layout_marginTop="8dp"
     app:cardElevation="0dp"
     android:elevation="0dp"
-    android:layout_marginLeft="0dp"
-    android:layout_marginTop="8dp"
     android:layout_marginBottom="10dp"
     android:layout_height="180dp">
 
