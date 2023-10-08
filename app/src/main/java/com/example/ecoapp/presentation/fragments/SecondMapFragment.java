@@ -1,4 +1,4 @@
-package com.example.ecoapp.fragments;
+package com.example.ecoapp.presentation.fragments;
 
 import android.location.Address;
 import android.location.Geocoder;

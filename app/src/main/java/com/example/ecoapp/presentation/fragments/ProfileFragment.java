@@ -1,4 +1,4 @@
-package com.example.ecoapp.fragments;
+package com.example.ecoapp.presentation.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -22,7 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.ecoapp.MainActivity;
+import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentProfileBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;

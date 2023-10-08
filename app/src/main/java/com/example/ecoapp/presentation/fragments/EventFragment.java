@@ -1,4 +1,4 @@
-package com.example.ecoapp.fragments;
+package com.example.ecoapp.presentation.fragments;
 
 
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentEventBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
-import com.example.ecoapp.models.EventCustom;
+import com.example.ecoapp.data.models.EventCustom;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 import com.squareup.picasso.Picasso;
 

@@ -1,4 +1,4 @@
-package com.example.ecoapp.fragments;
+package com.example.ecoapp.presentation.fragments;
 
 import android.graphics.PointF;
 import android.location.Address;
@@ -12,21 +12,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentMapBinding;
 import com.example.ecoapp.domain.helpers.PermissionHandler;
-import com.example.ecoapp.domain.helpers.StorageHandler;
-import com.example.ecoapp.models.EventCustom;
+import com.example.ecoapp.data.models.EventCustom;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
-import com.example.ecoapp.presentation.viewmodels.MapViewModel;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.directions.DirectionsFactory;
@@ -44,10 +38,7 @@ import com.yandex.mapkit.map.CompositeIcon;
 import com.yandex.mapkit.map.IconStyle;
 import com.yandex.mapkit.map.InputListener;
 import com.yandex.mapkit.map.Map;
-import com.yandex.mapkit.map.MapObject;
 import com.yandex.mapkit.map.MapObjectCollection;
-import com.yandex.mapkit.map.MapObjectTapListener;
-import com.yandex.mapkit.map.PlacemarkMapObject;
 import com.yandex.mapkit.map.RotationType;
 import com.yandex.mapkit.mapview.MapView;
 import com.yandex.mapkit.search.SearchFactory;

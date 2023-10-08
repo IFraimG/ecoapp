@@ -1,6 +1,6 @@
 package com.example.ecoapp.data.api.habits.dto;
 
-import com.example.ecoapp.models.Habit;
+import com.example.ecoapp.data.models.Habit;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;

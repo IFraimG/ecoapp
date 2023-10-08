@@ -1,4 +1,4 @@
-package com.example.ecoapp.fragments;
+package com.example.ecoapp.presentation.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.example.ecoapp.databinding.FragmentCreateEventBinding;
 import com.example.ecoapp.R;
 import com.example.ecoapp.domain.helpers.StorageHandler;
-import com.example.ecoapp.models.EventCustom;
+import com.example.ecoapp.data.models.EventCustom;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 
 import org.jetbrains.annotations.NotNull;

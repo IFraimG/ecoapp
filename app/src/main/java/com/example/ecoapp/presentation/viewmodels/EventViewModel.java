@@ -1,7 +1,6 @@
 package com.example.ecoapp.presentation.viewmodels;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -13,7 +12,7 @@ import com.example.ecoapp.data.api.events.EventAPIService;
 import com.example.ecoapp.data.api.events.EventRepository;
 import com.example.ecoapp.data.api.events.dto.EventsListDTO;
 import com.example.ecoapp.domain.helpers.StorageHandler;
-import com.example.ecoapp.models.EventCustom;
+import com.example.ecoapp.data.models.EventCustom;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -3,8 +3,7 @@ package com.example.ecoapp.domain.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.ecoapp.models.EventCustom;
-import com.example.ecoapp.models.User;
+import com.example.ecoapp.data.models.EventCustom;
 
 public class StorageHandler {
     private SharedPreferences sharedPreferences;

@@ -1,4 +1,4 @@
-package com.example.ecoapp.adapters;
+package com.example.ecoapp.presentation.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ecoapp.models.Advice;
+import com.example.ecoapp.data.models.Advice;
 import com.example.ecoapp.R;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.ecoapp.fragments;
+package com.example.ecoapp.presentation.fragments;
 
 import android.os.Bundle;
 
@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ecoapp.MainActivity;
+import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentRegistrationBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;

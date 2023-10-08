@@ -1,4 +1,4 @@
-package com.example.ecoapp.adapters;
+package com.example.ecoapp.presentation.adapters;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ecoapp.models.MyEvents;
+import com.example.ecoapp.data.models.MyEvents;
 import com.example.ecoapp.R;
 import com.squareup.picasso.Picasso;
 

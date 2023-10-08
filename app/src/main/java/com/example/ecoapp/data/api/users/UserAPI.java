@@ -1,14 +1,11 @@
 package com.example.ecoapp.data.api.users;
 
-import com.example.ecoapp.models.User;
+import com.example.ecoapp.data.models.User;
 import com.example.ecoapp.data.api.users.dto.ChangeScoresDTO;
 import com.example.ecoapp.data.api.users.dto.EditProfileDTO;
 import com.example.ecoapp.data.api.users.dto.HabitDTO;
 
-import java.io.File;
-
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;

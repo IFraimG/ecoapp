@@ -1,9 +1,8 @@
-package com.example.ecoapp.fragments;
+package com.example.ecoapp.presentation.fragments;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -13,9 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ecoapp.MainActivity;
+import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.R;
-import com.example.ecoapp.data.api.auth.dto.AuthResponseDTO;
 import com.example.ecoapp.databinding.FragmentLoginBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.viewmodels.AuthViewModel;

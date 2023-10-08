@@ -1,4 +1,4 @@
-package com.example.ecoapp.models;
+package com.example.ecoapp.data.models;
 
 public class Advice {
 

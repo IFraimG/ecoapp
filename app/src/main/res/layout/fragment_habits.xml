@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/background_gray"
     android:orientation="vertical"
-    tools:context=".fragments.HabitFragment">
+    tools:context=".presentation.fragments.HabitFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,9 +40,9 @@
                 />
 
             <TextView
+                android:id="@+id/type_habit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ежедневные"
                 android:fontFamily="@font/montserrat_bold"
                 android:textSize="20sp"
                 android:textColor="@color/text_gray"

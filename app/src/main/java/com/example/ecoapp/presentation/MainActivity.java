@@ -1,4 +1,4 @@
-package com.example.ecoapp;
+package com.example.ecoapp.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -10,6 +10,8 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.ecoapp.BuildConfig;
+import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.ActivityMainBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.services.NetworkChangeReceiver;

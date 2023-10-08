@@ -1,25 +1,22 @@
-package com.example.ecoapp.fragments;
+package com.example.ecoapp.presentation.fragments;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ecoapp.MainActivity;
-import com.example.ecoapp.adapters.ComingAdapter;
+import com.example.ecoapp.presentation.adapters.ComingAdapter;
 import com.example.ecoapp.databinding.FragmentEventsBinding;
-import com.example.ecoapp.models.Coming;
-import com.example.ecoapp.adapters.MyEventsAdapter;
-import com.example.ecoapp.models.EventCustom;
-import com.example.ecoapp.models.MyEvents;
+import com.example.ecoapp.data.models.Coming;
+import com.example.ecoapp.presentation.adapters.MyEventsAdapter;
+import com.example.ecoapp.data.models.EventCustom;
+import com.example.ecoapp.data.models.MyEvents;
 import com.example.ecoapp.R;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 

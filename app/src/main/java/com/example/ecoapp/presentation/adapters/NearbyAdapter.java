@@ -1,7 +1,5 @@
-package com.example.ecoapp.adapters;
+package com.example.ecoapp.presentation.adapters;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +12,10 @@ import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ecoapp.models.EventCustom;
-import com.example.ecoapp.models.Nearby;
+import com.example.ecoapp.data.models.EventCustom;
 import com.example.ecoapp.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.List;
 
 public class NearbyAdapter extends RecyclerView.Adapter<NearbyAdapter.NearbyViewHolder> {

@@ -23,7 +23,7 @@
         android:theme="@style/Theme.EcoApp"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

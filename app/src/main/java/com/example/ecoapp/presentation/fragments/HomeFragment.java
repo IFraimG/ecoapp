@@ -1,4 +1,4 @@
-package com.example.ecoapp.fragments;
+package com.example.ecoapp.presentation.fragments;
 
 import android.Manifest;
 import android.content.Context;
@@ -13,19 +13,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ecoapp.adapters.AdviceAdapter;
-import com.example.ecoapp.adapters.NearbyAdapter;
-import com.example.ecoapp.adapters.TasksAdapter;
+import com.example.ecoapp.presentation.adapters.AdviceAdapter;
+import com.example.ecoapp.presentation.adapters.NearbyAdapter;
+import com.example.ecoapp.presentation.adapters.TasksAdapter;
 import com.example.ecoapp.databinding.FragmentHomeBinding;
-import com.example.ecoapp.models.Advice;
-import com.example.ecoapp.models.EventCustom;
-import com.example.ecoapp.models.Tasks;
+import com.example.ecoapp.data.models.Advice;
+import com.example.ecoapp.data.models.EventCustom;
+import com.example.ecoapp.data.models.Tasks;
 import com.example.ecoapp.R;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 
@@ -132,6 +133,23 @@ public class HomeFragment extends Fragment {
 //        nearbyList.add(new Nearby(R.drawable.nearby_you, "Уборка пляжа"));
 //        nearbyList.add(new Nearby(R.drawable.nearby_you, "Уборка пляжа"));
 
+        binding.dailyHabits.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("type", "daily");
+            Navigation.findNavController(v).navigate(R.id.habitFragment, bundle);
+        });
+
+        binding.weeklyHabits.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("type", "weekly");
+            Navigation.findNavController(v).navigate(R.id.habitFragment, bundle);
+        });
+
+        binding.monthlyHabits.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("type", "monthly");
+            Navigation.findNavController(v).navigate(R.id.habitFragment, bundle);
+        });
 
         return binding.getRoot();
     }

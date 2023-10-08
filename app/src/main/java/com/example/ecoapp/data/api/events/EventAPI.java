@@ -2,9 +2,7 @@ package com.example.ecoapp.data.api.events;
 
 import com.example.ecoapp.data.api.events.dto.AddUserToEventDTO;
 import com.example.ecoapp.data.api.events.dto.EventsListDTO;
-import com.example.ecoapp.models.EventCustom;
-
-import java.util.ArrayList;
+import com.example.ecoapp.data.models.EventCustom;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;

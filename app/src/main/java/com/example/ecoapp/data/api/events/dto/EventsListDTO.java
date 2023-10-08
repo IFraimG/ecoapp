@@ -1,6 +1,6 @@
 package com.example.ecoapp.data.api.events.dto;
 
-import com.example.ecoapp.models.EventCustom;
+import com.example.ecoapp.data.models.EventCustom;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;

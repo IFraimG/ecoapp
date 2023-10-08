@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.ecoapp.fragments.HomeFragment"
+        android:name="com.example.ecoapp.presentation.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/authSignupFragment"
-        android:name="com.example.ecoapp.fragments.AuthSignupFragment"
+        android:name="com.example.ecoapp.presentation.fragments.AuthSignupFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" >
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/authLoginFragment"
-        android:name="com.example.ecoapp.fragments.AuthLoginFragment"
+        android:name="com.example.ecoapp.presentation.fragments.AuthLoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -70,7 +70,7 @@
     </fragment>
     <fragment
         android:id="@+id/eventsFragment"
-        android:name="com.example.ecoapp.fragments.EventsFragment"
+        android:name="com.example.ecoapp.presentation.fragments.EventsFragment"
         android:label="fragment_events"
         tools:layout="@layout/fragment_events" >
         <action
@@ -82,12 +82,12 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.ecoapp.fragments.SearchFragment"
+        android:name="com.example.ecoapp.presentation.fragments.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.ecoapp.fragments.ProfileFragment"
+        android:name="com.example.ecoapp.presentation.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -101,7 +101,7 @@
     </fragment>
     <fragment
         android:id="@+id/noNetworkFragment"
-        android:name="com.example.ecoapp.fragments.NoNetworkFragment"
+        android:name="com.example.ecoapp.presentation.fragments.NoNetworkFragment"
         android:label="fragment_no_network"
         tools:layout="@layout/fragment_no_network"
         app:enterAnim="@anim/nav_enter"
@@ -111,7 +111,7 @@
         />
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.example.ecoapp.fragments.MapFragment"
+        android:name="com.example.ecoapp.presentation.fragments.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" >
         <action
@@ -141,7 +141,7 @@
     </fragment>
     <fragment
         android:id="@+id/createEventFragment"
-        android:name="com.example.ecoapp.fragments.CreateEventFragment"
+        android:name="com.example.ecoapp.presentation.fragments.CreateEventFragment"
         android:label="fragment_create_event"
         tools:layout="@layout/fragment_create_event">
         <action
@@ -158,7 +158,7 @@
     </fragment>
     <fragment
         android:id="@+id/eventFragment"
-        android:name="com.example.ecoapp.fragments.EventFragment"
+        android:name="com.example.ecoapp.presentation.fragments.EventFragment"
         android:label="fragment_event"
         tools:layout="@layout/fragment_event" >
         <action
@@ -174,7 +174,7 @@
     </fragment>
     <fragment
         android:id="@+id/secondMapFragment"
-        android:name="com.example.ecoapp.fragments.SecondMapFragment"
+        android:name="com.example.ecoapp.presentation.fragments.SecondMapFragment"
         android:label="fragment_second_map"
         tools:layout="@layout/fragment_second_map" >
         <action
@@ -183,10 +183,22 @@
     </fragment>
     <fragment
         android:id="@+id/habitFragment"
-        android:name="com.example.ecoapp.fragments.HabitFragment"
+        android:name="com.example.ecoapp.presentation.fragments.HabitFragment"
         android:label="HabitFragment" >
         <action
             android:id="@+id/action_habitFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_habitFragment_to_addHabitFragment"
+            app:destination="@id/addHabitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addHabitFragment"
+        android:name="com.example.ecoapp.presentation.fragments.AddHabitFragment"
+        android:label="fragment_add_habit"
+        tools:layout="@layout/fragment_add_habit" >
+        <action
+            android:id="@+id/action_addHabitFragment_to_habitFragment"
+            app:destination="@id/habitFragment" />
     </fragment>
 </navigation>

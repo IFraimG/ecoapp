@@ -1,7 +1,7 @@
 package com.example.ecoapp.data.api.habits;
 
 import com.example.ecoapp.data.api.habits.dto.HabitsListDTO;
-import com.example.ecoapp.models.Habit;
+import com.example.ecoapp.data.models.Habit;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;

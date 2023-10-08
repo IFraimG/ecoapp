@@ -1,7 +1,6 @@
 package com.example.ecoapp.presentation.viewmodels;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -10,13 +9,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.ecoapp.data.api.RetrofitService;
 import com.example.ecoapp.data.api.users.UserAPIService;
 import com.example.ecoapp.data.api.users.UserRepository;
-import com.example.ecoapp.models.User;
+import com.example.ecoapp.data.models.User;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

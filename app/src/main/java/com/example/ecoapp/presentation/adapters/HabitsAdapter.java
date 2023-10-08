@@ -1,4 +1,4 @@
-package com.example.ecoapp.adapters;
+package com.example.ecoapp.presentation.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ecoapp.models.Habit;
+import com.example.ecoapp.data.models.Habit;
 import com.example.ecoapp.R;
 
 import java.util.List;
@@ -16,9 +16,11 @@ import java.util.List;
 public class HabitsAdapter extends RecyclerView.Adapter<HabitsAdapter.HabitsViewHolder> {
 
     private List<Habit> habitsList;
+
     public HabitsAdapter(List<Habit> habitsList){
         this.habitsList = habitsList;
     }
+
     @NonNull
     @Override
     public HabitsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
