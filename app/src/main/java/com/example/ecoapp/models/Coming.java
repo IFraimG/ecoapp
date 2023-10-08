@@ -1,21 +1,23 @@
 package com.example.ecoapp.models;
 
 public class Coming {
-    private int image;
+    private String image;
     private String name;
+    private String id;
 
     public Coming() {}
 
-    public Coming(int image, String name) {
+    public Coming(String image, String name, String id) {
         this.image = image;
         this.name = name;
+        this.id = id;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -25,5 +27,13 @@ public class Coming {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

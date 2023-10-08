@@ -129,10 +129,10 @@ public class CreateEventFragment extends Fragment {
                        fragmentCreateEventBinding.eventDescriptionEditText.setText("");
                        fragmentCreateEventBinding.eventDateEditText.setText("");
                        fragmentCreateEventBinding.eventTimeEditText.setText("");
-                       fragmentCreateEventBinding.eventPeopleEditText.setText(0);
-                       fragmentCreateEventBinding.eventPointsToAPersonEditText.setText(0);
+                       fragmentCreateEventBinding.eventPeopleEditText.setText("");
+                       fragmentCreateEventBinding.eventPointsToAPersonEditText.setText("");
 
-                       Navigation.findNavController(v).navigate(R.id.action_createEventFragment_to_eventsFragment);
+                       Navigation.findNavController(v).navigate(R.id.eventsFragment);
                    } else if (statusCode >= 400) {
                        Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
                    }
