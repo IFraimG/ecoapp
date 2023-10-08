@@ -13,7 +13,7 @@ public class HabitRepository {
         habitAPI = habitAPIService.getEventAPI();
     }
 
-    public Call<Habit> createHabit(String token, String title, String frequency, String type, String authorID) {
+    public Call<Habit> createHabit(String token, String title, int frequency, String type, String authorID) {
         return habitAPI.createHabit(token, new Habit(title, frequency, type, authorID));
     }
 
