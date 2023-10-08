@@ -30,7 +30,6 @@ import java.util.List;
 
 public class EventsFragment extends Fragment {
     private FragmentEventsBinding fragmentEventsBinding;
-    private RecyclerView comingRecyclerView, myEventsRecyclerView;
     private EventViewModel viewModel;
 
     @Override
@@ -65,14 +64,16 @@ public class EventsFragment extends Fragment {
         fragmentEventsBinding.myEventsRecyclerView.setHasFixedSize(true);
         fragmentEventsBinding.myEventsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        List<MyEvents> myEventsList = new ArrayList<>();
-        myEventsList.add(new MyEvents(R.drawable.coming, "Cубботник в парке Горького"));
-        myEventsList.add(new MyEvents(R.drawable.coming, "Cубботник в парке Горького"));
-        myEventsList.add(new MyEvents(R.drawable.coming, "Cубботник в парке Горького"));
-        myEventsList.add(new MyEvents(R.drawable.coming, "Cубботник в парке Горького"));
+        viewModel.findEventsByAuthorID().observe(requireActivity(), eventCustoms -> {
+            if (eventCustoms != null) {
+                List<MyEvents> myEventsList = new ArrayList<>();
 
-        MyEventsAdapter myEventsAdapter = new MyEventsAdapter(myEventsList);
-        fragmentEventsBinding.myEventsRecyclerView.setAdapter(myEventsAdapter);
+                for (EventCustom event: eventCustoms) myEventsList.add(new MyEvents(event.getPhoto(), event.getTitle(), event.getEventID()));
+
+                MyEventsAdapter myEventsAdapter = new MyEventsAdapter(myEventsList);
+                fragmentEventsBinding.myEventsRecyclerView.setAdapter(myEventsAdapter);
+            }
+        });
 
         return fragmentEventsBinding.getRoot();
     }

@@ -132,7 +132,11 @@ public class CreateEventFragment extends Fragment {
                        fragmentCreateEventBinding.eventPeopleEditText.setText("");
                        fragmentCreateEventBinding.eventPointsToAPersonEditText.setText("");
 
-                       Navigation.findNavController(v).navigate(R.id.eventsFragment);
+                       try {
+                           Navigation.findNavController(v).navigate(R.id.eventsFragment);
+                       } catch (IllegalStateException err) {
+                           Toast.makeText(requireContext(), "Попробуйте еще раз", Toast.LENGTH_SHORT).show();
+                       }
                    } else if (statusCode >= 400) {
                        Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
                    }
