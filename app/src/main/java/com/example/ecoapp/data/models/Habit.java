@@ -7,7 +7,7 @@ public class Habit {
     private String title;
 
     @SerializedName("frequency")
-    private String frequency;
+    private int frequency;
 
     @SerializedName("type")
     private String type;
@@ -23,14 +23,14 @@ public class Habit {
 
     public Habit() {}
 
-    public Habit(String title, String frequency, String type, String authorID) {
+    public Habit(String title, int frequency, String type, String authorID) {
         this.title = title;
         this.frequency = frequency;
         this.type = type;
         this.authorID = authorID;
     }
 
-    public Habit(String title, String frequency, String type, String habitID, String authorID, boolean isDone) {
+    public Habit(String title, int frequency, String type, String habitID, String authorID, boolean isDone) {
         this.title = title;
         this.frequency = frequency;
         this.type = type;
@@ -47,7 +47,7 @@ public class Habit {
         return authorID;
     }
 
-    public String getFrequency() {
+    public int getFrequency() {
         return frequency;
     }
 
@@ -67,7 +67,7 @@ public class Habit {
         isDone = done;
     }
 
-    public void setFrequency(String frequency) {
+    public void setFrequency(int frequency) {
         this.frequency = frequency;
     }
 
