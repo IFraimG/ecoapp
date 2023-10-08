@@ -1,5 +1,7 @@
 package com.example.ecoapp.presentation.adapters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ecoapp.data.models.Habit;
 import com.example.ecoapp.R;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class HabitsAdapter extends RecyclerView.Adapter<HabitsAdapter.HabitsViewHolder> {
@@ -33,6 +36,7 @@ public class HabitsAdapter extends RecyclerView.Adapter<HabitsAdapter.HabitsView
     public void onBindViewHolder(@NonNull HabitsViewHolder holder, int position) {
         holder.mName.setText(habitsList.get(position).getTitle());
         holder.circle.setOnClickListener(v -> {
+            holder.circle.setImageResource(R.drawable.green_check);
 
         });
     }

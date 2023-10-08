@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,5 +70,24 @@ public class HabitViewModel extends AndroidViewModel {
         });
 
         return habitsList;
+    }
+
+    public LiveData<Integer> makeHabitDone(String habitID) {
+        statusCode.setValue(0);
+
+        habitRepository.habitUpdate(storageHandler.getToken(), habitID).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                statusCode.setValue(response.code());
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                t.printStackTrace();
+                statusCode.setValue(400);
+            }
+        });
+
+        return statusCode;
     }
 }
