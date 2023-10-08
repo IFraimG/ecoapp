@@ -98,7 +98,7 @@ public class CreateEventFragment extends Fragment {
             String date = fragmentCreateEventBinding.eventDateEditText.getText().toString();
             String time = fragmentCreateEventBinding.eventTimeEditText.getText().toString();
             String peopleLen = fragmentCreateEventBinding.eventPeopleEditText.getText().toString().isEmpty() ? "0" : fragmentCreateEventBinding.eventPeopleEditText.getText().toString();
-            String scores = fragmentCreateEventBinding.eventPointsToAPersonEditText.getText().toString();
+            String scores = fragmentCreateEventBinding.eventPointsToAPersonEditText.getText().toString().isEmpty() ? "0" : fragmentCreateEventBinding.eventPointsToAPersonEditText.getText().toString();
 
             storageHandler.saveIntermediateData(title, description, date, time, Integer.parseInt(peopleLen), fileImage == null ? "" : fileImage.getAbsolutePath(), Integer.parseInt(scores));
 
@@ -132,7 +132,7 @@ public class CreateEventFragment extends Fragment {
                        fragmentCreateEventBinding.eventPeopleEditText.setText("");
                        fragmentCreateEventBinding.eventPointsToAPersonEditText.setText("");
 
-                       Navigation.findNavController(v).navigate(R.id.action_createEventFragment_to_eventsFragment);
+                       Navigation.findNavController(v).navigate(R.id.eventsFragment);
                    } else if (statusCode >= 400) {
                        Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
                    }

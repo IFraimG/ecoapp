@@ -15,8 +15,6 @@ import com.example.ecoapp.MainActivity;
 import com.example.ecoapp.adapters.ComingAdapter;
 import com.example.ecoapp.databinding.FragmentEventsBinding;
 import com.example.ecoapp.models.Coming;
-import com.example.ecoapp.adapters.MyEventsAdapter;
-import com.example.ecoapp.models.MyEvents;
 import com.example.ecoapp.R;
 
 import java.util.ArrayList;
@@ -24,7 +22,7 @@ import java.util.List;
 
 public class EventsFragment extends Fragment {
     private FragmentEventsBinding fragmentEventsBinding;
-    private RecyclerView comingRecyclerView, myEventsRecyclerView;
+    private RecyclerView comingRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,18 +47,6 @@ public class EventsFragment extends Fragment {
 
         ComingAdapter comingAdapter = new ComingAdapter(comingList);
         fragmentEventsBinding.comingRecyclerView.setAdapter(comingAdapter);
-
-        fragmentEventsBinding.myEventsRecyclerView.setHasFixedSize(true);
-        fragmentEventsBinding.myEventsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        List<MyEvents> myEventsList = new ArrayList<>();
-        myEventsList.add(new MyEvents(R.drawable.coming, "Cубботник в парке Горького"));
-        myEventsList.add(new MyEvents(R.drawable.coming, "Cубботник в парке Горького"));
-        myEventsList.add(new MyEvents(R.drawable.coming, "Cубботник в парке Горького"));
-        myEventsList.add(new MyEvents(R.drawable.coming, "Cубботник в парке Горького"));
-
-        MyEventsAdapter myEventsAdapter = new MyEventsAdapter(myEventsList);
-        fragmentEventsBinding.myEventsRecyclerView.setAdapter(myEventsAdapter);
 
         return fragmentEventsBinding.getRoot();
     }

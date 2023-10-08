@@ -56,4 +56,8 @@ public class EventRepository {
     public Call<EventsListDTO> getEventsList(String token) {
         return eventAPI.getEventsList(token);
     }
+
+    public Call<EventsListDTO> findEventsByAuthorID(String token, String authorID) {
+        return eventAPI.findEventsByAuthorID(token, authorID);
+    }
 }

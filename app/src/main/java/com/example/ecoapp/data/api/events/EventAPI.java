@@ -39,4 +39,7 @@ public interface EventAPI {
 
     @PUT("/events/removeUserToEvent")
     Call<EventCustom> removeUserToEvent(@Header("Authorization") String token, @Body AddUserToEventDTO removeUserToEventDTO);
+
+    @GET("/events/findEventsByAuthorID")
+    Call<EventsListDTO> findEventsByAuthorID(@Header("Authorization") String token, @Query("authorID") String authorID);
 }

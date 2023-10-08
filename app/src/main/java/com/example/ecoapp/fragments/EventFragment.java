@@ -1,10 +1,9 @@
 package com.example.ecoapp.fragments;
 
-import android.graphics.Point;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -57,7 +56,7 @@ public class EventFragment extends Fragment {
                     binding.theEventAddress.setText(eventCustom.getPlace());
                     binding.theEventAwardPoints.setText(String.valueOf("Баллы в награду: " + eventCustom.getScores()));
                     binding.theEventCurrentPeopleAmount.setText(String.valueOf(eventCustom.getCurrentUsers()) + " / " + String.valueOf(eventCustom.getMaxUsers()));
-                    showButton(!eventCustom.getUsersList().contains(storageHandler.getUserID()));
+                    showButton(eventCustom.getUsersList().contains(storageHandler.getUserID()));
 
                     Picasso.get().load(url).into(binding.eventImage);
                 }

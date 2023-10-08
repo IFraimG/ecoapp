@@ -131,4 +131,22 @@ public class EventViewModel extends AndroidViewModel {
 
         return statusCode;
     }
+
+    public LiveData<ArrayList<EventCustom>> findEventsByAuthorID() {
+        eventRepository.findEventsByAuthorID(storageHandler.getToken(), storageHandler.getUserID()).enqueue(new Callback<EventsListDTO>() {
+            @Override
+            public void onResponse(@NotNull Call<EventsListDTO> call, @NotNull Response<EventsListDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    eventsList.setValue(response.body().getItem());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<EventsListDTO> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return eventsList;
+    }
 }
