@@ -42,4 +42,7 @@ public interface EventAPI {
 
     @GET("/events/findEventsByAuthorID")
     Call<EventsListDTO> findEventsByAuthorID(@Header("Authorization") String token, @Query("authorID") String authorID);
+
+    @GET("/events/findNearestEventsByAuthorCoords")
+    Call<EventsListDTO> findNearestEventsByAuthorCoords(@Header("Authorization") String token, @Query("lat") double lat, @Query("longt") double longt);
 }
