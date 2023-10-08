@@ -108,7 +108,7 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
                     for (EventCustom eventCustom: eventCustoms) {
                         if (eventCustom.getPlace().equals(fullAddress)) {
                             isTrue = true;
-                            bundle.putString("eventID", eventCustom.getEventID());
+                            bundle.putString("id", eventCustom.getEventID());
                             break;
                         }
                     }
