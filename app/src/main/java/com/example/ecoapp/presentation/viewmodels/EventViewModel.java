@@ -149,4 +149,22 @@ public class EventViewModel extends AndroidViewModel {
 
         return eventsList;
     }
+
+    public LiveData<ArrayList<EventCustom>> findNearestEventsByAuthorCoords(double lat, double longt) {
+        eventRepository.findNearestEventsByAuthorCoords(storageHandler.getToken(), lat, longt).enqueue(new Callback<EventsListDTO>() {
+            @Override
+            public void onResponse(@NotNull Call<EventsListDTO> call, @NotNull Response<EventsListDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    eventsList.setValue(response.body().getItem());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<EventsListDTO> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return eventsList;
+    }
 }

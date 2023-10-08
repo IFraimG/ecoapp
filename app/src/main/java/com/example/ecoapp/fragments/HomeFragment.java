@@ -1,29 +1,34 @@
 package com.example.ecoapp.fragments;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.ecoapp.adapters.AdviceAdapter;
 import com.example.ecoapp.adapters.NearbyAdapter;
 import com.example.ecoapp.adapters.TasksAdapter;
 import com.example.ecoapp.databinding.FragmentHomeBinding;
 import com.example.ecoapp.domain.helpers.PaginationScrollListener;
+import com.example.ecoapp.domain.helpers.PermissionHandler;
 import com.example.ecoapp.models.Advice;
 import com.example.ecoapp.models.EventCustom;
-import com.example.ecoapp.models.Nearby;
 import com.example.ecoapp.models.Tasks;
 import com.example.ecoapp.R;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
@@ -37,6 +42,22 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private EventViewModel viewModel;
     private ArrayList<EventCustom> eventCustoms;
+    private AppCompatActivity activity;
+    private boolean isLoad = false;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof AppCompatActivity) {
+            activity = (AppCompatActivity) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        activity = null;
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -45,45 +66,43 @@ public class HomeFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(EventViewModel.class);
 
+        binding.tasksRecyclerView.setHasFixedSize(true);
+        binding.tasksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
         binding.nearbyRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         binding.nearbyRecyclerView.setLayoutManager(layoutManager);
 
-        PaginationScrollListener scrollListener = new PaginationScrollListener(layoutManager) {
-            @Override
-            public void loadMoreItems() {
-                ArrayList<EventCustom> events = new ArrayList<>();
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
 
-            }
+            viewModel.getEventsList().observe(requireActivity(), eventCustoms -> {
+                if (eventCustoms != null) {
+                    this.eventCustoms = eventCustoms;
+                    loadEvents();
+                }
+            });
+        } else {
+            LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
 
-            @Override
-            public boolean isLoading() {
-                return false;
-            }
+            if (ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {}
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30, 30, new LocationListener() {
+                @Override
+                public void onLocationChanged(@NonNull Location location) {
+                    if (activity != null && !isLoad) {
+                        viewModel.findNearestEventsByAuthorCoords(location.getLatitude(), location.getLongitude()).observe(activity, events -> {
+                            isLoad = true;
 
-            @Override
-            public boolean isLastPage() {
-
-                return false;
-            }
-        };
-
-        binding.nearbyRecyclerView.addOnScrollListener(scrollListener);
-
-
-        viewModel.getEventsList().observe(requireActivity(), eventCustoms -> {
-            if (eventCustoms != null) {
-                this.eventCustoms = eventCustoms;
-                ArrayList<EventCustom> eventsShort = new ArrayList<>();
-                for (int i = 0; i < 5; i++) eventsShort.add(eventCustoms.get(i));
-
-                NearbyAdapter nearbyAdapter = new NearbyAdapter(eventCustoms);
-                binding.nearbyRecyclerView.setAdapter(nearbyAdapter);
-            }
-        });
-
-        binding.tasksRecyclerView.setHasFixedSize(true);
-        binding.tasksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+                            if (events != null) {
+                                eventCustoms = events;
+                                loadEvents();
+                            }
+                        });
+                    }
+                }
+            });
+        }
 
         List<Tasks> tasksList = new ArrayList<>();
         tasksList.add(new Tasks("Очистить городской пляж"));
@@ -119,5 +138,10 @@ public class HomeFragment extends Fragment {
 
 
         return binding.getRoot();
+    }
+
+    private void loadEvents() {
+        NearbyAdapter nearbyAdapter = new NearbyAdapter(eventCustoms);
+        binding.nearbyRecyclerView.setAdapter(nearbyAdapter);
     }
 }

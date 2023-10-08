@@ -1,28 +1,28 @@
 package com.example.ecoapp.models;
 
 public class Coming {
-    private int image;
+    private String image;
     private String name;
     private String id;
 
     public Coming() {}
 
-    public Coming(int image, String name, String id) {
+    public Coming(String image, String name, String id) {
         this.image = image;
         this.name = name;
         this.id = id;
     }
 
-    public Coming(int image, String name) {
+    public Coming(String image, String name) {
         this.image = image;
         this.name = name;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
