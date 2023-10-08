@@ -105,7 +105,6 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
 
                     binding.mapCardView.setVisibility(View.VISIBLE);
                     binding.mapCoords.setText(fullAddress);
-
                 }
             } catch (IOException e) {
                 e.printStackTrace();

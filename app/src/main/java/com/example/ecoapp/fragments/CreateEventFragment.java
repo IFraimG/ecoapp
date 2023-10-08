@@ -125,8 +125,15 @@ public class CreateEventFragment extends Fragment {
                eventViewModel.sendData(title, description, date, time, fileImage, lenPeople, address, lat, longt, Integer.parseInt(scores)).observe(requireActivity(), statusCode -> {
                    if (statusCode < 400 && statusCode != 0) {
                        Toast.makeText(requireContext(), "Успешно!", Toast.LENGTH_SHORT).show();
+                       fragmentCreateEventBinding.eventNameEditText.setText("");
+                       fragmentCreateEventBinding.eventDescriptionEditText.setText("");
+                       fragmentCreateEventBinding.eventDateEditText.setText("");
+                       fragmentCreateEventBinding.eventTimeEditText.setText("");
+                       fragmentCreateEventBinding.eventPeopleEditText.setText("");
+                       fragmentCreateEventBinding.eventPointsToAPersonEditText.setText("");
+
                        Navigation.findNavController(v).navigate(R.id.action_createEventFragment_to_eventsFragment);
-                   } else if (statusCode != 0) {
+                   } else if (statusCode >= 400) {
                        Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
                    }
                });
