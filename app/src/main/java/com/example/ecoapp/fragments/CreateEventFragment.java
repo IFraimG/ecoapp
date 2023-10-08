@@ -98,7 +98,7 @@ public class CreateEventFragment extends Fragment {
             String date = fragmentCreateEventBinding.eventDateEditText.getText().toString();
             String time = fragmentCreateEventBinding.eventTimeEditText.getText().toString();
             String peopleLen = fragmentCreateEventBinding.eventPeopleEditText.getText().toString().isEmpty() ? "0" : fragmentCreateEventBinding.eventPeopleEditText.getText().toString();
-            String scores = fragmentCreateEventBinding.eventPointsToAPersonEditText.getText().toString();
+            String scores = fragmentCreateEventBinding.eventPointsToAPersonEditText.getText().toString().isEmpty() ? "0" : fragmentCreateEventBinding.eventPointsToAPersonEditText.getText().toString();
 
             storageHandler.saveIntermediateData(title, description, date, time, Integer.parseInt(peopleLen), fileImage == null ? "" : fileImage.getAbsolutePath(), Integer.parseInt(scores));
 
@@ -129,8 +129,8 @@ public class CreateEventFragment extends Fragment {
                        fragmentCreateEventBinding.eventDescriptionEditText.setText("");
                        fragmentCreateEventBinding.eventDateEditText.setText("");
                        fragmentCreateEventBinding.eventTimeEditText.setText("");
-                       fragmentCreateEventBinding.eventPeopleEditText.setText("");
-                       fragmentCreateEventBinding.eventPointsToAPersonEditText.setText("");
+                       fragmentCreateEventBinding.eventPeopleEditText.setText(0);
+                       fragmentCreateEventBinding.eventPointsToAPersonEditText.setText(0);
 
                        Navigation.findNavController(v).navigate(R.id.action_createEventFragment_to_eventsFragment);
                    } else if (statusCode >= 400) {

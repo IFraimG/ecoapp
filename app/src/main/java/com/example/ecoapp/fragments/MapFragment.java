@@ -24,6 +24,8 @@ import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentMapBinding;
 import com.example.ecoapp.domain.helpers.PermissionHandler;
 import com.example.ecoapp.domain.helpers.StorageHandler;
+import com.example.ecoapp.models.EventCustom;
+import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 import com.example.ecoapp.presentation.viewmodels.MapViewModel;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
@@ -77,13 +79,11 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
     private LocationManager locationManager;
     private final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
     private Point myPoint;
-    private StorageHandler storageHandler;
-    private MapViewModel viewModel;
-    private ArrayAdapter<String> adapter = null;
-    //    private MapRepository mapRepository;
+    private EventViewModel viewModel;
     private PermissionHandler permissionHandler;
     private Bundle bundle;
     private Geocoder geoCoder;
+    ArrayList<EventCustom> eventCustoms;
     private final InputListener listener = new InputListener() {
         @Override
         public void onMapTap(@NonNull Map map, @NonNull Point point) {
@@ -103,8 +103,30 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
                     String fullAddress = address.getAddressLine(0);
                     bundle.putString("address", fullAddress);
 
+                    boolean isTrue = false;
+
+                    for (EventCustom eventCustom: eventCustoms) {
+                        if (eventCustom.getPlace().equals(fullAddress)) {
+                            isTrue = true;
+                            bundle.putString("eventID", eventCustom.getEventID());
+                            break;
+                        }
+                    }
+
                     binding.mapCardView.setVisibility(View.VISIBLE);
                     binding.mapCoords.setText(fullAddress);
+
+                    if (isTrue) {
+                        binding.mapButtonOneEvent.setOnClickListener(v -> {
+                            Navigation.findNavController(v).navigate(R.id.eventFragment, bundle);
+                        });
+                        binding.mapButton.setVisibility(View.GONE);
+                        binding.mapButtonOneEvent.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.mapButton.setVisibility(View.VISIBLE);
+                        binding.mapButtonOneEvent.setVisibility(View.GONE);
+                    }
+
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -146,7 +168,7 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
         binding = FragmentMapBinding.inflate(inflater);
         mBinding = new WeakReference<>(binding);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(EventViewModel.class);
 
         this.mapView = binding.mapview;
 
@@ -195,6 +217,7 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
         userLocationLayer.setHeadingEnabled(true);
         userLocationLayer.setObjectListener(this);
         mapView.getMap().setRotateGesturesEnabled(false);
+        mapObjects = mapView.getMap().getMapObjects().addCollection();
 
         mapView.getMap().move(new CameraPosition(new Point(55.71989101308894, 37.5689757769603), 14, 0, 0), pingAnimation, null);
 
@@ -206,13 +229,19 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
             }
         });
 
-//        ImageProvider imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.add_guide_icon);
-//        for (Point point : viewModel.getMarketPoints()) {
-//            PlacemarkMapObject placemark = mapObjects.addPlacemark(point, imageProvider);
-//            placemark.addTapListener(this);
-//        }
-
         geoCoder = new Geocoder(requireContext(), Locale.getDefault());
+
+
+        viewModel.getEventsList().observe(requireActivity(), eventsList -> {
+            ImageProvider imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.place_mark);
+            eventCustoms = eventsList;
+            for (EventCustom event: eventsList) {
+                if (event.getLongt() != 0 && event.getLat() != 0) {
+                    mapObjects.addPlacemark(new Point(event.getLat(), event.getLongt()), imageProvider);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -221,20 +250,6 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
 
         mapView.getMap().addInputListener(listener);
     }
-
-    //    /**
-//     * Этот метод отображает название магазина
-//     * @param point координаты магазина
-//     */
-//    private void handleMarkerTap(Point point) {
-//        for (Market fullListMarket : viewModel.getFullListMarkets()) {
-//            Point pointMarket = fullListMarket.getPoint();
-//            if (Math.abs(pointMarket.getLatitude() - point.getLatitude()) < 0.001 &&
-//                    Math.abs(pointMarket.getLongitude() - point.getLongitude()) < 0.001) {
-//                Snackbar.make(requireContext(), requireView(), getString(R.string.magazine_toast) + fullListMarket.getTitle(), Snackbar.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
 
     @Override
     public void onDrivingRoutes(@NonNull List<DrivingRoute> list) {
@@ -248,10 +263,6 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
 
     }
 
-
-    /**
-     * Этот метод отображает метку пользователя
-     */
     @Override
     public void onObjectAdded(UserLocationView userLocationView) {
         userLocationLayer.setAnchor(
@@ -260,7 +271,8 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
                 new PointF((float)(mapView.getWidth() * 0.5), (float)
                         (mapView.getHeight() * 0.83)));
 
-        userLocationView.getArrow().setIcon(ImageProvider.fromResource(requireContext(), R.drawable.baseline_place_24));
+        userLocationView.getArrow().setIcon(ImageProvider.fromResource(
+                requireContext(), R.drawable.add_guide_icon));
 
         CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
 
@@ -278,3 +290,4 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
     @Override
     public void onObjectUpdated(@NotNull UserLocationView view, @NotNull ObjectEvent event) {}
 }
+

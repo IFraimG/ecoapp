@@ -25,7 +25,17 @@
             android:layout_marginTop="50dp"
             android:text="Добавить метку"/>
 
-<!--        <EditText-->
+        <Button
+            android:id="@+id/map_button_one_event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_marginTop="50dp"
+            android:visibility="gone"
+            android:text="Перейти на страницу мероприятия"/>
+
+
+        <!--        <EditText-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
 <!--            />-->
