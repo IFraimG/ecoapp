@@ -3,6 +3,8 @@ package com.example.ecoapp.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,8 +18,12 @@ import com.example.ecoapp.adapters.ComingAdapter;
 import com.example.ecoapp.databinding.FragmentEventsBinding;
 import com.example.ecoapp.models.Coming;
 import com.example.ecoapp.adapters.MyEventsAdapter;
+import com.example.ecoapp.models.EventCustom;
 import com.example.ecoapp.models.MyEvents;
 import com.example.ecoapp.R;
+import com.example.ecoapp.presentation.viewmodels.EventViewModel;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +31,28 @@ import java.util.List;
 public class EventsFragment extends Fragment {
     private FragmentEventsBinding fragmentEventsBinding;
     private RecyclerView comingRecyclerView, myEventsRecyclerView;
+    private EventViewModel viewModel;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         fragmentEventsBinding = FragmentEventsBinding.inflate(getLayoutInflater());
+
+        viewModel = new ViewModelProvider(this).get(EventViewModel.class);
+
+        fragmentEventsBinding.comingRecyclerView.setHasFixedSize(true);
+        fragmentEventsBinding.comingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        viewModel.findEventsByAuthorID().observe(requireActivity(), eventsList -> {
+            if (eventsList != null) {
+                List<Coming> comingList = new ArrayList<>();
+
+                for (EventCustom event: eventsList) comingList.add(new Coming(event.getPhoto(), event.getTitle(), event.getEventID()));
+
+                ComingAdapter comingAdapter = new ComingAdapter(comingList);
+                fragmentEventsBinding.comingRecyclerView.setAdapter(comingAdapter);
+            }
+        });
 
         fragmentEventsBinding.mapOpen.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_mapFragment);
@@ -38,17 +61,6 @@ public class EventsFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_createEventFragment);
         });
 
-        fragmentEventsBinding.comingRecyclerView.setHasFixedSize(true);
-        fragmentEventsBinding.comingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        List<Coming> comingList = new ArrayList<>();
-        comingList.add(new Coming(R.drawable.coming, "Cубботник в парке Горького"));
-        comingList.add(new Coming(R.drawable.coming, "Cубботник в парке Горького"));
-        comingList.add(new Coming(R.drawable.coming, "Cубботник в парке Горького"));
-        comingList.add(new Coming(R.drawable.coming, "Cубботник в парке Горького"));
-
-        ComingAdapter comingAdapter = new ComingAdapter(comingList);
-        fragmentEventsBinding.comingRecyclerView.setAdapter(comingAdapter);
 
         fragmentEventsBinding.myEventsRecyclerView.setHasFixedSize(true);
         fragmentEventsBinding.myEventsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
