@@ -9,8 +9,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -24,6 +26,7 @@ import com.example.ecoapp.databinding.FragmentCreateEventBinding;
 import com.example.ecoapp.R;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.data.models.EventCustom;
+import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -50,6 +53,22 @@ public class CreateEventFragment extends Fragment {
     private File fileImage;
     private double longt;
     private double lat;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(false);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(true);
+        }
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -131,14 +150,7 @@ public class CreateEventFragment extends Fragment {
                        fragmentCreateEventBinding.eventTimeEditText.setText("");
                        fragmentCreateEventBinding.eventPeopleEditText.setText("");
                        fragmentCreateEventBinding.eventPointsToAPersonEditText.setText("");
-
-                       try {
-                           Navigation.findNavController(v).navigate(R.id.eventsFragment);
-                       } catch (IllegalStateException err) {
-                           Toast.makeText(requireContext(), "Попробуйте еще раз", Toast.LENGTH_SHORT).show();
-                       }
-                   } else if (statusCode >= 400) {
-                       Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show();
+                       storageHandler.clearIntermediateData();
                    }
                });
             }
@@ -157,6 +169,15 @@ public class CreateEventFragment extends Fragment {
         });
 
         return fragmentCreateEventBinding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        eventViewModel.getNavigate().observe(getViewLifecycleOwner(), isNavigate -> {
+            if (isNavigate) Navigation.findNavController(requireView()).navigate(R.id.eventsFragment);
+        });
     }
 
     @Override

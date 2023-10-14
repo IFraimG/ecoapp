@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.ecoapp.data.models.Rating;
 import com.example.ecoapp.data.models.User;
 import com.example.ecoapp.databinding.FragmentGuideBinding;
+import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.GuideViewModel;
 import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
 import com.squareup.picasso.Picasso;
@@ -27,6 +28,22 @@ public class GuideFragment extends Fragment {
     private GuideViewModel viewModel;
     private ProfileViewModel profileViewModel;
     private String guideID;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(false);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(true);
+        }
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,

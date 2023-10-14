@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ecoapp.R;
+import com.example.ecoapp.presentation.MainActivity;
 
 public class SearchFragment extends Fragment {
 

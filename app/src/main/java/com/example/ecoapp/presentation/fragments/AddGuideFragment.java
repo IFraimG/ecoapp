@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentCreateGuideBinding;
+import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.GuideViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -41,6 +42,22 @@ public class AddGuideFragment extends Fragment {
     private Uri uri;
     private File file;
     private GuideViewModel viewModel;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(false);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(true);
+        }
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,

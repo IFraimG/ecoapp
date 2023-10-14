@@ -29,6 +29,7 @@ public class EventViewModel extends AndroidViewModel {
     private final MutableLiveData<ArrayList<EventCustom>> eventsList = new MutableLiveData<>();
     private final MutableLiveData<Integer> statusCode = new MutableLiveData<>(0);
     private final MutableLiveData<EventCustom> event = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isNavigation = new MutableLiveData<>(false);
 
     public EventViewModel(@NonNull Application application) {
         super(application);
@@ -42,6 +43,7 @@ public class EventViewModel extends AndroidViewModel {
             @Override
             public void onResponse(@NotNull Call<EventCustom> call, @NotNull Response<EventCustom> response) {
                 statusCode.setValue(response.code());
+                isNavigation.setValue(true);
             }
 
             @Override
@@ -59,7 +61,7 @@ public class EventViewModel extends AndroidViewModel {
             @Override
             public void onResponse(@NotNull Call<EventsListDTO> call, @NotNull Response<EventsListDTO> response) {
                 statusCode.setValue(response.code());
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null && response.body().getItem() != null) {
                     eventsList.setValue(response.body().getItem());
                 }
             }
@@ -86,8 +88,8 @@ public class EventViewModel extends AndroidViewModel {
 
             @Override
             public void onFailure(@NotNull Call<EventCustom> call, @NotNull Throwable t) {
-                t.printStackTrace();
                 statusCode.setValue(400);
+                t.printStackTrace();
             }
         });
 
@@ -165,5 +167,17 @@ public class EventViewModel extends AndroidViewModel {
         });
 
         return eventsList;
+    }
+
+    public void clearEvents() {
+        eventsList.setValue(null);
+    }
+
+    public LiveData<Boolean> getNavigate() {
+        return isNavigation;
+    }
+
+    public void cancelNavigate() {
+        isNavigation.setValue(false);
     }
 }

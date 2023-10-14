@@ -20,6 +20,7 @@ import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentMapBinding;
 import com.example.ecoapp.domain.helpers.PermissionHandler;
 import com.example.ecoapp.data.models.EventCustom;
+import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
@@ -129,6 +130,22 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
     };
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(false);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(true);
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -188,10 +205,9 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         mBinding.clear();
 
-        if (mapView != null) mapView.getMap().getMapObjects().clear();
+//        if (mapView != null) mapView.getMap().getMapObjects().clear();
     }
 
     /**
@@ -224,15 +240,16 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
 
 
         viewModel.getEventsList().observe(requireActivity(), eventsList -> {
-            ImageProvider imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.place_mark);
-            eventCustoms = eventsList;
-            for (EventCustom event: eventsList) {
-                if (event.getLongt() != 0 && event.getLat() != 0) {
-                    mapObjects.addPlacemark(new Point(event.getLat(), event.getLongt()), imageProvider);
+            if (eventsList != null) {
+                ImageProvider imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.place_mark);
+                eventCustoms = eventsList;
+                for (EventCustom event: eventsList) {
+                    if (event.getLongt() != 0 && event.getLat() != 0) {
+                        mapObjects.addPlacemark(new Point(event.getLat(), event.getLongt()), imageProvider);
+                    }
                 }
             }
         });
-
     }
 
     @Override

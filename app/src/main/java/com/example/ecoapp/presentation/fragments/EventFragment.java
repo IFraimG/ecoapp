@@ -15,6 +15,7 @@ import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentEventBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.data.models.EventCustom;
+import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -25,6 +26,22 @@ public class EventFragment extends Fragment {
     private EventViewModel viewModel;
     private EventCustom eventCustom;
     private StorageHandler storageHandler;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(false);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(true);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

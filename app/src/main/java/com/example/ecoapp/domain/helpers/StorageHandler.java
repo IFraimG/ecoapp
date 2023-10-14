@@ -75,4 +75,15 @@ public class StorageHandler {
 
         return eventCustom;
     }
+
+    public void clearIntermediateData() {
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.remove("eventTitle");
+        edit.remove("eventDescription");
+        edit.remove("eventData");
+        edit.remove("eventTime");
+        edit.remove("eventPeopleLen");
+        edit.remove("eventImagePath");
+        edit.apply();
+    }
 }

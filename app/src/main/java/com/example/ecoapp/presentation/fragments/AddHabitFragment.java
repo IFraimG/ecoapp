@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentAddHabitBinding;
+import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.HabitViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +24,22 @@ public class AddHabitFragment extends Fragment {
     private FragmentAddHabitBinding binding;
     private HabitViewModel viewModel;
     private String typeHabit;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(false);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(true);
+        }
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
