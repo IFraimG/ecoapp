@@ -1,7 +1,5 @@
 package com.example.ecoapp.presentation.adapters;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoapp.data.models.Habit;
 import com.example.ecoapp.R;
-
-import java.io.InputStream;
 import java.util.List;
 
 public class HabitsAdapter extends RecyclerView.Adapter<HabitsAdapter.HabitsViewHolder> {

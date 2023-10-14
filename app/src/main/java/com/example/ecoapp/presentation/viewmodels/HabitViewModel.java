@@ -28,6 +28,7 @@ public class HabitViewModel extends AndroidViewModel {
     private HabitRepository habitRepository;
     private MutableLiveData<ArrayList<Habit>> habitsList = new MutableLiveData<>();
     private MutableLiveData<Integer> statusCode = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isNavigation = new MutableLiveData<>(false);
 
     public HabitViewModel(@NonNull Application application) {
         super(application);
@@ -42,6 +43,7 @@ public class HabitViewModel extends AndroidViewModel {
             @Override
             public void onResponse(@NotNull Call<Habit> call, @NotNull Response<Habit> response) {
                 statusCode.setValue(response.code());
+                isNavigation.setValue(true);
             }
 
             @Override
@@ -89,5 +91,13 @@ public class HabitViewModel extends AndroidViewModel {
         });
 
         return statusCode;
+    }
+
+    public LiveData<Boolean> isNavigate() {
+        return isNavigation;
+    }
+
+    public void cancelNavigate() {
+        isNavigation.setValue(false);
     }
 }

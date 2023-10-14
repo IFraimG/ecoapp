@@ -2,6 +2,8 @@ package com.example.ecoapp.presentation.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -10,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentAddHabitBinding;
 import com.example.ecoapp.presentation.viewmodels.HabitViewModel;
 
@@ -18,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 public class AddHabitFragment extends Fragment {
     private FragmentAddHabitBinding binding;
     private HabitViewModel viewModel;
+    private String typeHabit;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -25,6 +30,9 @@ public class AddHabitFragment extends Fragment {
         binding = FragmentAddHabitBinding.inflate(getLayoutInflater());
 
         viewModel = new ViewModelProvider(requireActivity()).get(HabitViewModel.class);
+
+        Bundle args = getArguments();
+        if (args != null) typeHabit = args.getString("type");
 
         binding.fragmentAddHabitBackToPreviousFragmentButton.setOnClickListener(v -> {
             Navigation.findNavController(v).popBackStack();
@@ -45,14 +53,24 @@ public class AddHabitFragment extends Fragment {
                 viewModel.createHabit(binding.habitNameEditText.getText().toString(), type).observe(requireActivity(), statusCode -> {
                     if (statusCode == 0) binding.fragmentHabitButtonAddHabit.setClickable(false);
                     else binding.fragmentHabitButtonAddHabit.setClickable(true);
-
-                    if (statusCode >= 200 && statusCode < 400) {
-                        Navigation.findNavController(v).popBackStack();
-                    }
                 });
+
             }
         });
 
         return binding.getRoot();
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View createdView, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(createdView, savedInstanceState);
+
+        viewModel.isNavigate().observe(getViewLifecycleOwner(), isNavigate -> {
+            if (isNavigate) {
+                Navigation.findNavController(requireView()).popBackStack();
+                viewModel.cancelNavigate();
+            }
+        });
     }
 }
