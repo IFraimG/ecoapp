@@ -61,7 +61,7 @@ public class EventsFragment extends Fragment {
         fragmentEventsBinding.myEventsRecyclerView.setHasFixedSize(true);
         fragmentEventsBinding.myEventsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        viewModel.findEventsByAuthorID().observe(requireActivity(), eventCustoms -> {
+        viewModel.findAuthorsEvents().observe(requireActivity(), eventCustoms -> {
             if (eventCustoms != null) {
                 List<MyEvents> myEventsList = new ArrayList<>();
 

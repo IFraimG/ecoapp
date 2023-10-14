@@ -1,5 +1,6 @@
 package com.example.ecoapp.data.api.guides;
 
+import com.example.ecoapp.data.api.guides.dto.GuidesListDTO;
 import com.example.ecoapp.data.models.Guide;
 import com.example.ecoapp.data.models.Rating;
 
@@ -61,5 +62,9 @@ public class GuideRepository {
 
     public Call<ResponseBody> setRating(String token, String guideID, String authorID, float mark) {
         return guideAPI.setRating(token, new Rating(authorID, mark, guideID));
+    }
+
+    public Call<GuidesListDTO> getGuidesSavedList(String token, String authorID) {
+        return guideAPI.getGuidesSavedList(token, authorID);
     }
 }

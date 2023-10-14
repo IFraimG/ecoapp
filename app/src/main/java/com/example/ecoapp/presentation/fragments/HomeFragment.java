@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import com.example.ecoapp.data.models.Guide;
 import com.example.ecoapp.presentation.adapters.AdviceAdapter;
 import com.example.ecoapp.presentation.adapters.NearbyAdapter;
+import com.example.ecoapp.presentation.adapters.SavedAdviceAdapter;
 import com.example.ecoapp.presentation.adapters.TasksAdapter;
 import com.example.ecoapp.databinding.FragmentHomeBinding;
 import com.example.ecoapp.data.models.Advice;
@@ -132,8 +133,19 @@ public class HomeFragment extends Fragment {
             binding.adviceRecyclerView.setAdapter(adviceAdapter);
         });
 
+
         binding.savedAdviceRecyclerView.setHasFixedSize(true);
         binding.savedAdviceRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        guideViewModel.getGuidesSavedList().observe(requireActivity(), guides -> {
+            List<Advice> guidesList = new ArrayList<>();
+            for (Guide guide: guides) {
+                guidesList.add(new Advice(guide.getPhoto(), guide.getTitle(), guide.getGuideID()));
+            }
+
+            SavedAdviceAdapter adviceAdapter = new SavedAdviceAdapter(guidesList);
+            binding.savedAdviceRecyclerView.setAdapter(adviceAdapter);
+        });
 
         binding.dailyHabits.setOnClickListener(v -> {
             Bundle bundle = new Bundle();

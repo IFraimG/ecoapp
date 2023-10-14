@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.ecoapp.data.api.RetrofitService;
 import com.example.ecoapp.data.api.guides.GuideAPIService;
 import com.example.ecoapp.data.api.guides.GuideRepository;
+import com.example.ecoapp.data.api.guides.dto.GuidesListDTO;
 import com.example.ecoapp.data.models.Guide;
 import com.example.ecoapp.data.models.Rating;
 import com.example.ecoapp.domain.helpers.StorageHandler;
@@ -32,6 +33,7 @@ public class GuideViewModel extends AndroidViewModel {
     private final MutableLiveData<Guide> guide = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isNavigation = new MutableLiveData<>(false);
     private final MutableLiveData<Rating> rating = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<Guide>> savedGuidesList = new MutableLiveData<>();
 
     public GuideViewModel(@NonNull Application application) {
         super(application);
@@ -173,5 +175,23 @@ public class GuideViewModel extends AndroidViewModel {
         });
 
         return statusCode;
+    }
+
+    public LiveData<ArrayList<Guide>> getGuidesSavedList() {
+        guideRepository.getGuidesSavedList(storageHandler.getToken(), storageHandler.getUserID()).enqueue(new Callback<GuidesListDTO>() {
+            @Override
+            public void onResponse(@NotNull Call<GuidesListDTO> call, @NotNull Response<GuidesListDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    savedGuidesList.setValue(response.body().getGuides());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<GuidesListDTO> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return savedGuidesList;
     }
 }

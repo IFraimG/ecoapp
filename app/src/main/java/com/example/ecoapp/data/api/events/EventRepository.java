@@ -63,4 +63,8 @@ public class EventRepository {
     public Call<EventsListDTO> findNearestEventsByAuthorCoords(String token, double lat, double longt) {
         return eventAPI.findNearestEventsByAuthorCoords(token, lat, longt);
     }
+
+    public Call<EventsListDTO> findAuthorsEvents(String token, String authorID) {
+        return eventAPI.findAuthorsEvents(token, authorID);
+    }
 }

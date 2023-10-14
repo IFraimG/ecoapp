@@ -1,5 +1,6 @@
 package com.example.ecoapp.data.api.guides;
 
+import com.example.ecoapp.data.api.guides.dto.GuidesListDTO;
 import com.example.ecoapp.data.models.Guide;
 import com.example.ecoapp.data.models.Rating;
 
@@ -42,4 +43,7 @@ public interface GuideAPI {
 
     @GET("/get_rating")
     Call<Rating> getRating(@Header("Authorization") String token, @Query("guideID") String guideID, @Query("authorID") String authorID);
+
+    @GET("/guides/get_saved_guides")
+    Call<GuidesListDTO> getGuidesSavedList(@Header("Authorization") String token, @Query("authorID") String authorID);
 }

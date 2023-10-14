@@ -238,7 +238,6 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
 
         geoCoder = new Geocoder(requireContext(), Locale.getDefault());
 
-
         viewModel.getEventsList().observe(requireActivity(), eventsList -> {
             if (eventsList != null) {
                 ImageProvider imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.place_mark);
