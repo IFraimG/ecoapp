@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background_gray"
     android:paddingBottom="80dp"
+    tools:context=".presentation.fragments.AddGuideFragment"
     >
 
     <ScrollView
@@ -201,6 +202,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/guide_publish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

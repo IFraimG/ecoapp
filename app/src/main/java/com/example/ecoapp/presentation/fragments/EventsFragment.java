@@ -72,6 +72,8 @@ public class EventsFragment extends Fragment {
             }
         });
 
+        fragmentEventsBinding.guideIcon.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.addGuideFragment));
+
         return fragmentEventsBinding.getRoot();
     }
 }

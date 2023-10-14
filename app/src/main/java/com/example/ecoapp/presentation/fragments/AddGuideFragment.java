@@ -1,0 +1,115 @@
+package com.example.ecoapp.presentation.fragments;
+
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.example.ecoapp.databinding.FragmentCreateGuideBinding;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+
+public class AddGuideFragment extends Fragment {
+    private FragmentCreateGuideBinding binding;
+    private int SELECT_PHOTO_PROFILE = 1;
+    private Uri uri;
+    private File file;
+
+    @Override
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentCreateGuideBinding.inflate(getLayoutInflater());
+
+        binding.createEventBackToEventFragmentButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+
+            Intent chooserIntent = Intent.createChooser(intent, "Choose Photo");
+
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{cameraIntent});
+
+            startActivityForResult(chooserIntent, SELECT_PHOTO_PROFILE);
+        });
+
+        binding.guidePublish.setOnClickListener(v -> {
+            String title = binding.guideNameEditText.getText().toString();
+            String description = binding.guideArticleEditText.getText().toString();
+            String links = binding.guideReferencesEditText.getText().toString();
+
+            if (title.isEmpty() || description.isEmpty() || file == null) {
+                Toast.makeText(requireContext(), "Вы не заполнили все необходимые данные", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (((requestCode == SELECT_PHOTO_PROFILE && resultCode == RESULT_OK)) && data != null) {
+            if (data.getData() != null) {
+                uri = data.getData();
+
+                try {
+                    final InputStream imageStream = requireActivity().getContentResolver().openInputStream(uri);
+                    final Bitmap originalBitmap = BitmapFactory.decodeStream(imageStream);
+
+                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                    Cursor cursor = requireActivity().getContentResolver().query(uri, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String imagePath = cursor.getString(columnIndex);
+                    cursor.close();
+
+                    file = new File(imagePath);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                Bundle extras = data.getExtras();
+                Bitmap bitmap = (Bitmap) extras.get("data");
+                File f = new File(requireContext().getCacheDir(), "test");
+                try {
+                    f.createNewFile();
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 0, bos);
+
+                    byte[] bitmapdata = bos.toByteArray();
+
+                    FileOutputStream fos = new FileOutputStream(f);
+                    fos.write(bitmapdata);
+                    fos.flush();
+                    fos.close();
+
+                    file = f;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+}

@@ -79,6 +79,9 @@
         <action
             android:id="@+id/action_eventsFragment_to_createEventFragment"
             app:destination="@id/createEventFragment" />
+        <action
+            android:id="@+id/action_eventsFragment_to_addGuideFragment"
+            app:destination="@id/addGuideFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -200,5 +203,18 @@
         <action
             android:id="@+id/action_addHabitFragment_to_habitFragment"
             app:destination="@id/habitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGuideFragment"
+        android:name="com.example.ecoapp.presentation.fragments.AddGuideFragment"
+        android:label="fragment_create_guide"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit"
+        tools:layout="@layout/fragment_create_guide" >
+        <action
+            android:id="@+id/action_addGuideFragment_to_eventsFragment"
+            app:destination="@id/eventsFragment" />
     </fragment>
 </navigation>
