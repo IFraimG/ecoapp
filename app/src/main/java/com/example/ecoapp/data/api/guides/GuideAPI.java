@@ -1,6 +1,7 @@
 package com.example.ecoapp.data.api.guides;
 
 import com.example.ecoapp.data.models.Guide;
+import com.example.ecoapp.data.models.Rating;
 
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -34,4 +36,10 @@ public interface GuideAPI {
 
     @GET("/guides/get_guides")
     Call<ArrayList<Guide>> getGuidesList(@Header("Authorization") String token);
+
+    @PUT("/set_rating")
+    Call<ResponseBody> setRating(@Header("Authorization") String token, @Body Rating rating);
+
+    @GET("/get_rating")
+    Call<Rating> getRating(@Header("Authorization") String token, @Query("guideID") String guideID, @Query("authorID") String authorID);
 }

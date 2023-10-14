@@ -1,6 +1,7 @@
 package com.example.ecoapp.data.api.guides;
 
 import com.example.ecoapp.data.models.Guide;
+import com.example.ecoapp.data.models.Rating;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Query;
 
 public class GuideRepository {
     private final GuideAPI guideAPI;
@@ -51,5 +53,13 @@ public class GuideRepository {
         RequestBody sourceBody = RequestBody.create(MediaType.parse("text/plain"), source);
 
         return guideAPI.changeGuide(token, titleBody, descriptionBody, sourceBody, file);
+    }
+
+    public Call<Rating> getRating(String token, String guideID, String authorID) {
+        return guideAPI.getRating(token, guideID, authorID);
+    }
+
+    public Call<ResponseBody> setRating(String token, String guideID, String authorID, float mark) {
+        return guideAPI.setRating(token, new Rating(authorID, mark, guideID));
     }
 }

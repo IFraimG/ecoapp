@@ -11,6 +11,7 @@ import com.example.ecoapp.data.api.RetrofitService;
 import com.example.ecoapp.data.api.guides.GuideAPIService;
 import com.example.ecoapp.data.api.guides.GuideRepository;
 import com.example.ecoapp.data.models.Guide;
+import com.example.ecoapp.data.models.Rating;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +31,7 @@ public class GuideViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> statusCode = new MutableLiveData<>(0);
     private final MutableLiveData<Guide> guide = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isNavigation = new MutableLiveData<>(false);
+    private final MutableLiveData<Rating> rating = new MutableLiveData<>();
 
     public GuideViewModel(@NonNull Application application) {
         super(application);
@@ -135,5 +137,41 @@ public class GuideViewModel extends AndroidViewModel {
 
     public void setCancelNavigate() {
         isNavigation.setValue(false);
+    }
+
+    public LiveData<Rating> getRating(String guideID) {
+        guideRepository.getRating(storageHandler.getToken(), guideID, storageHandler.getUserID()).enqueue(new Callback<Rating>() {
+            @Override
+            public void onResponse(@NotNull Call<Rating> call, @NotNull Response<Rating> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    rating.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Rating> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return rating;
+    }
+
+    public LiveData<Integer> setRating(String guideID, float mark) {
+        statusCode.setValue(0);
+        guideRepository.setRating(storageHandler.getToken(), guideID, storageHandler.getUserID(), mark).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                statusCode.setValue(response.code());
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                statusCode.setValue(400);
+                t.printStackTrace();
+            }
+        });
+
+        return statusCode;
     }
 }

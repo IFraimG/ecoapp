@@ -3,13 +3,17 @@ package com.example.ecoapp.presentation.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
+import com.example.ecoapp.data.models.Rating;
 import com.example.ecoapp.data.models.User;
 import com.example.ecoapp.databinding.FragmentGuideBinding;
 import com.example.ecoapp.presentation.viewmodels.GuideViewModel;
@@ -45,6 +49,10 @@ public class GuideFragment extends Fragment {
                             showBookmark(user);
                         }
                     });
+                    viewModel.getRating(guideID).observe(requireActivity(), rating -> {
+                        if (rating != null) binding.guideRatingBar.setRating(rating.getMark());
+                    });
+
                     binding.guideSourceName.setText(guide.getSource());
                     binding.articleTv.setText(guide.getSource());
                     binding.guideTitleTitle.setText(guide.getTitle());
@@ -54,6 +62,9 @@ public class GuideFragment extends Fragment {
                 }
             });
 
+            binding.guideRatingBar.setOnRatingBarChangeListener((ratingBar, rating, b) -> {
+                viewModel.setRating(guideID, rating);
+            });
         }
 
         return binding.getRoot();
