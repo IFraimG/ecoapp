@@ -39,7 +39,7 @@ public class AddHabitFragment extends Fragment {
         });
 
         binding.fragmentHabitButtonAddHabit.setOnClickListener(v -> {
-            int selectedID = binding.habitFrequencyRadioGroup.getCheckedRadioButtonId();
+            int selectedID = binding.habitFrequencyRadioGroup.indexOfChild(requireActivity().findViewById(binding.habitFrequencyRadioGroup.getCheckedRadioButtonId()));
             if (selectedID == -1) Toast.makeText(requireContext(), "Вы не выбрали тип привычки", Toast.LENGTH_SHORT).show();
             else if (binding.habitNameEditText.getText().toString().isEmpty()) Toast.makeText(requireContext(), "Вы не указали название", Toast.LENGTH_SHORT).show();
             else {
