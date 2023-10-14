@@ -2,19 +2,19 @@ package com.example.ecoapp.data.models;
 
 public class Advice {
 
-    private int image;
+    private String image;
     private String name;
 
-    public Advice(int image, String name) {
+    public Advice(String image, String name) {
         this.image = image;
         this.name = name;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

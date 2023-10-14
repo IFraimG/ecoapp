@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ecoapp.data.models.Guide;
 import com.example.ecoapp.presentation.adapters.AdviceAdapter;
 import com.example.ecoapp.presentation.adapters.NearbyAdapter;
 import com.example.ecoapp.presentation.adapters.TasksAdapter;
@@ -30,6 +32,7 @@ import com.example.ecoapp.data.models.EventCustom;
 import com.example.ecoapp.data.models.Tasks;
 import com.example.ecoapp.R;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
+import com.example.ecoapp.presentation.viewmodels.GuideViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,6 +42,7 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private EventViewModel viewModel;
+    private GuideViewModel guideViewModel;
     private ArrayList<EventCustom> eventCustoms;
     private AppCompatActivity activity;
     private boolean isLoad = false;
@@ -63,6 +67,7 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
 
         viewModel = new ViewModelProvider(this).get(EventViewModel.class);
+        guideViewModel = new ViewModelProvider(this).get(GuideViewModel.class);
 
         binding.tasksRecyclerView.setHasFixedSize(true);
         binding.tasksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -119,25 +124,25 @@ public class HomeFragment extends Fragment {
         binding.adviceRecyclerView.setHasFixedSize(true);
         binding.adviceRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        List<Advice> adviceList = new ArrayList<>();
-        adviceList.add(new Advice(R.drawable.advice, "Сортировка мусора"));
-        adviceList.add(new Advice(R.drawable.advice, "Сортировка мусора"));
-        adviceList.add(new Advice(R.drawable.advice, "Сортировка мусора"));
-        adviceList.add(new Advice(R.drawable.advice, "Сортировка мусора"));
+        guideViewModel.getGuidesList().observe(requireActivity(), guides -> {
+            List<Advice> guidesList = new ArrayList<>();
+            for (Guide guide: guides) {
+                guidesList.add(new Advice(guide.getPhoto(), guide.getTitle()));
+            }
 
-        AdviceAdapter adviceAdapter = new AdviceAdapter(adviceList);
-        binding.adviceRecyclerView.setAdapter(adviceAdapter);
-
+            AdviceAdapter adviceAdapter = new AdviceAdapter(guidesList);
+            binding.adviceRecyclerView.setAdapter(adviceAdapter);
+        });
 
         binding.savedAdviceRecyclerView.setHasFixedSize(true);
         binding.savedAdviceRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        List<Advice> savedAdviceList = new ArrayList<>();
-        savedAdviceList.add(new Advice(R.drawable.empty_advice, "Хоп хей"));
-        savedAdviceList.add(new Advice(R.drawable.empty_advice, "Ла ла лей"));
-
-        SavedAdviceAdapter savedAdviceAdapter = new SavedAdviceAdapter(savedAdviceList);
-        binding.savedAdviceRecyclerView.setAdapter(savedAdviceAdapter);
+//        List<Advice> savedAdviceList = new ArrayList<>();
+//        savedAdviceList.add(new Advice(R.drawable.empty_advice, "Хоп хей"));
+//        savedAdviceList.add(new Advice(R.drawable.empty_advice, "Ла ла лей"));
+//
+//        SavedAdviceAdapter savedAdviceAdapter = new SavedAdviceAdapter(savedAdviceList);
+//        binding.savedAdviceRecyclerView.setAdapter(savedAdviceAdapter);
 
 //        List<Nearby> nearbyList = new ArrayList<>();
 //        nearbyList.add(new Nearby(R.drawable.nearby_you, "Уборка пляжа, сбор мусора, очистка поля, фильтрация воды"));

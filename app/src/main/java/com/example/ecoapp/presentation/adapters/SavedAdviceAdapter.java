@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoapp.data.models.Advice;
 import com.example.ecoapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -32,7 +33,8 @@ public class SavedAdviceAdapter extends RecyclerView.Adapter<SavedAdviceAdapter.
     @Override
     public void onBindViewHolder(@NonNull SavedAdviceViewHolder holder, int position) {
         holder.name.setText(savedAdviceList.get(position).getName());
-        holder.mImageView.setImageResource(savedAdviceList.get(position).getImage());
+        String url = "https://test123-production-e08e.up.railway.app/image/" + savedAdviceList.get(position).getImage();
+        Picasso.get().load(url).into(holder.mImageView);
     }
 
     @Override

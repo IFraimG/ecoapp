@@ -110,7 +110,6 @@ public class AddGuideFragment extends Fragment {
 
                     file = new File(imagePath);
                     binding.createGuidePhoto.setImageBitmap(originalBitmap);
-
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
