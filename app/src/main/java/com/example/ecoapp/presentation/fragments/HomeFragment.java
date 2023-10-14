@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import com.example.ecoapp.presentation.adapters.AdviceAdapter;
 import com.example.ecoapp.presentation.adapters.NearbyAdapter;
 import com.example.ecoapp.presentation.adapters.TasksAdapter;
+import com.example.ecoapp.presentation.adapters.SavedAdviceAdapter;
 import com.example.ecoapp.databinding.FragmentHomeBinding;
 import com.example.ecoapp.data.models.Advice;
 import com.example.ecoapp.data.models.EventCustom;
@@ -126,6 +127,17 @@ public class HomeFragment extends Fragment {
 
         AdviceAdapter adviceAdapter = new AdviceAdapter(adviceList);
         binding.adviceRecyclerView.setAdapter(adviceAdapter);
+
+
+        binding.savedAdviceRecyclerView.setHasFixedSize(true);
+        binding.savedAdviceRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        List<Advice> savedAdviceList = new ArrayList<>();
+        savedAdviceList.add(new Advice(R.drawable.empty_advice, "Хоп хей"));
+        savedAdviceList.add(new Advice(R.drawable.empty_advice, "Ла ла лей"));
+
+        SavedAdviceAdapter savedAdviceAdapter = new SavedAdviceAdapter(savedAdviceList);
+        binding.savedAdviceRecyclerView.setAdapter(savedAdviceAdapter);
 
 //        List<Nearby> nearbyList = new ArrayList<>();
 //        nearbyList.add(new Nearby(R.drawable.nearby_you, "Уборка пляжа, сбор мусора, очистка поля, фильтрация воды"));
