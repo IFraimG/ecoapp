@@ -1,6 +1,7 @@
 package com.example.ecoapp.data.api.habits;
 
 import com.example.ecoapp.data.api.habits.dto.HabitsListDTO;
+import com.example.ecoapp.data.api.habits.dto.UpdateHabitDTO;
 import com.example.ecoapp.data.models.Habit;
 
 import okhttp3.ResponseBody;
@@ -23,9 +24,9 @@ public interface HabitAPI {
     @GET("/habits/getList")
     Call<HabitsListDTO> getListHabits(@Header("Authorization") String token, @Query("authorID") String authorID);
 
-    @DELETE("/habits/getHabitsByType")
+    @GET("/habits/getHabitsByType")
     Call<HabitsListDTO> getHabitsByType(@Header("Authorization") String token, @Query("authorID") String authorID, @Query("type") String type);
 
     @PUT("/habits/habitUpdate")
-    Call<ResponseBody> habitUpdate(@Header("Authorization") String token, @Body String id);
+    Call<ResponseBody> habitUpdate(@Header("Authorization") String token, @Body UpdateHabitDTO id);
 }

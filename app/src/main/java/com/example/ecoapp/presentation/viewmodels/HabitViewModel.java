@@ -74,6 +74,24 @@ public class HabitViewModel extends AndroidViewModel {
         return habitsList;
     }
 
+    public LiveData<ArrayList<Habit>> getHabitsListByType(String type) {
+        habitRepository.getHabitsByType(storageHandler.getToken(), storageHandler.getUserID(), type).enqueue(new Callback<HabitsListDTO>() {
+            @Override
+            public void onResponse(@NotNull Call<HabitsListDTO> call, @NotNull Response<HabitsListDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    habitsList.setValue(response.body().getHabitsList());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<HabitsListDTO> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return habitsList;
+    }
+
     public LiveData<Integer> makeHabitDone(String habitID) {
         statusCode.setValue(0);
 
@@ -99,5 +117,9 @@ public class HabitViewModel extends AndroidViewModel {
 
     public void cancelNavigate() {
         isNavigation.setValue(false);
+    }
+
+    public void clearData() {
+        habitsList.setValue(null);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.ecoapp.data.api.habits;
 
 import com.example.ecoapp.data.api.habits.dto.HabitsListDTO;
+import com.example.ecoapp.data.api.habits.dto.UpdateHabitDTO;
 import com.example.ecoapp.data.models.Habit;
 
 import okhttp3.ResponseBody;
@@ -30,6 +31,6 @@ public class HabitRepository {
     }
 
     public Call<ResponseBody> habitUpdate(String token, String id) {
-        return habitAPI.habitUpdate(token, id);
+        return habitAPI.habitUpdate(token, new UpdateHabitDTO(id));
     }
 }

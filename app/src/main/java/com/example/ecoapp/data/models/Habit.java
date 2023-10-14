@@ -82,5 +82,9 @@ public class Habit {
     public void setType(String type) {
         this.type = type;
     }
+
+    public boolean isDone() {
+        return isDone;
+    }
 }
 
