@@ -51,12 +51,9 @@ public class GuideFragment extends Fragment {
 
                     String url = "https://test123-production-e08e.up.railway.app/image/" + guide.getPhoto();
                     Picasso.get().load(url).into(binding.adviceImage);
-
                 }
             });
 
-            binding.unactivatedBookmark.setOnClickListener(View -> updateGuideToUser());
-            binding.activatedBookmark.setOnClickListener(View -> updateGuideToUser());
         }
 
         return binding.getRoot();
@@ -76,5 +73,8 @@ public class GuideFragment extends Fragment {
             binding.unactivatedBookmark.setVisibility(View.VISIBLE);
             binding.activatedBookmark.setVisibility(View.GONE);
         }
+
+        binding.unactivatedBookmark.setOnClickListener(View -> updateGuideToUser());
+        binding.activatedBookmark.setOnClickListener(View -> updateGuideToUser());
     }
 }

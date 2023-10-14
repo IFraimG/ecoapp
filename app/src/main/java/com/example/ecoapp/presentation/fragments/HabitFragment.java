@@ -86,6 +86,8 @@ public class HabitFragment extends Fragment {
             });
         }
 
+        binding.progressIcon.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.progressFragment));
+
         return binding.getRoot();
     }
 
