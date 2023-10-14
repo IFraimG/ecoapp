@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.example.ecoapp.databinding.ProgressLayoutBinding;
 import com.example.ecoapp.presentation.MainActivity;
+import com.example.ecoapp.presentation.adapters.CalendarDecorator;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +38,12 @@ public class ProgressFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = ProgressLayoutBinding.inflate(getLayoutInflater());
 
+
+        CalendarDay targetDate = CalendarDay.from(2023, 10, 14);
+        CalendarDay targetDate2 = CalendarDay.from(2023, 10, 9);
+
+        binding.progressCalendar.addDecorator(new CalendarDecorator(requireContext(), targetDate, "full"));
+        binding.progressCalendar.addDecorator(new CalendarDecorator(requireContext(), targetDate2, "normal"));
 
         return binding.getRoot();
     }
