@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/background_gray"
+    android:paddingBottom="50dp"
     tools:context=".presentation.fragments.HomeFragment">
 
     <ScrollView
@@ -174,6 +175,7 @@
                 app:cardElevation="0dp"
                 android:elevation="0dp"
                 android:layout_marginTop="12dp"
+                android:paddingBottom="60dp"
                 app:cardCornerRadius="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
