@@ -1,5 +1,6 @@
 package com.example.ecoapp.presentation.adapters;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,11 @@ public class AdviceAdapter extends RecyclerView.Adapter<AdviceAdapter.AdviceView
     @Override
     public void onBindViewHolder(@NonNull AdviceViewHolder holder, int position) {
         holder.name.setText(adviceList.get(position).getName());
-//        holder.mImageView.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.));
+        holder.mImageView.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("guideID", adviceList.get(position).getId());
+            Navigation.findNavController(v).navigate(R.id.guideFragment, bundle);
+        });
         String url = "https://test123-production-e08e.up.railway.app/image/" + adviceList.get(position).getImage();
         Picasso.get().load(url).into(holder.mImageView);
     }

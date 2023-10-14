@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +24,6 @@ import com.example.ecoapp.data.models.Guide;
 import com.example.ecoapp.presentation.adapters.AdviceAdapter;
 import com.example.ecoapp.presentation.adapters.NearbyAdapter;
 import com.example.ecoapp.presentation.adapters.TasksAdapter;
-import com.example.ecoapp.presentation.adapters.SavedAdviceAdapter;
 import com.example.ecoapp.databinding.FragmentHomeBinding;
 import com.example.ecoapp.data.models.Advice;
 import com.example.ecoapp.data.models.EventCustom;
@@ -127,7 +125,7 @@ public class HomeFragment extends Fragment {
         guideViewModel.getGuidesList().observe(requireActivity(), guides -> {
             List<Advice> guidesList = new ArrayList<>();
             for (Guide guide: guides) {
-                guidesList.add(new Advice(guide.getPhoto(), guide.getTitle()));
+                guidesList.add(new Advice(guide.getPhoto(), guide.getTitle(), guide.getGuideID()));
             }
 
             AdviceAdapter adviceAdapter = new AdviceAdapter(guidesList);
@@ -136,19 +134,6 @@ public class HomeFragment extends Fragment {
 
         binding.savedAdviceRecyclerView.setHasFixedSize(true);
         binding.savedAdviceRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-//        List<Advice> savedAdviceList = new ArrayList<>();
-//        savedAdviceList.add(new Advice(R.drawable.empty_advice, "Хоп хей"));
-//        savedAdviceList.add(new Advice(R.drawable.empty_advice, "Ла ла лей"));
-//
-//        SavedAdviceAdapter savedAdviceAdapter = new SavedAdviceAdapter(savedAdviceList);
-//        binding.savedAdviceRecyclerView.setAdapter(savedAdviceAdapter);
-
-//        List<Nearby> nearbyList = new ArrayList<>();
-//        nearbyList.add(new Nearby(R.drawable.nearby_you, "Уборка пляжа, сбор мусора, очистка поля, фильтрация воды"));
-//        nearbyList.add(new Nearby(R.drawable.nearby_you, "Уборка пляжа"));
-//        nearbyList.add(new Nearby(R.drawable.nearby_you, "Уборка пляжа"));
-//        nearbyList.add(new Nearby(R.drawable.nearby_you, "Уборка пляжа"));
 
         binding.dailyHabits.setOnClickListener(v -> {
             Bundle bundle = new Bundle();

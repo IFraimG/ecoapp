@@ -10,6 +10,7 @@ import com.example.ecoapp.data.api.RetrofitService;
 import com.example.ecoapp.data.api.users.UserAPIService;
 import com.example.ecoapp.data.api.users.UserRepository;
 import com.example.ecoapp.data.models.User;
+import com.example.ecoapp.domain.helpers.StorageHandler;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -24,9 +25,12 @@ public class ProfileViewModel extends AndroidViewModel {
     private UserRepository userRepository;
     private MutableLiveData<User> user = new MutableLiveData<>();
     private MutableLiveData<File> userImage = new MutableLiveData<>();
+    private StorageHandler storageHandler;
 
     public ProfileViewModel(@NotNull Application application) {
         super(application);
+
+        storageHandler = new StorageHandler(application);
         userRepository = new UserRepository(new UserAPIService(new RetrofitService()));
     }
 
@@ -48,7 +52,7 @@ public class ProfileViewModel extends AndroidViewModel {
     }
 
     public LiveData<User> getUserData(String token, String userID) {
-        userRepository.getUser(token, userID).enqueue(new Callback<User>() {
+        userRepository.getUser(storageHandler.getToken(), storageHandler.getUserID()).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NotNull Call<User> call, @NotNull Response<User> response) {
                 statusCode.setValue(response.code());

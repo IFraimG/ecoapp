@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.fragments.GuideFragment"
     android:background="@color/background_gray">
 
     <ScrollView
@@ -15,28 +16,41 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <ImageButton
+                android:id="@+id/guide_back"
+                android:contentDescription="back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="-70dp"
+                android:background="@drawable/baseline_arrow_back_24"
+                />
+
+
             <ImageView
                 android:id="@+id/unactivated_bookmark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="20dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
                 android:src="@drawable/grey_bookmark" />
 
             <ImageView
                 android:id="@+id/activated_bookmark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="20dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
                 android:src="@drawable/green_bookmark"
                 android:visibility="gone"/>
 
             <TextView
+                android:id="@+id/guide_title_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxWidth="300dp"
-                android:text="Сортировка мусора"
                 android:fontFamily="@font/montserrat_bold"
                 android:textSize="24sp"
                 android:textColor="@color/black"
@@ -59,21 +73,14 @@
                 android:id="@+id/article_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginRight="16dp"
                 android:ellipsize="end"
-                android:text="Сортировка мусора - это не только ответственное действие перед природой, но и шаг к более устойчивому будущему для наших городов и планеты в целом. Вот несколько простых шагов, которые каждый из нас может предпринять, чтобы сделать наш мир чище и зеленее:
-Разделите мусор. Начните с основных категорий: бумага, пластик, металл и органические отходы. Это позволит упростить процесс переработки.
-Перерабатывайте. Узнайте, какие виды мусора принимаются для переработки в вашем районе, и следуйте правилам сортировки.
-Уменьшайте потребление. Стремитесь к уменьшению объема мусора, который вы создаете, путем уменьшения использования одноразовых товаров и покупки продуктов с минимальной упаковкой.
-Перерабатывайте электронику и опасные отходы. Это важно для предотвращения загрязнения почвы и воды токсичными веществами.
-Организуйте сбор мусора на общественных мероприятиях. Поддерживайте инициативы и участвуйте в совместных усилиях по очистке природы.
-Сортировка мусора - это не только способ заботиться о окружающей среде, но и создать более здоровое и устойчивое будущее для наших потомков. Давайте внесем свой вклад в это важное дело, начиная сегодня!"
                 android:fontFamily="@font/montserrat_medium"
                 android:textColor="@color/text_gray"
-                android:textSize="20sp"
-                android:layout_gravity="center_horizontal" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/guide_author_title"
@@ -93,7 +100,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
-                android:text="София Бойко"
                 android:fontFamily="@font/montserrat_regular"
                 android:textColor="@color/text_gray"
                 android:textSize="20sp"
@@ -117,7 +123,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
-                android:text="ChatGPT"
                 android:fontFamily="@font/montserrat_regular"
                 android:textColor="@color/text_gray"
                 android:textSize="20sp"

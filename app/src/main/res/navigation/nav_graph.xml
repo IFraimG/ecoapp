@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_homeFragment_to_habitFragment"
             app:destination="@id/habitFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_guideFragment"
+            app:destination="@id/guideFragment" />
     </fragment>
     <fragment
         android:id="@+id/authSignupFragment"
@@ -216,5 +219,14 @@
         <action
             android:id="@+id/action_addGuideFragment_to_eventsFragment"
             app:destination="@id/eventsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/guideFragment"
+        android:name="com.example.ecoapp.presentation.fragments.GuideFragment"
+        android:label="fragment_guide"
+        tools:layout="@layout/fragment_guide" >
+        <action
+            android:id="@+id/action_guideFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 </navigation>
