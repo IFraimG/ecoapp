@@ -29,6 +29,7 @@ public class GuideViewModel extends AndroidViewModel {
     private final MutableLiveData<ArrayList<Guide>> guidesList = new MutableLiveData<>();
     private final MutableLiveData<Integer> statusCode = new MutableLiveData<>(0);
     private final MutableLiveData<Guide> guide = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isNavigation = new MutableLiveData<>(false);
 
     public GuideViewModel(@NonNull Application application) {
         super(application);
@@ -43,6 +44,7 @@ public class GuideViewModel extends AndroidViewModel {
             @Override
             public void onResponse(@NotNull Call<Guide> call, @NotNull Response<Guide> response) {
                 statusCode.setValue(response.code());
+                if (response.isSuccessful()) isNavigation.setValue(true);
             }
 
             @Override
@@ -125,5 +127,13 @@ public class GuideViewModel extends AndroidViewModel {
         });
 
         return statusCode;
+    }
+
+    public LiveData<Boolean> getNavigation() {
+        return isNavigation;
+    }
+
+    public void setCancelNavigate() {
+        isNavigation.setValue(false);
     }
 }

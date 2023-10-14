@@ -5,9 +5,9 @@ import com.example.ecoapp.data.models.Guide;
 import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -20,7 +20,7 @@ import retrofit2.http.Query;
 public interface GuideAPI {
     @POST("/guides/create")
     @Multipart
-    Call<Guide> createGuide(@Header("Authorization") String token, @Body Guide guideDTO, @Part MultipartBody.Part img);
+    Call<Guide> createGuide(@Header("Authorization") String token, @Part("title") RequestBody title, @Part("description") RequestBody description, @Part("authorID") RequestBody authorID, @Part("source") RequestBody source, @Part MultipartBody.Part img);
 
     @DELETE("/guides/delete")
     Call<ResponseBody> deleteHabit(@Header("Authorization") String token, @Query("id") String id);
@@ -30,7 +30,7 @@ public interface GuideAPI {
 
     @PUT("/habits/change_guide")
     @Multipart
-    Call<ResponseBody> changeGuide(@Header("Authorization") String token, @Body Guide guideDTO, @Part MultipartBody.Part img);
+    Call<ResponseBody> changeGuide(@Header("Authorization") String token, @Part("title") RequestBody title, @Part("description") RequestBody description, @Part("source") RequestBody source, @Part MultipartBody.Part img);
 
     @GET("/guides/get_guides")
     Call<ArrayList<Guide>> getGuidesList(@Header("Authorization") String token);

@@ -20,8 +20,8 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface UserAPI {
-    @PUT("/users/edit_profile")
     @Multipart
+    @PUT("/users/edit_profile")
     Call<User> editProfile(@Header("Authorization") String token, @Body EditProfileDTO editProfileDTO,
                            @Part MultipartBody.Part img);
 

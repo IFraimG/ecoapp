@@ -22,7 +22,12 @@ public class GuideRepository {
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), photo);
         MultipartBody.Part file = MultipartBody.Part.createFormData("img", photo.getName(), fileReqBody);
 
-        return guideAPI.createGuide(token, new Guide(title, description, authorID, source), file);
+        RequestBody titleBody = RequestBody.create(MediaType.parse("text/plain"), title);
+        RequestBody descriptionBody = RequestBody.create(MediaType.parse("text/plain"), description);
+        RequestBody authorIDBody = RequestBody.create(MediaType.parse("text/plain"), authorID);
+        RequestBody sourceBody = RequestBody.create(MediaType.parse("text/plain"), source);
+
+        return guideAPI.createGuide(token, titleBody, descriptionBody, authorIDBody, sourceBody, file);
     }
 
     public Call<ResponseBody> deleteGuide(String token, String guideID) {
@@ -41,6 +46,10 @@ public class GuideRepository {
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), photo);
         MultipartBody.Part file = MultipartBody.Part.createFormData("img", photo.getName(), fileReqBody);
 
-        return guideAPI.changeGuide(token, new Guide(title, description, source), file);
+        RequestBody titleBody = RequestBody.create(MediaType.parse("text/plain"), title);
+        RequestBody descriptionBody = RequestBody.create(MediaType.parse("text/plain"), description);
+        RequestBody sourceBody = RequestBody.create(MediaType.parse("text/plain"), source);
+
+        return guideAPI.changeGuide(token, titleBody, descriptionBody, sourceBody, file);
     }
 }

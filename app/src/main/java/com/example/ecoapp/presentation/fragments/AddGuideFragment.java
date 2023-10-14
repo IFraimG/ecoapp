@@ -9,8 +9,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -18,7 +22,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentCreateGuideBinding;
+import com.example.ecoapp.presentation.viewmodels.GuideViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -34,13 +40,18 @@ public class AddGuideFragment extends Fragment {
     private int SELECT_PHOTO_PROFILE = 1;
     private Uri uri;
     private File file;
+    private GuideViewModel viewModel;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentCreateGuideBinding.inflate(getLayoutInflater());
 
-        binding.createEventBackToEventFragmentButton.setOnClickListener(v -> {
+        viewModel = new ViewModelProvider(requireActivity()).get(GuideViewModel.class);
+
+        binding.createEventBackToEventFragmentButton.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
+
+        binding.createGuidePhoto.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
 
@@ -59,11 +70,23 @@ public class AddGuideFragment extends Fragment {
 
             if (title.isEmpty() || description.isEmpty() || file == null) {
                 Toast.makeText(requireContext(), "Вы не заполнили все необходимые данные", Toast.LENGTH_SHORT).show();
-
+            } else {
+                viewModel.createGuide(title, description, links, file);
             }
         });
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewModel.getNavigation().observe(getViewLifecycleOwner(), isNavigate -> {
+            if (isNavigate) {
+                Navigation.findNavController(requireView()).navigate(R.id.eventsFragment);
+                viewModel.setCancelNavigate();
+            }
+        });
     }
 
     @Override
@@ -86,6 +109,8 @@ public class AddGuideFragment extends Fragment {
                     cursor.close();
 
                     file = new File(imagePath);
+                    binding.createGuidePhoto.setImageBitmap(originalBitmap);
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -106,6 +131,7 @@ public class AddGuideFragment extends Fragment {
                     fos.close();
 
                     file = f;
+                    binding.createGuidePhoto.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
