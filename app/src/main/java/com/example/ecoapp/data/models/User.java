@@ -27,6 +27,9 @@ public class User {
     @SerializedName("habitsList")
     private ArrayList<String> habitsList;
 
+    @SerializedName("guidesList")
+    private ArrayList<String> guidesList;
+
     public User() {}
 
     public User(String name, String email, String password, String id) {
@@ -91,5 +94,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ArrayList<String> getGuidesList() {
+        return guidesList;
+    }
+
+    public void setGuidesList(ArrayList<String> guidesList) {
+        this.guidesList = guidesList;
     }
 }

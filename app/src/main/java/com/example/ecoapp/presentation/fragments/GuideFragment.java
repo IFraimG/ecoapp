@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ecoapp.data.models.User;
 import com.example.ecoapp.databinding.FragmentGuideBinding;
 import com.example.ecoapp.presentation.viewmodels.GuideViewModel;
 import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
@@ -21,6 +22,7 @@ public class GuideFragment extends Fragment {
     private FragmentGuideBinding binding;
     private GuideViewModel viewModel;
     private ProfileViewModel profileViewModel;
+    private String guideID;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -32,13 +34,16 @@ public class GuideFragment extends Fragment {
         binding.guideBack.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
         Bundle args = getArguments();
-        String guideID = args != null ? args.getString("guideID") : null;
+        guideID = args != null ? args.getString("guideID") : null;
 
         if (guideID != null) {
             viewModel.getGuideByID(guideID).observe(requireActivity(), guide -> {
                 if (guide != null) {
                     profileViewModel.getUserData("", "").observe(requireActivity(), user -> {
-                        if (user != null) binding.guideAuthorName.setText(user.getName());
+                        if (user != null) {
+                            binding.guideAuthorName.setText(user.getName());
+                            showBookmark(user);
+                        }
                     });
                     binding.guideSourceName.setText(guide.getSource());
                     binding.articleTv.setText(guide.getSource());
@@ -46,10 +51,30 @@ public class GuideFragment extends Fragment {
 
                     String url = "https://test123-production-e08e.up.railway.app/image/" + guide.getPhoto();
                     Picasso.get().load(url).into(binding.adviceImage);
+
                 }
             });
+
+            binding.unactivatedBookmark.setOnClickListener(View -> updateGuideToUser());
+            binding.activatedBookmark.setOnClickListener(View -> updateGuideToUser());
         }
 
         return binding.getRoot();
+    }
+
+    private void updateGuideToUser() {
+        profileViewModel.updateGuideToUser(guideID).observe(requireActivity(), user -> {
+            if (user != null) showBookmark(user);
+        });
+    }
+
+    private void showBookmark(User user) {
+        if (user.getGuidesList().contains(guideID)) {
+            binding.unactivatedBookmark.setVisibility(View.GONE);
+            binding.activatedBookmark.setVisibility(View.VISIBLE);
+        } else {
+            binding.unactivatedBookmark.setVisibility(View.VISIBLE);
+            binding.activatedBookmark.setVisibility(View.GONE);
+        }
     }
 }

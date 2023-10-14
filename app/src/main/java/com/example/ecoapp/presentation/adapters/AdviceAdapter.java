@@ -35,7 +35,7 @@ public class AdviceAdapter extends RecyclerView.Adapter<AdviceAdapter.AdviceView
     @Override
     public void onBindViewHolder(@NonNull AdviceViewHolder holder, int position) {
         holder.name.setText(adviceList.get(position).getName());
-        holder.mImageView.setOnClickListener(v -> {
+        holder.itemView.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString("guideID", adviceList.get(position).getId());
             Navigation.findNavController(v).navigate(R.id.guideFragment, bundle);

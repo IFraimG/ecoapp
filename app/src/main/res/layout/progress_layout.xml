@@ -19,8 +19,8 @@
             android:layout_weight="1"
             android:text="<-"
             android:textColor="@color/green"
-            android:background=""
             android:textStyle="bold"
+            android:backgroundTint="@color/white"
             android:onClick="previousMonthAction"
             android:textSize="20sp"/>
 
@@ -41,8 +41,8 @@
             android:layout_weight="1"
             android:text="->"
             android:textColor="@color/green"
-            android:background=""
             android:textStyle="bold"
+            android:backgroundTint="@color/white"
             android:onClick="nextMonthAction"
             android:textSize="20sp"/>
 

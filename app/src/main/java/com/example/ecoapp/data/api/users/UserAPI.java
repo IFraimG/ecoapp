@@ -1,5 +1,6 @@
 package com.example.ecoapp.data.api.users;
 
+import com.example.ecoapp.data.api.users.dto.AddGuideToUserDTO;
 import com.example.ecoapp.data.models.User;
 import com.example.ecoapp.data.api.users.dto.ChangeScoresDTO;
 import com.example.ecoapp.data.api.users.dto.EditProfileDTO;
@@ -46,4 +47,7 @@ public interface UserAPI {
 
     @GET("/image/{image}")
     Call<ResponseBody> getImage(@Header("Authorization") String token, @Path("image") String imageURL);
+
+    @PUT("/users/update_guide_to_user")
+    Call<User> updateGuideToUser(@Header("Authorization") String token, @Body AddGuideToUserDTO addGuideToUserDTO);
 }

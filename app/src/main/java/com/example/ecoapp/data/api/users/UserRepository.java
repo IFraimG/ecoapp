@@ -1,5 +1,6 @@
 package com.example.ecoapp.data.api.users;
 
+import com.example.ecoapp.data.api.users.dto.AddGuideToUserDTO;
 import com.example.ecoapp.data.models.User;
 import com.example.ecoapp.data.api.users.dto.ChangeScoresDTO;
 import com.example.ecoapp.data.api.users.dto.EditProfileDTO;
@@ -50,7 +51,7 @@ public class UserRepository {
         return userAPI.getHabitByTitle(token, title);
     }
 
-//    public Call<File> getImage(String token, String imageURL) {
-//        return userAPI.getImage(token, imageURL);
-//    }
+    public Call<User> updateGuideToUser(String token, String userID, String guideID) {
+        return userAPI.updateGuideToUser(token, new AddGuideToUserDTO(userID, guideID));
+    }
 }

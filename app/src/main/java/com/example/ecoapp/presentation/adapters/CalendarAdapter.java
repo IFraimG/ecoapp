@@ -8,23 +8,22 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ecoapp.R;
+
 import java.util.ArrayList;
 
-class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>
-{
+class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder> {
     private final ArrayList<String> daysOfMonth;
     private final OnItemListener onItemListener;
 
-    public CalendarAdapter(ArrayList<String> daysOfMonth, OnItemListener onItemListener)
-    {
+    public CalendarAdapter(ArrayList<String> daysOfMonth, OnItemListener onItemListener) {
         this.daysOfMonth = daysOfMonth;
         this.onItemListener = onItemListener;
     }
 
     @NonNull
     @Override
-    public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-    {
+    public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.calendar_cell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
@@ -44,17 +43,15 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewH
         return daysOfMonth.size();
     }
 
-    public interface  OnItemListener
-    {
+    public interface  OnItemListener {
         void onItemClick(int position, String dayText);
     }
 
-    public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
-    {
+    public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final TextView dayOfMonth;
         private final CalendarAdapter.OnItemListener onItemListener;
-        public CalendarViewHolder(@NonNull View itemView, CalendarAdapter.OnItemListener onItemListener)
-        {
+
+        public CalendarViewHolder(@NonNull View itemView, CalendarAdapter.OnItemListener onItemListener) {
             super(itemView);
             dayOfMonth = itemView.findViewById(R.id.cellDayText);
             this.onItemListener = onItemListener;
@@ -62,8 +59,7 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.CalendarViewH
         }
 
         @Override
-        public void onClick(View view)
-        {
+        public void onClick(View view) {
             onItemListener.onItemClick(getAdapterPosition(), (String) dayOfMonth.getText());
         }
     }
