@@ -45,9 +45,15 @@ public class HabitsAdapter extends RecyclerView.Adapter<HabitsAdapter.HabitsView
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public void onBindViewHolder(@NonNull HabitsViewHolder holder, int position) {
         holder.mName.setText(habitsList.get(position).getTitle());
         if (habitsList.get(position).isDone()) holder.circle.setImageResource(R.drawable.green_check);
+        else holder.circle.setImageResource(R.drawable.grey_circle);
     }
 
     @Override
