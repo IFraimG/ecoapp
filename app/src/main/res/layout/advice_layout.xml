@@ -4,6 +4,7 @@
     android:layout_width="140dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/background_card_view"
     android:layout_marginLeft="0dp"
     android:layout_marginTop="8dp"
     android:layout_marginBottom="10dp"
@@ -29,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/empty_nearby"
-                android:background="@color/white"
+                android:background="@color/background_card_view"
                 android:scaleType="centerCrop"
                 />
         </androidx.cardview.widget.CardView>

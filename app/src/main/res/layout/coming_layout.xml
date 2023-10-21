@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="140dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/background_card_view"
     app:cardElevation="0dp"
     android:elevation="0dp"
     android:layout_marginLeft="0dp"
@@ -22,6 +23,7 @@
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
             android:elevation="0dp"
+            app:cardBackgroundColor="@color/background_card_view"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">

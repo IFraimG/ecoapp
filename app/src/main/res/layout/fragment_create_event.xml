@@ -70,6 +70,7 @@
                 android:elevation="0dp"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/background_card_view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fragment_create_event_person_points">
@@ -107,6 +108,7 @@
                 android:elevation="0dp"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/background_card_view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/create_event_photo_card_view">
@@ -302,6 +304,7 @@
                 android:elevation="0dp"
                 android:layout_marginTop="12dp"
                 app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/background_card_view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/creating_event_fields_card_view">

@@ -36,6 +36,7 @@
                 app:cardCornerRadius="19dp"
                 app:cardElevation="0dp"
                 android:layout_gravity="right"
+                app:cardBackgroundColor="@color/background_card_view"
                 android:layout_marginBottom="-80dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="16dp">
@@ -78,6 +79,7 @@
                 android:layout_height="wrap_content"
                 app:cardElevation="0dp"
                 android:elevation="0dp"
+                app:cardBackgroundColor="@color/background_card_view"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp">
 
