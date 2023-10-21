@@ -4,6 +4,8 @@ package com.example.ecoapp.presentation.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -106,6 +108,18 @@ public class EventFragment extends Fragment {
                 bundle.putDouble("longt", eventCustom.getLongt());
                 bundle.putDouble("lat", eventCustom.getLat());
                 Navigation.findNavController(v).navigate(R.id.secondMapFragment, bundle);
+            });
+
+            binding.theEventCurrentPeopleAmount.setOnClickListener(v -> {
+                if (eventCustom != null && storageHandler.getUserID().equals(eventCustom.getAuthorID())) {
+                    FragmentManager manager = requireActivity().getSupportFragmentManager();
+                    UserListDialogFragment dialogFragment = new UserListDialogFragment();
+                    Bundle args2 = new Bundle();
+                    args2.putString("eventID", eventCustom.getEventID());
+                    dialogFragment.setArguments(args2);
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    dialogFragment.show(transaction, "dialog");
+                }
             });
         }
 

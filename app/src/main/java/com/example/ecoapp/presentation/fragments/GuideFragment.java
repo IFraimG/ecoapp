@@ -61,10 +61,7 @@ public class GuideFragment extends Fragment {
             viewModel.getGuideByID(guideID).observe(requireActivity(), guide -> {
                 if (guide != null) {
                     profileViewModel.getUserData("", "").observe(requireActivity(), user -> {
-                        if (user != null) {
-                            binding.guideAuthorName.setText(user.getName());
-                            showBookmark(user);
-                        }
+                        if (user != null) showBookmark(user);
                     });
                     viewModel.getRating(guideID).observe(requireActivity(), rating -> {
                         if (rating != null) binding.guideRatingBar.setRating(rating.getMark());
@@ -73,6 +70,8 @@ public class GuideFragment extends Fragment {
                     binding.guideSourceName.setText(guide.getSource());
                     binding.articleTv.setText(guide.getSource());
                     binding.guideTitleTitle.setText(guide.getTitle());
+                    binding.guideAuthorName.setText(guide.getAuthorID());
+
 
                     String url = "https://test123-production-e08e.up.railway.app/image/" + guide.getPhoto();
                     Picasso.get().load(url).into(binding.adviceImage);

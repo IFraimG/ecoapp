@@ -11,6 +11,8 @@ import com.example.ecoapp.data.api.RetrofitService;
 import com.example.ecoapp.data.api.events.EventAPIService;
 import com.example.ecoapp.data.api.events.EventRepository;
 import com.example.ecoapp.data.api.events.dto.EventsListDTO;
+import com.example.ecoapp.data.api.users.dto.UsersListDTO;
+import com.example.ecoapp.data.models.User;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.data.models.EventCustom;
 
@@ -30,6 +32,8 @@ public class EventViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> statusCode = new MutableLiveData<>(0);
     private final MutableLiveData<EventCustom> event = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isNavigation = new MutableLiveData<>(false);
+    private final MutableLiveData<ArrayList<User>> usersScoresList = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> isGetContext = new MutableLiveData<>(false);
 
     public EventViewModel(@NonNull Application application) {
         super(application);
@@ -57,19 +61,22 @@ public class EventViewModel extends AndroidViewModel {
     }
 
     public LiveData<ArrayList<EventCustom>> getEventsList() {
+        isGetContext.setValue(false);
         eventRepository.getEventsList(storageHandler.getToken()).enqueue(new Callback<EventsListDTO>() {
             @Override
             public void onResponse(@NotNull Call<EventsListDTO> call, @NotNull Response<EventsListDTO> response) {
                 statusCode.setValue(response.code());
                 if (response.isSuccessful() && response.body() != null && response.body().getItem() != null) {
                     eventsList.setValue(response.body().getItem());
+                    isGetContext.setValue(true);
                 }
             }
 
             @Override
             public void onFailure(@NotNull Call<EventsListDTO> call, @NotNull Throwable t) {
-                t.printStackTrace();
                 statusCode.setValue(400);
+                isGetContext.setValue(false);
+                t.printStackTrace();
             }
         });
 
@@ -188,6 +195,24 @@ public class EventViewModel extends AndroidViewModel {
         return eventsList;
     }
 
+    public LiveData<ArrayList<User>> getUsersScores(String eventID) {
+        eventRepository.getUsersFromEvents(storageHandler.getToken(), storageHandler.getUserID(), eventID).enqueue(new Callback<UsersListDTO>() {
+            @Override
+            public void onResponse(@NotNull Call<UsersListDTO> call, @NotNull Response<UsersListDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    usersScoresList.setValue(response.body().getItem());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<UsersListDTO> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return usersScoresList;
+    }
+
     public void clearEvents() {
         eventsList.setValue(null);
     }
@@ -199,4 +224,13 @@ public class EventViewModel extends AndroidViewModel {
     public void cancelNavigate() {
         isNavigation.setValue(false);
     }
+
+    public void setCancelContext() {
+        isGetContext.setValue(false);
+    }
+
+    public LiveData<Boolean> getIsContext() {
+        return isGetContext;
+    }
+
 }

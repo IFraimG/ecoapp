@@ -20,6 +20,7 @@ import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentMapBinding;
 import com.example.ecoapp.domain.helpers.PermissionHandler;
 import com.example.ecoapp.data.models.EventCustom;
+import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 import com.yandex.mapkit.Animation;
@@ -66,12 +67,12 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
     private UserLocationLayer userLocationLayer;
     private MapObjectCollection mapObjects;
     private DrivingRouter drivingRouter;
-    private DrivingSession drivingSession;
     private boolean isAvailableLocation = false;
     private LocationManager locationManager;
     private final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
     private Point myPoint;
     private EventViewModel viewModel;
+    private StorageHandler storageHandler;
     private PermissionHandler permissionHandler;
     private Bundle bundle;
     private Geocoder geoCoder;
@@ -219,6 +220,9 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
     private void initMap() {
         if (permissionHandler != null) permissionHandler.requestMapPermissions((AppCompatActivity) requireActivity());
 
+        storageHandler = new StorageHandler(requireContext());
+        mapView.getMap().setNightModeEnabled(storageHandler.getTheme() == 1);
+
         userLocationLayer = MapKitFactory.getInstance().createUserLocationLayer(mapView.getMapWindow());
         userLocationLayer.setVisible(true);
         userLocationLayer.setHeadingEnabled(true);
@@ -240,13 +244,7 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
 
         viewModel.getEventsList().observe(requireActivity(), eventsList -> {
             if (eventsList != null) {
-                ImageProvider imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.place_mark);
                 eventCustoms = eventsList;
-                for (EventCustom event: eventsList) {
-                    if (event.getLongt() != 0 && event.getLat() != 0) {
-                        mapObjects.addPlacemark(new Point(event.getLat(), event.getLongt()), imageProvider);
-                    }
-                }
             }
         });
     }
@@ -256,6 +254,18 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
         super.onViewCreated(view, savedInstanceState);
 
         mapView.getMap().addInputListener(listener);
+
+        viewModel.getIsContext().observe(getViewLifecycleOwner(), isCtx -> {
+            if (isCtx) {
+                ImageProvider imageProvider = ImageProvider.fromResource(requireContext(), R.drawable.place_mark);
+                for (EventCustom event: eventCustoms) {
+                    if (event.getLongt() != 0 && event.getLat() != 0) {
+                        mapObjects.addPlacemark(new Point(event.getLat(), event.getLongt()), imageProvider);
+                    }
+                }
+                viewModel.setCancelContext();
+            }
+        });
     }
 
     @Override

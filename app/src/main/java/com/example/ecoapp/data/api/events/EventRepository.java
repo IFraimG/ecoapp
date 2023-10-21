@@ -2,6 +2,7 @@ package com.example.ecoapp.data.api.events;
 
 import com.example.ecoapp.data.api.events.dto.AddUserToEventDTO;
 import com.example.ecoapp.data.api.events.dto.EventsListDTO;
+import com.example.ecoapp.data.api.users.dto.UsersListDTO;
 import com.example.ecoapp.data.models.EventCustom;
 
 import java.io.File;
@@ -66,5 +67,9 @@ public class EventRepository {
 
     public Call<EventsListDTO> findAuthorsEvents(String token, String authorID) {
         return eventAPI.findAuthorsEvents(token, authorID);
+    }
+
+    public Call<UsersListDTO> getUsersFromEvents(String token, String authorID, String eventID) {
+        return eventAPI.getUsersFromEvents(token, authorID, eventID);
     }
 }

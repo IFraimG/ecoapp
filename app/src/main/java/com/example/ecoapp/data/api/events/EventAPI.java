@@ -2,6 +2,7 @@ package com.example.ecoapp.data.api.events;
 
 import com.example.ecoapp.data.api.events.dto.AddUserToEventDTO;
 import com.example.ecoapp.data.api.events.dto.EventsListDTO;
+import com.example.ecoapp.data.api.users.dto.UsersListDTO;
 import com.example.ecoapp.data.models.EventCustom;
 
 import okhttp3.MultipartBody;
@@ -46,4 +47,7 @@ public interface EventAPI {
 
     @GET("/events/findNearestEventsByAuthorCoords")
     Call<EventsListDTO> findNearestEventsByAuthorCoords(@Header("Authorization") String token, @Query("lat") double lat, @Query("longt") double longt);
+
+    @GET("/events/getUsersFromEvents")
+    Call<UsersListDTO> getUsersFromEvents(@Header("Authorization") String token, @Query("authorID") String authorID, @Query("eventID") String eventID);
 }
