@@ -3,6 +3,6 @@
     <style name="AppBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="android:stateListAnimator">@null</item>
         <item name="itemHorizontalTranslationEnabled">false</item>
-        <item name="itemBackground">@android:color/white</item>
+        <item name="itemBackground">@color/white</item>
     </style>
 </resources>
