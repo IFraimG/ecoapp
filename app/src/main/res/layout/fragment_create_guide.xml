@@ -118,16 +118,15 @@
                         <EditText
                             android:id="@+id/guide_name_edit_text"
                             android:layout_width="match_parent"
+                            android:layout_height="48dp"
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="16dp"
-                            android:hint="Название гайда"
-                            android:textSize="16sp"
-                            android:textColorHint="@color/reglogin_text"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:backgroundTint="@color/background_search"
                             android:background="@color/background_search"
-                            android:inputType="textCapWords"
-                            android:layout_height="48dp" />
+                            android:backgroundTint="@color/background_search"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:hint="Название гайда"
+                            android:textColorHint="@color/reglogin_text"
+                            android:textSize="16sp" />
 
                     </androidx.cardview.widget.CardView>
 
