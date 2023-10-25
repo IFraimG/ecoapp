@@ -29,5 +29,6 @@ public class CalendarDecorator implements DayViewDecorator {
     public void decorate(DayViewFacade view) {
         if (type.equals("full")) view.setBackgroundDrawable(ctx.getDrawable(R.drawable.habit_progress_green));
         else if (type.equals("normal")) view.setBackgroundDrawable(ctx.getDrawable(R.drawable.habit_progress_gray));
+        else if (type.equals("lose")) view.setBackgroundDrawable(ctx.getDrawable(R.drawable.habit_progress_gray));
     }
 }

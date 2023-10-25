@@ -55,6 +55,12 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        isLoad = false;
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         activity = null;
@@ -92,16 +98,12 @@ public class HomeFragment extends Fragment {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30, 30, new LocationListener() {
                 @Override
                 public void onLocationChanged(@NonNull Location location) {
-                    if (activity != null && !isLoad) {
-                        viewModel.findNearestEventsByAuthorCoords(location.getLatitude(), location.getLongitude()).observe(activity, events -> {
-                            isLoad = true;
+                    if (activity != null && !isLoad) loadNearbyEvents(location.getLatitude(), location.getLongitude());
+                }
 
-                            if (events != null) {
-                                eventCustoms = events;
-                                loadEvents();
-                            }
-                        });
-                    }
+                @Override
+                public void onProviderDisabled(@NonNull String provider) {
+                    loadNearbyEvents(0, 0);
                 }
             });
         }
@@ -171,5 +173,16 @@ public class HomeFragment extends Fragment {
     private void loadEvents() {
         NearbyAdapter nearbyAdapter = new NearbyAdapter(eventCustoms);
         binding.nearbyRecyclerView.setAdapter(nearbyAdapter);
+    }
+
+    private void loadNearbyEvents(double lat, double longt) {
+        viewModel.findNearestEventsByAuthorCoords(lat, longt).observe(activity, events -> {
+            isLoad = true;
+
+            if (events != null) {
+                eventCustoms = events;
+                loadEvents();
+            }
+        });
     }
 }

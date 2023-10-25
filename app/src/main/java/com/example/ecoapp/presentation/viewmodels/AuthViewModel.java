@@ -1,6 +1,7 @@
 package com.example.ecoapp.presentation.viewmodels;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -19,7 +20,7 @@ import retrofit2.Response;
 
 public class AuthViewModel extends AndroidViewModel {
     private final MutableLiveData<AuthResponseDTO> userData = new MutableLiveData<>();
-    private MutableLiveData<Integer> statusCode = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> statusCode = new MutableLiveData<>(0);
     private final AuthRepository authRepository;
     private final StorageHandler storageHandler;
 

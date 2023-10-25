@@ -34,6 +34,7 @@
                 android:layout_height="64dp"
                 android:elevation="0dp"
                 app:cardCornerRadius="19dp"
+                android:visibility="gone"
                 app:cardElevation="0dp"
                 android:layout_gravity="right"
                 app:cardBackgroundColor="@color/background_card_view"

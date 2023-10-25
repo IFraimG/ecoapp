@@ -29,6 +29,7 @@ public class EventViewModel extends AndroidViewModel {
     private final EventRepository eventRepository;
     private final StorageHandler storageHandler;
     private final MutableLiveData<ArrayList<EventCustom>> eventsList = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<EventCustom>> eventsList2 = new MutableLiveData<>();
     private final MutableLiveData<Integer> statusCode = new MutableLiveData<>(0);
     private final MutableLiveData<EventCustom> event = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isNavigation = new MutableLiveData<>(false);
@@ -163,7 +164,7 @@ public class EventViewModel extends AndroidViewModel {
             @Override
             public void onResponse(@NotNull Call<EventsListDTO> call, @NotNull Response<EventsListDTO> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    eventsList.setValue(response.body().getItem());
+                    eventsList2.setValue(response.body().getItem());
                 }
             }
 
@@ -173,7 +174,7 @@ public class EventViewModel extends AndroidViewModel {
             }
         });
 
-        return eventsList;
+        return eventsList2;
     }
 
 

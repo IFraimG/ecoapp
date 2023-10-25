@@ -47,6 +47,10 @@ public class HabitFragment extends Fragment {
                     case "monthly": binding.typeHabit.setText("Ежемесячные"); break;
                     default: binding.typeHabit.setText("");
                 }
+
+                if (type.equals("daily")) {
+                    binding.fragmentHabitsProgressCardView.setVisibility(View.VISIBLE);
+                }
             }
 
             binding.habitLayoutButtonAddHabit.setOnClickListener(v -> {
@@ -94,6 +98,7 @@ public class HabitFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        binding.fragmentHabitsProgressCardView.setVisibility(View.GONE);
         viewModel.clearData();
     }
 }

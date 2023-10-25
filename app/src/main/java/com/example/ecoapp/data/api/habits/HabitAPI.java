@@ -1,6 +1,7 @@
 package com.example.ecoapp.data.api.habits;
 
 import com.example.ecoapp.data.api.habits.dto.HabitsListDTO;
+import com.example.ecoapp.data.api.habits.dto.HabitsStatsDTO;
 import com.example.ecoapp.data.api.habits.dto.UpdateHabitDTO;
 import com.example.ecoapp.data.models.Habit;
 
@@ -29,4 +30,8 @@ public interface HabitAPI {
 
     @PUT("/habits/habitUpdate")
     Call<ResponseBody> habitUpdate(@Header("Authorization") String token, @Body UpdateHabitDTO id);
+
+    @GET("/habits/getStatistics")
+    Call<HabitsStatsDTO> getStatistics(@Header("Authorization") String token, @Query("authorID") String authorID, @Query("type") String type);
+
 }

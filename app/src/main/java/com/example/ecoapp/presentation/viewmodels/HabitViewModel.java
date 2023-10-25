@@ -11,7 +11,9 @@ import com.example.ecoapp.data.api.RetrofitService;
 import com.example.ecoapp.data.api.habits.HabitAPIService;
 import com.example.ecoapp.data.api.habits.HabitRepository;
 import com.example.ecoapp.data.api.habits.dto.HabitsListDTO;
+import com.example.ecoapp.data.api.habits.dto.HabitsStatsDTO;
 import com.example.ecoapp.data.models.Habit;
+import com.example.ecoapp.data.models.HabitStats;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +31,7 @@ public class HabitViewModel extends AndroidViewModel {
     private MutableLiveData<ArrayList<Habit>> habitsList = new MutableLiveData<>();
     private MutableLiveData<Integer> statusCode = new MutableLiveData<>();
     private MutableLiveData<Boolean> isNavigation = new MutableLiveData<>(false);
+    private MutableLiveData<ArrayList<HabitStats>> habitStats = new MutableLiveData<>();
 
     public HabitViewModel(@NonNull Application application) {
         super(application);
@@ -109,6 +112,22 @@ public class HabitViewModel extends AndroidViewModel {
         });
 
         return statusCode;
+    }
+
+    public LiveData<ArrayList<HabitStats>> getHabitStats() {
+        habitRepository.getStatistics(storageHandler.getToken(), storageHandler.getUserID(), "daily").enqueue(new Callback<HabitsStatsDTO>() {
+            @Override
+            public void onResponse(@NotNull Call<HabitsStatsDTO> call, @NotNull Response<HabitsStatsDTO> response) {
+                if (response.isSuccessful() && response.body() != null) habitStats.setValue(response.body().getItem());
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<HabitsStatsDTO> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return habitStats;
     }
 
     public LiveData<Boolean> isNavigate() {
