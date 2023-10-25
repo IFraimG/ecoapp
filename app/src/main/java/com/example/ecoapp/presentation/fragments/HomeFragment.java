@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +39,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private FragmentHomeBinding binding;
     private EventViewModel viewModel;
     private GuideViewModel guideViewModel;
@@ -74,6 +75,8 @@ public class HomeFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(EventViewModel.class);
         guideViewModel = new ViewModelProvider(this).get(GuideViewModel.class);
 
+        binding.homeLoader.setOnRefreshListener(this);
+
         binding.tasksRecyclerView.setHasFixedSize(true);
         binding.tasksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -81,73 +84,13 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         binding.nearbyRecyclerView.setLayoutManager(layoutManager);
 
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-
-            viewModel.getEventsList().observe(requireActivity(), eventCustoms -> {
-                if (eventCustoms != null) {
-                    this.eventCustoms = eventCustoms;
-                    loadEvents();
-                }
-            });
-        } else {
-            LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
-
-            if (ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {}
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30, 30, new LocationListener() {
-                @Override
-                public void onLocationChanged(@NonNull Location location) {
-                    if (activity != null && !isLoad) loadNearbyEvents(location.getLatitude(), location.getLongitude());
-                }
-
-                @Override
-                public void onProviderDisabled(@NonNull String provider) {
-                    loadNearbyEvents(0, 0);
-                }
-            });
-        }
-
-        List<Tasks> tasksList = new ArrayList<>();
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-
-        TasksAdapter tasksAdapter = new TasksAdapter(tasksList);
-        binding.tasksRecyclerView.setAdapter(tasksAdapter);
-
         binding.adviceRecyclerView.setHasFixedSize(true);
         binding.adviceRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
-        guideViewModel.getGuidesList().observe(requireActivity(), guides -> {
-            List<Advice> guidesList = new ArrayList<>();
-            for (Guide guide: guides) {
-                guidesList.add(new Advice(guide.getPhoto(), guide.getTitle(), guide.getGuideID()));
-            }
-
-            AdviceAdapter adviceAdapter = new AdviceAdapter(guidesList);
-            binding.adviceRecyclerView.setAdapter(adviceAdapter);
-        });
-
 
         binding.savedAdviceRecyclerView.setHasFixedSize(true);
         binding.savedAdviceRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        guideViewModel.getGuidesSavedList().observe(requireActivity(), guides -> {
-            List<Advice> guidesList = new ArrayList<>();
-            for (Guide guide: guides) {
-                guidesList.add(new Advice(guide.getPhoto(), guide.getTitle(), guide.getGuideID()));
-            }
-
-            SavedAdviceAdapter adviceAdapter = new SavedAdviceAdapter(guidesList);
-            binding.savedAdviceRecyclerView.setAdapter(adviceAdapter);
-        });
+        loadData();
 
         binding.dailyHabits.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
@@ -184,5 +127,78 @@ public class HomeFragment extends Fragment {
                 loadEvents();
             }
         });
+    }
+
+    private void loadData() {
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+
+            viewModel.getEventsList().observe(requireActivity(), eventCustoms -> {
+                if (eventCustoms != null) {
+                    this.eventCustoms = eventCustoms;
+                    loadEvents();
+                    binding.homeLoader.setRefreshing(false);
+                }
+            });
+        } else {
+            LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
+
+            if (ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {}
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30, 30, new LocationListener() {
+                @Override
+                public void onLocationChanged(@NonNull Location location) {
+                    if (activity != null && !isLoad) loadNearbyEvents(location.getLatitude(), location.getLongitude());
+                }
+
+                @Override
+                public void onProviderDisabled(@NonNull String provider) {
+                    loadNearbyEvents(0, 0);
+                }
+            });
+        }
+
+        List<Tasks> tasksList = new ArrayList<>();
+        tasksList.add(new Tasks("Очистить городской пляж"));
+        tasksList.add(new Tasks("Очистить городской пляж"));
+        tasksList.add(new Tasks("Очистить городской пляж"));
+        tasksList.add(new Tasks("Очистить городской пляж"));
+        tasksList.add(new Tasks("Очистить городской пляж"));
+        tasksList.add(new Tasks("Очистить городской пляж"));
+        tasksList.add(new Tasks("Очистить городской пляж"));
+        tasksList.add(new Tasks("Очистить городской пляж"));
+        tasksList.add(new Tasks("Очистить городской пляж"));
+
+        TasksAdapter tasksAdapter = new TasksAdapter(tasksList);
+        binding.tasksRecyclerView.setAdapter(tasksAdapter);
+
+        guideViewModel.getGuidesList().observe(requireActivity(), guides -> {
+            List<Advice> guidesList = new ArrayList<>();
+            for (Guide guide: guides) {
+                guidesList.add(new Advice(guide.getPhoto(), guide.getTitle(), guide.getGuideID()));
+            }
+
+            AdviceAdapter adviceAdapter = new AdviceAdapter(guidesList);
+            binding.adviceRecyclerView.setAdapter(adviceAdapter);
+            binding.homeLoader.setRefreshing(false);
+        });
+
+        guideViewModel.getGuidesSavedList().observe(requireActivity(), guides -> {
+            if (guides != null) {
+                List<Advice> guidesList = new ArrayList<>();
+                for (Guide guide: guides) {
+                    guidesList.add(new Advice(guide.getPhoto(), guide.getTitle(), guide.getGuideID()));
+                }
+
+                SavedAdviceAdapter adviceAdapter = new SavedAdviceAdapter(guidesList);
+                binding.savedAdviceRecyclerView.setAdapter(adviceAdapter);
+                binding.homeLoader.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void onRefresh() {
+        loadData();
     }
 }

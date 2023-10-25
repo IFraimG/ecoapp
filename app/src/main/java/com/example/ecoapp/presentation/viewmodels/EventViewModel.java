@@ -35,6 +35,7 @@ public class EventViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> isNavigation = new MutableLiveData<>(false);
     private final MutableLiveData<ArrayList<User>> usersScoresList = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isGetContext = new MutableLiveData<>(false);
+    private final MutableLiveData<Integer> isLoadData = new MutableLiveData<>(0);
 
     public EventViewModel(@NonNull Application application) {
         super(application);
@@ -147,6 +148,7 @@ public class EventViewModel extends AndroidViewModel {
             public void onResponse(@NotNull Call<EventsListDTO> call, @NotNull Response<EventsListDTO> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     eventsList.setValue(response.body().getItem());
+                    if (isLoadData.getValue() != null) isLoadData.setValue(isLoadData.getValue() + 1);
                 }
             }
 
@@ -165,6 +167,7 @@ public class EventViewModel extends AndroidViewModel {
             public void onResponse(@NotNull Call<EventsListDTO> call, @NotNull Response<EventsListDTO> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     eventsList2.setValue(response.body().getItem());
+                    if (isLoadData.getValue() != null) isLoadData.setValue(isLoadData.getValue() + 1);
                 }
             }
 
@@ -234,4 +237,13 @@ public class EventViewModel extends AndroidViewModel {
         return isGetContext;
     }
 
+    public LiveData<Integer> getIsLoadData() {
+        return isLoadData;
+    }
+
+    public LiveData<Integer> clearLoadData() {
+        isLoadData.setValue(0);
+
+        return isLoadData;
+    }
 }

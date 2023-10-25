@@ -7,6 +7,10 @@
     android:background="@color/background_gray"
     tools:context=".presentation.fragments.EventsFragment">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/events_loader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -38,7 +42,6 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
-                android:text="Баллы: 256"
                 android:textColor="@color/text_gray"
                 android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@id/events_title"
@@ -293,5 +296,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </FrameLayout>

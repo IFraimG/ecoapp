@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventsFragment extends Fragment {
+public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private FragmentEventsBinding fragmentEventsBinding;
     private EventViewModel viewModel;
 
@@ -39,6 +40,25 @@ public class EventsFragment extends Fragment {
         fragmentEventsBinding.comingRecyclerView.setHasFixedSize(true);
         fragmentEventsBinding.comingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
+        fragmentEventsBinding.eventsLoader.setOnRefreshListener(this);
+
+        fragmentEventsBinding.mapOpen.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_mapFragment);
+        });
+        fragmentEventsBinding.addEventCardView.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_createEventFragment);
+        });
+
+        fragmentEventsBinding.myEventsRecyclerView.setHasFixedSize(true);
+        fragmentEventsBinding.myEventsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+
+        fragmentEventsBinding.guideIcon.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.addGuideFragment));
+
+        return fragmentEventsBinding.getRoot();
+    }
+
+    private void loadData() {
         viewModel.findEventsByAuthorID().observe(requireActivity(), eventsList -> {
             if (eventsList != null) {
                 List<Coming> comingList = new ArrayList<>();
@@ -50,17 +70,6 @@ public class EventsFragment extends Fragment {
             }
         });
 
-        fragmentEventsBinding.mapOpen.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_mapFragment);
-        });
-        fragmentEventsBinding.addEventCardView.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_createEventFragment);
-        });
-
-
-        fragmentEventsBinding.myEventsRecyclerView.setHasFixedSize(true);
-        fragmentEventsBinding.myEventsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
         viewModel.findAuthorsEvents().observe(requireActivity(), eventCustoms -> {
             if (eventCustoms != null) {
                 List<MyEvents> myEventsList = new ArrayList<>();
@@ -71,9 +80,23 @@ public class EventsFragment extends Fragment {
                 fragmentEventsBinding.myEventsRecyclerView.setAdapter(myEventsAdapter);
             }
         });
+    }
 
-        fragmentEventsBinding.guideIcon.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.addGuideFragment));
+    @Override
+    public void onRefresh() {
+        viewModel.clearLoadData().observe(requireActivity(), result -> {
+            if (result == 0) {
+                loadData();
+                viewModel.getIsLoadData().observe(requireActivity(), count -> {
+                    if (count == 2) fragmentEventsBinding.eventsLoader.setRefreshing(false);
+                });
+            }
+        });
+    }
 
-        return fragmentEventsBinding.getRoot();
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewModel.clearLoadData();
     }
 }
