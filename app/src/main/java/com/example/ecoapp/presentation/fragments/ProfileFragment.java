@@ -1,8 +1,6 @@
 package com.example.ecoapp.presentation.fragments;
 
 import static android.app.Activity.RESULT_OK;
-
-import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -14,12 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 import com.example.ecoapp.presentation.MainActivity;
@@ -41,7 +39,6 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private int SELECT_PHOTO_PROFILE = 1;
     private Uri uri;
-    private ActionBar actionBar;
     private StorageHandler storageHandler;
     private ProfileViewModel viewModel;
 
@@ -64,16 +61,12 @@ public class ProfileFragment extends Fragment {
             if (user != null) {
                 binding.personName.setText(user.getName());
                 binding.personPoints.setText("Баллы: " + user.getScores());
-            }
-            if (user != null && user.getImage() != null) {
-                // update text values ...
-                binding.profileImageButton.setVisibility(View.VISIBLE);
-                binding.profileLoadImage.setVisibility(View.GONE);
-                String url = "https://test123-production-e08e.up.railway.app/image/" + user.getImage();
-                Picasso.get().load(url).into(binding.profileImageButton);
-            } else if (user == null) {
-                NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
-                navHostFragment.getNavController().navigate(R.id.noNetworkFragment);
+                if (user.getImage() != null) {
+                    binding.profileImageButton.setVisibility(View.VISIBLE);
+                    binding.profileLoadImage.setVisibility(View.GONE);
+                    String url = "https://test123-production-e08e.up.railway.app/image/" + user.getImage();
+                    Picasso.get().load(url).into(binding.profileImageButton);
+                }
             }
         });
 
@@ -99,6 +92,17 @@ public class ProfileFragment extends Fragment {
 
             Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_authSignupFragment);
             Navigation.findNavController(v).popBackStack(R.id.profileFragment, true);
+        });
+        binding.personName.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
+                if (!textView.getText().toString().isEmpty()) {
+                    viewModel.updateName(textView.getText().toString());
+                }
+
+                return true;
+            }
+
+            return false;
         });
 
         binding.whiteTheme.setOnClickListener(View -> storageHandler.setTheme(0));

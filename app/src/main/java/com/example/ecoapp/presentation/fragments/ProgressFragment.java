@@ -26,6 +26,7 @@ public class ProgressFragment extends Fragment {
         }
     }
 
+
     @Override
     public void onPause() {
         super.onPause();
@@ -33,11 +34,11 @@ public class ProgressFragment extends Fragment {
             ((MainActivity) requireActivity()).changeMenu(true);
         }
     }
+
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = ProgressLayoutBinding.inflate(getLayoutInflater());
-
 
         CalendarDay targetDate = CalendarDay.from(2023, 10, 14);
         CalendarDay targetDate2 = CalendarDay.from(2023, 10, 9);
