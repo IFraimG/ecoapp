@@ -65,4 +65,6 @@ dependencies {
     implementation 'com.yandex.android:maps.mobile:4.3.1-full'
 
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 }

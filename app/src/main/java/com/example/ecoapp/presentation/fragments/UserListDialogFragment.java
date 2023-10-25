@@ -36,7 +36,9 @@ public class UserListDialogFragment extends DialogFragment {
                 if (users != null) {
                     UserScoresAdapter adapter = new UserScoresAdapter(users);
                     adapter.setOnItemClickListener((position, scores) -> {
-                        if (!scores.isEmpty()) {
+                        if (Integer.parseInt(scores) > 200) {
+                            Toast.makeText(requireContext(), "Вы не можете добавить пользователю больше 200 очков", Toast.LENGTH_SHORT).show();
+                        } else if (!scores.isEmpty()) {
                             profileViewModel.updateUserScores(users.get(position).getId(), Integer.parseInt(scores)).observe(requireActivity(), statusCode -> {
                                 if (statusCode >= 200 && statusCode < 400) {
                                     Toast.makeText(requireContext(), "Успешно!", Toast.LENGTH_SHORT).show();

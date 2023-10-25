@@ -23,6 +23,8 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class EventFragment extends Fragment {
     private FragmentEventBinding binding;
     private EventViewModel viewModel;
@@ -75,7 +77,14 @@ public class EventFragment extends Fragment {
                     binding.theEventAddress.setText(eventCustom.getPlace());
                     binding.theEventAwardPoints.setText(String.valueOf("Баллы в награду: " + eventCustom.getScores()));
                     binding.theEventCurrentPeopleAmount.setText(String.valueOf(eventCustom.getCurrentUsers()) + " / " + String.valueOf(eventCustom.getMaxUsers()));
-                    showButton(eventCustom.getUsersList().contains(storageHandler.getUserID()));
+                    if (!storageHandler.getUserID().equals(eventCustom.getAuthorID())) {
+                        if (eventCustom.getUsersList().contains(storageHandler.getUserID()) && Objects.equals(eventCustom.getCurrentUsers(), eventCustom.getMaxUsers())
+                        || eventCustom.getCurrentUsers() < eventCustom.getMaxUsers()) {
+                            showButton(true);
+                        } else if (eventCustom.getCurrentUsers() < eventCustom.getMaxUsers() && !eventCustom.getUsersList().contains(storageHandler.getUserID())) {
+                            showButton(false);
+                        }
+                    }
 
                     Picasso.get().load(url).into(binding.eventImage);
                 }
