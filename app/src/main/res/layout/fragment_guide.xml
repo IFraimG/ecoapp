@@ -7,6 +7,10 @@
     tools:context=".presentation.fragments.GuideFragment"
     android:background="@color/background_gray">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/guide_loader">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -154,4 +158,5 @@
                 android:progressDrawable="@drawable/custom_ratingbar"/>
         </LinearLayout>
     </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </FrameLayout>

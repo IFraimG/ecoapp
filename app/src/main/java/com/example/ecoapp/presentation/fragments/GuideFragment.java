@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-public class GuideFragment extends Fragment {
+public class GuideFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private FragmentGuideBinding binding;
     private GuideViewModel viewModel;
     private ProfileViewModel profileViewModel;
@@ -50,34 +51,12 @@ public class GuideFragment extends Fragment {
 
         binding.guideBack.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
+        binding.guideLoader.setOnRefreshListener(this);
+
         Bundle args = getArguments();
         guideID = args != null ? args.getString("guideID") : null;
 
-        if (guideID != null) {
-            viewModel.getGuideByID(guideID).observe(requireActivity(), guide -> {
-                if (guide != null) {
-                    profileViewModel.getUserData("", "").observe(requireActivity(), user -> {
-                        if (user != null) showBookmark(user);
-                    });
-                    viewModel.getRating(guideID).observe(requireActivity(), rating -> {
-                        if (rating != null) binding.guideRatingBar.setRating(rating.getMark());
-                    });
-
-                    binding.guideSourceName.setText(guide.getSource());
-                    binding.articleTv.setText(guide.getSource());
-                    binding.guideTitleTitle.setText(guide.getTitle());
-                    binding.guideAuthorName.setText(guide.getAuthorID());
-
-
-                    String url = "https://test123-production-e08e.up.railway.app/image/" + guide.getPhoto();
-                    Picasso.get().load(url).into(binding.adviceImage);
-                }
-            });
-
-            binding.guideRatingBar.setOnRatingBarChangeListener((ratingBar, rating, b) -> {
-                viewModel.setRating(guideID, rating);
-            });
-        }
+        loadData();
 
         return binding.getRoot();
     }
@@ -99,5 +78,40 @@ public class GuideFragment extends Fragment {
 
         binding.unactivatedBookmark.setOnClickListener(View -> updateGuideToUser());
         binding.activatedBookmark.setOnClickListener(View -> updateGuideToUser());
+    }
+
+    private void loadData() {
+        if (guideID != null) {
+            viewModel.getGuideByID(guideID).observe(requireActivity(), guide -> {
+                if (guide != null) {
+                    profileViewModel.getUserData("", "").observe(requireActivity(), user -> {
+                        if (user != null) showBookmark(user);
+                    });
+                    viewModel.getRating(guideID).observe(requireActivity(), rating -> {
+                        if (rating != null) binding.guideRatingBar.setRating(rating.getMark());
+                    });
+
+                    binding.guideSourceName.setText(guide.getSource());
+                    binding.articleTv.setText(guide.getSource());
+                    binding.guideTitleTitle.setText(guide.getTitle());
+                    binding.guideAuthorName.setText(guide.getAuthorID());
+
+
+                    String url = "https://test123-production-e08e.up.railway.app/image/" + guide.getPhoto();
+                    Picasso.get().load(url).into(binding.adviceImage);
+
+                    binding.guideLoader.setRefreshing(false);
+                }
+            });
+
+            binding.guideRatingBar.setOnRatingBarChangeListener((ratingBar, rating, b) -> {
+                viewModel.setRating(guideID, rating);
+            });
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        loadData();
     }
 }

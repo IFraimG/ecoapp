@@ -52,6 +52,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         fragmentEventsBinding.myEventsRecyclerView.setHasFixedSize(true);
         fragmentEventsBinding.myEventsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
+        loadData();
 
         fragmentEventsBinding.guideIcon.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.addGuideFragment));
 

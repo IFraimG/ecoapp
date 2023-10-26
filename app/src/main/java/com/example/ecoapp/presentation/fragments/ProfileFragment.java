@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private FragmentProfileBinding binding;
     private int SELECT_PHOTO_PROFILE = 1;
     private Uri uri;
@@ -57,19 +58,8 @@ public class ProfileFragment extends Fragment {
         storageHandler = new StorageHandler(requireContext());
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
-        viewModel.getUserData(storageHandler.getToken(), storageHandler.getUserID()).observe(requireActivity(), user -> {
-            if (user != null) {
-                binding.personName.setText(user.getName());
-                binding.personPoints.setText("Баллы: " + user.getScores());
-                if (user.getImage() != null) {
-                    binding.profileImageButton.setVisibility(View.VISIBLE);
-                    binding.profileLoadImage.setVisibility(View.GONE);
-                    String url = "https://test123-production-e08e.up.railway.app/image/" + user.getImage();
-                    Picasso.get().load(url).into(binding.profileImageButton);
-                }
-            }
-        });
-
+        binding.profileLoader.setOnRefreshListener(this);
+        loadData();
 
         binding.profileImageButton.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
@@ -93,6 +83,7 @@ public class ProfileFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_authSignupFragment);
             Navigation.findNavController(v).popBackStack(R.id.profileFragment, true);
         });
+
         binding.personName.setOnEditorActionListener((textView, actionId, keyEvent) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
                 if (!textView.getText().toString().isEmpty()) {
@@ -175,5 +166,27 @@ public class ProfileFragment extends Fragment {
                 binding.profileLoadImage.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void loadData() {
+        binding.profileLoader.setRefreshing(true);
+        viewModel.getUserData(storageHandler.getToken(), storageHandler.getUserID()).observe(requireActivity(), user -> {
+            if (user != null) {
+                binding.personName.setText(user.getName());
+                binding.personPoints.setText("Баллы: " + user.getScores());
+                if (user.getImage() != null) {
+                    binding.profileImageButton.setVisibility(View.VISIBLE);
+                    binding.profileLoadImage.setVisibility(View.GONE);
+                    String url = "https://test123-production-e08e.up.railway.app/image/" + user.getImage();
+                    Picasso.get().load(url).into(binding.profileImageButton);
+                }
+                binding.profileLoader.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void onRefresh() {
+        loadData();
     }
 }

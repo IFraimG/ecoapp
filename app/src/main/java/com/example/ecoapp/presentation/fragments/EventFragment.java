@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +26,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class EventFragment extends Fragment {
+public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private FragmentEventBinding binding;
     private EventViewModel viewModel;
     private EventCustom eventCustom;
     private StorageHandler storageHandler;
+    private Bundle args;
 
     @Override
     public void onResume() {
@@ -61,34 +63,12 @@ public class EventFragment extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity()).get(EventViewModel.class);
 
-        Bundle args = getArguments();
+        args = getArguments();
         if (args == null) Navigation.findNavController(requireView()).navigate(R.id.homeFragment);
         else {
-            viewModel.getEventByID(args.getString("id", "")).observe(requireActivity(), eventCustom -> {
-                if (eventCustom != null) {
-                    this.eventCustom = eventCustom;
+            loadData();
 
-                    String url = "https://test123-production-e08e.up.railway.app/image/" + eventCustom.getPhoto();
-
-                    binding.eventTitle.setText(eventCustom.getTitle());
-                    binding.theEventDescription.setText(eventCustom.getDescription());
-                    binding.theEventDate.setText(eventCustom.getDate());
-                    binding.theEventTime.setText(eventCustom.getTime());
-                    binding.theEventAddress.setText(eventCustom.getPlace());
-                    binding.theEventAwardPoints.setText(String.valueOf("Баллы в награду: " + eventCustom.getScores()));
-                    binding.theEventCurrentPeopleAmount.setText(String.valueOf(eventCustom.getCurrentUsers()) + " / " + String.valueOf(eventCustom.getMaxUsers()));
-                    if (!storageHandler.getUserID().equals(eventCustom.getAuthorID())) {
-                        if (eventCustom.getUsersList().contains(storageHandler.getUserID()) && Objects.equals(eventCustom.getCurrentUsers(), eventCustom.getMaxUsers())
-                        || eventCustom.getCurrentUsers() < eventCustom.getMaxUsers()) {
-                            showButton(true);
-                        } else if (eventCustom.getCurrentUsers() < eventCustom.getMaxUsers() && !eventCustom.getUsersList().contains(storageHandler.getUserID())) {
-                            showButton(false);
-                        }
-                    }
-
-                    Picasso.get().load(url).into(binding.eventImage);
-                }
-            });
+            binding.eventLoader.setOnRefreshListener(this);
 
             binding.takePartInButton.setOnClickListener(View -> {
                 showButton(true);
@@ -143,5 +123,40 @@ public class EventFragment extends Fragment {
             binding.takePartInButton.setVisibility(View.VISIBLE);
             binding.refuseButton.setVisibility(View.GONE);
         }
+    }
+
+    private void loadData() {
+        binding.eventLoader.setRefreshing(true);
+        viewModel.getEventByID(args.getString("id", "")).observe(requireActivity(), eventCustom -> {
+            if (eventCustom != null) {
+                this.eventCustom = eventCustom;
+
+                String url = "https://test123-production-e08e.up.railway.app/image/" + eventCustom.getPhoto();
+
+                binding.eventTitle.setText(eventCustom.getTitle());
+                binding.theEventDescription.setText(eventCustom.getDescription());
+                binding.theEventDate.setText(eventCustom.getDate());
+                binding.theEventTime.setText(eventCustom.getTime());
+                binding.theEventAddress.setText(eventCustom.getPlace());
+                binding.theEventAwardPoints.setText(String.valueOf("Баллы в награду: " + eventCustom.getScores()));
+                binding.theEventCurrentPeopleAmount.setText(String.valueOf(eventCustom.getCurrentUsers()) + " / " + String.valueOf(eventCustom.getMaxUsers()));
+                if (!storageHandler.getUserID().equals(eventCustom.getAuthorID())) {
+                    if (eventCustom.getUsersList().contains(storageHandler.getUserID()) && Objects.equals(eventCustom.getCurrentUsers(), eventCustom.getMaxUsers())
+                            || eventCustom.getCurrentUsers() < eventCustom.getMaxUsers()) {
+                        showButton(true);
+                    } else if (eventCustom.getCurrentUsers() < eventCustom.getMaxUsers() && !eventCustom.getUsersList().contains(storageHandler.getUserID())) {
+                        showButton(false);
+                    }
+                }
+
+                Picasso.get().load(url).into(binding.eventImage);
+                binding.eventLoader.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void onRefresh() {
+        loadData();
     }
 }
