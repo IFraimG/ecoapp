@@ -115,11 +115,47 @@
                         android:layout_marginTop="16dp" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/tasksRecyclerView"
+                        android:id="@+id/myTasksRecyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="144dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:layout_marginLeft="16dp"/>
+                        android:layout_marginLeft="40dp"/>
+
+                    <TextView
+                        android:id="@+id/needs_confirming_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Ждет подтверждения"
+                        android:textColor="@color/home_titles_gray"
+                        android:textSize="20sp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="16dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/needsConfirmingRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="40dp"/>
+
+                    <TextView
+                        android:id="@+id/in_process_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Выполняю"
+                        android:textColor="@color/home_titles_gray"
+                        android:textSize="20sp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="16dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/inProcessRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="40dp"/>
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/fragment_profile_button_add_task"
@@ -195,7 +231,6 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:background="@drawable/radio_button_selector_dark"
-
                             style="@style/DarkThemeRadioButtonStyle">
                         </RadioButton>
 
