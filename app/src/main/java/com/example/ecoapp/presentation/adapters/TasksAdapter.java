@@ -8,16 +8,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ecoapp.data.models.Tasks;
+import com.example.ecoapp.data.models.Task;
 import com.example.ecoapp.R;
 
 import java.util.List;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
 
-    private List<Tasks> tasksList;
-    public TasksAdapter(List<Tasks> tasksList){
-        this.tasksList = tasksList;
+    private List<Task> taskList;
+    public TasksAdapter(List<Task> taskList){
+        this.taskList = taskList;
     }
     @NonNull
     @Override
@@ -28,12 +28,12 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
 
     @Override
     public void onBindViewHolder(@NonNull TasksViewHolder holder, int position) {
-        holder.mName.setText(tasksList.get(position).getName());
+        holder.mName.setText(taskList.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return tasksList.size();
+        return taskList.size();
     }
 
     public class TasksViewHolder extends RecyclerView.ViewHolder{

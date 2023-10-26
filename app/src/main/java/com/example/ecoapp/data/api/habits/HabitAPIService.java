@@ -3,13 +3,13 @@ package com.example.ecoapp.data.api.habits;
 import com.example.ecoapp.data.api.RetrofitService;
 
 public class HabitAPIService {
-    private final HabitAPI eventAPI;
+    private final HabitAPI habitAPI;
 
     public HabitAPIService(RetrofitService retrofitService) {
-        eventAPI = retrofitService.getInstance().create(HabitAPI.class);
+        habitAPI = retrofitService.getInstance().create(HabitAPI.class);
     }
 
-    public HabitAPI getEventAPI() {
-        return eventAPI;
+    public HabitAPI getHabitAPI() {
+        return habitAPI;
     }
 }

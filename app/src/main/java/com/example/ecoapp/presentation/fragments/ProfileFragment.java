@@ -23,15 +23,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
-import com.example.ecoapp.BuildConfig;
 import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentProfileBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
 import com.squareup.picasso.Picasso;
-import com.yandex.mapkit.MapKitFactory;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;

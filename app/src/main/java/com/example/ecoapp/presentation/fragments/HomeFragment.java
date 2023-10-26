@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ecoapp.data.models.Guide;
+import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.adapters.AdviceAdapter;
 import com.example.ecoapp.presentation.adapters.NearbyAdapter;
 import com.example.ecoapp.presentation.adapters.SavedAdviceAdapter;
@@ -29,7 +30,7 @@ import com.example.ecoapp.presentation.adapters.TasksAdapter;
 import com.example.ecoapp.databinding.FragmentHomeBinding;
 import com.example.ecoapp.data.models.Advice;
 import com.example.ecoapp.data.models.EventCustom;
-import com.example.ecoapp.data.models.Tasks;
+import com.example.ecoapp.data.models.Task;
 import com.example.ecoapp.R;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 import com.example.ecoapp.presentation.viewmodels.GuideViewModel;
@@ -46,6 +47,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private ArrayList<EventCustom> eventCustoms;
     private AppCompatActivity activity;
     private boolean isLoad = false;
+    private StorageHandler storageHandler;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -74,6 +76,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         viewModel = new ViewModelProvider(this).get(EventViewModel.class);
         guideViewModel = new ViewModelProvider(this).get(GuideViewModel.class);
+
+        storageHandler = new StorageHandler(requireContext());
 
         binding.homeLoader.setOnRefreshListener(this);
 
@@ -123,7 +127,11 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             isLoad = true;
 
             if (events != null) {
-                eventCustoms = events;
+                if (eventCustoms == null) eventCustoms = new ArrayList<>();
+                for (EventCustom event: events) {
+                    if (event == null || event.getAuthorID().equals(storageHandler.getUserID())) continue;
+                    eventCustoms.add(event);
+                }
                 loadEvents();
             }
         });
@@ -136,7 +144,10 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
             viewModel.getEventsList().observe(requireActivity(), eventCustoms -> {
                 if (eventCustoms != null) {
-                    this.eventCustoms = eventCustoms;
+                    for (EventCustom event: eventCustoms) {
+                        if (event.getAuthorID().equals(storageHandler.getUserID())) continue;
+                        eventCustoms.add(event);
+                    }
                     loadEvents();
                     binding.homeLoader.setRefreshing(false);
                 }
@@ -158,23 +169,24 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             });
         }
 
-        List<Tasks> tasksList = new ArrayList<>();
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
-        tasksList.add(new Tasks("Очистить городской пляж"));
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(new Task("Очистить городской пляж"));
+        taskList.add(new Task("Очистить городской пляж"));
+        taskList.add(new Task("Очистить городской пляж"));
+        taskList.add(new Task("Очистить городской пляж"));
+        taskList.add(new Task("Очистить городской пляж"));
+        taskList.add(new Task("Очистить городской пляж"));
+        taskList.add(new Task("Очистить городской пляж"));
+        taskList.add(new Task("Очистить городской пляж"));
+        taskList.add(new Task("Очистить городской пляж"));
 
-        TasksAdapter tasksAdapter = new TasksAdapter(tasksList);
+        TasksAdapter tasksAdapter = new TasksAdapter(taskList);
         binding.tasksRecyclerView.setAdapter(tasksAdapter);
 
         guideViewModel.getGuidesList().observe(requireActivity(), guides -> {
             List<Advice> guidesList = new ArrayList<>();
             for (Guide guide: guides) {
+                if (guide.getAuthorID().equals(storageHandler.getUserID())) continue;
                 guidesList.add(new Advice(guide.getPhoto(), guide.getTitle(), guide.getGuideID()));
             }
 
@@ -187,6 +199,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             if (guides != null) {
                 List<Advice> guidesList = new ArrayList<>();
                 for (Guide guide: guides) {
+                    if (guide.getAuthorID().equals(storageHandler.getUserID())) continue;
                     guidesList.add(new Advice(guide.getPhoto(), guide.getTitle(), guide.getGuideID()));
                 }
 
