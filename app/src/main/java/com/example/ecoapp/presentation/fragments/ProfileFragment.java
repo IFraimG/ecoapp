@@ -73,9 +73,9 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         loadData();
 
         switch (storageHandler.getTheme()) {
-            case 0: binding.profileRadioList.check(R.id.white_theme);
-            case 1: binding.profileRadioList.check(R.id.black_theme);
-            case 2: binding.profileRadioList.check(R.id.green_theme);
+            case 1: binding.profileRadioList.check(R.id.black_theme); break;
+            case 2: binding.profileRadioList.check(R.id.green_theme); break;
+            default: binding.profileRadioList.check(R.id.white_theme); break;
         }
 
 

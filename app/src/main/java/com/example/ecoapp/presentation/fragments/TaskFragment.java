@@ -77,6 +77,7 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     binding.fragmentTaskBeginButton.setVisibility(View.VISIBLE);
                 }
 
+
                 if (task.getImages() != null && !task.getImages().isEmpty()) {
                     if (task.getImages().get(0) != null) {
                         String url = "https://test123-production-e08e.up.railway.app/image/" + task.getImages().get(0);
@@ -91,6 +92,8 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         String url = "https://test123-production-e08e.up.railway.app/image/" + task.getImages().get(2);
                         Picasso.get().load(url).into(binding.confirmTaskPhoto3);
                     }
+                } else {
+                    binding.taskConfirmation.setVisibility(View.GONE);
                 }
 
                 binding.taskLoader.setRefreshing(false);
