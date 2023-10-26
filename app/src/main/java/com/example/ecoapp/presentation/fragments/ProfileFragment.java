@@ -106,6 +106,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             storageHandler.setTheme(0);
         });
+
         binding.blackTheme.setOnClickListener(View -> {
             int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             if (nightModeFlags != Configuration.UI_MODE_NIGHT_YES) {
@@ -115,8 +116,13 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             requireActivity().recreate();
             storageHandler.setTheme(1);
         });
+
         binding.greenTheme.setOnClickListener(View -> {
             storageHandler.setTheme(2);
+        });
+
+        binding.fragmentProfileButtonAddTask.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.createTaskFragment);
         });
 
         return binding.getRoot();
