@@ -85,6 +85,62 @@
                 android:layout_gravity="center_horizontal" />
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/fragment_profile_tasks_card_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="0dp"
+                android:elevation="0dp"
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/background_card_view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/main_title">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/my_tasks_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Мои задачи"
+                        android:textColor="@color/home_titles_gray"
+                        android:textSize="20sp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="16dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/tasksRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="144dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="16dp"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/fragment_profile_button_add_task"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="12dp"
+                        android:paddingLeft="50dp"
+                        android:paddingRight="50dp"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:fontFamily="@font/montserrat_light"
+                        android:text="Создать задачу"
+                        android:elevation="0dp"
+                        android:background="@drawable/green_rounded_button"
+                        android:stateListAnimator="@null"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
                 android:id="@+id/interface_settings_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
