@@ -20,20 +20,42 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/the_task_back_to_previous_fragment_button"
-                    android:contentDescription="back"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="-60dp"
-                    android:background="@drawable/baseline_arrow_back_24"
-                    />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/the_task_back_to_previous_fragment_button"
+                        android:contentDescription="back"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/baseline_arrow_back_24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/delete_task_button"
+                        android:contentDescription="back"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_gravity="end"
+                        android:background="@drawable/delete_button"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="visible"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:maxWidth="270dp"
+                    android:maxWidth="260dp"
                     android:id="@+id/task_title"
                     android:gravity="center_horizontal"
                     android:layout_height="wrap_content"
@@ -42,7 +64,6 @@
                     android:textSize="24sp"
                     android:textColor="@color/black"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="12dp"
                     />
 
                 <TextView
@@ -79,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="20dp"
                     android:paddingLeft="50dp"
                     android:paddingRight="50dp"
                     android:visibility="visible"
@@ -97,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="20dp"
                     android:paddingLeft="50dp"
                     android:paddingRight="50dp"
                     android:textAllCaps="false"
@@ -127,7 +148,7 @@
                         android:textColor="@color/black"
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="12dp"
                         />
 
                     <androidx.cardview.widget.CardView
