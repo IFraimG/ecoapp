@@ -9,9 +9,11 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +36,7 @@ import com.example.ecoapp.data.models.Task;
 import com.example.ecoapp.R;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 import com.example.ecoapp.presentation.viewmodels.GuideViewModel;
+import com.example.ecoapp.presentation.viewmodels.TaskViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -44,10 +47,12 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private FragmentHomeBinding binding;
     private EventViewModel viewModel;
     private GuideViewModel guideViewModel;
+    private TaskViewModel taskViewModel;
     private ArrayList<EventCustom> eventCustoms;
     private AppCompatActivity activity;
     private boolean isLoad = false;
     private StorageHandler storageHandler;
+    private TasksAdapter tasksAdapter;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -70,12 +75,19 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        taskViewModel.setCancelNavigation();
+    }
+
+    @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
 
         viewModel = new ViewModelProvider(this).get(EventViewModel.class);
         guideViewModel = new ViewModelProvider(this).get(GuideViewModel.class);
+        taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
         storageHandler = new StorageHandler(requireContext());
 
@@ -169,19 +181,12 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             });
         }
 
-        List<Task> taskList = new ArrayList<>();
-        taskList.add(new Task("Очистить городской пляж"));
-        taskList.add(new Task("Очистить городской пляж"));
-        taskList.add(new Task("Очистить городской пляж"));
-        taskList.add(new Task("Очистить городской пляж"));
-        taskList.add(new Task("Очистить городской пляж"));
-        taskList.add(new Task("Очистить городской пляж"));
-        taskList.add(new Task("Очистить городской пляж"));
-        taskList.add(new Task("Очистить городской пляж"));
-        taskList.add(new Task("Очистить городской пляж"));
-
-        TasksAdapter tasksAdapter = new TasksAdapter(taskList);
-        binding.tasksRecyclerView.setAdapter(tasksAdapter);
+        taskViewModel.getAllTasks().observe(requireActivity(), tasks -> {
+            if (tasks != null) {
+                tasksAdapter = new TasksAdapter(tasks);
+                binding.tasksRecyclerView.setAdapter(tasksAdapter);
+            }
+        });
 
         guideViewModel.getGuidesList().observe(requireActivity(), guides -> {
             List<Advice> guidesList = new ArrayList<>();
@@ -206,6 +211,21 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 SavedAdviceAdapter adviceAdapter = new SavedAdviceAdapter(guidesList);
                 binding.savedAdviceRecyclerView.setAdapter(adviceAdapter);
                 binding.homeLoader.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        taskViewModel.getNavigation().observe(getViewLifecycleOwner(), isNavigation -> {
+            if (isNavigation) {
+                tasksAdapter.setOnItemClickListener(task -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("taskID", task.getTaskID());
+                    Navigation.findNavController(requireView()).navigate(R.id.taskFragment, bundle);
+                    taskViewModel.setCancelNavigation();
+                });
             }
         });
     }

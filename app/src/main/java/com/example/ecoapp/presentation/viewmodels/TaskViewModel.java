@@ -133,6 +133,25 @@ public class TaskViewModel extends AndroidViewModel {
         return statusCode;
     }
 
+    public LiveData<ArrayList<Task>> getAllTasks() {
+        taskRepository.getAllTasks(storageHandler.getToken()).enqueue(new Callback<TasksDTO>() {
+            @Override
+            public void onResponse(@NotNull Call<TasksDTO> call, @NotNull Response<TasksDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    tasksList.setValue(response.body().getTasks());
+                    isNavigation.setValue(true);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<TasksDTO> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return tasksList;
+    }
+
     public LiveData<Boolean> getNavigation() {
         return isNavigation;
     }

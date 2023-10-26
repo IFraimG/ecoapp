@@ -55,4 +55,8 @@ public class TaskRepository {
     public Call<ResponseBody> deleteTask(String token, String taskID) {
         return taskAPI.deleteTask(token, taskID);
     }
+
+    public Call<TasksDTO> getAllTasks(String token) {
+        return taskAPI.getAllTasks(token);
+    }
 }

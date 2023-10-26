@@ -99,7 +99,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             }
 
             Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_authSignupFragment);
-            Navigation.findNavController(v).popBackStack(R.id.profileFragment, true);
+//            Navigation.findNavController(v).popBackStack(R.id.profileFragment, true);
         });
 
         binding.personName.setOnEditorActionListener((textView, actionId, keyEvent) -> {
