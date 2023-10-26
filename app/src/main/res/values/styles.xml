@@ -5,4 +5,23 @@
         <item name="itemHorizontalTranslationEnabled">false</item>
         <item name="itemBackground">@color/white</item>
     </style>
+
+    <style name="LightThemeRadioButtonStyle">
+        <item name="android:button">@drawable/radio_button_selector_light</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DarkThemeRadioButtonStyle">
+        <item name="android:button">@drawable/radio_button_selector_dark</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="GreenThemeRadioButtonStyle">
+        <item name="android:button">@drawable/radio_button_selector_green</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 </resources>
