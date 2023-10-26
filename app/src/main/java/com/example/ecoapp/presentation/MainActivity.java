@@ -1,6 +1,7 @@
 package com.example.ecoapp.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -10,19 +11,24 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.ecoapp.BuildConfig;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.ActivityMainBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.services.NetworkChangeReceiver;
-import com.yandex.mapkit.MapKitFactory;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private NavController navController;
     private StorageHandler storageHandler;
     private NetworkChangeReceiver networkChangeReceiver;
-    private boolean isInitMap = false;
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        storageHandler = new StorageHandler(getApplicationContext());
+        initData();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,34 +36,14 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (!isInitMap) {
-            MapKitFactory.setApiKey(BuildConfig.apiKey);
-            MapKitFactory.initialize(getApplicationContext());
-            isInitMap = true;
+        storageHandler = new StorageHandler(getApplicationContext());
+        if (storageHandler.getTheme() == 0) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else if (storageHandler.getTheme() == 1) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
-        navController = navHostFragment.getNavController();
-
-        storageHandler = new StorageHandler(getApplicationContext());
-
-        networkChangeReceiver = new NetworkChangeReceiver(new NetworkChangeReceiver.NetworkChangeListener() {
-            @Override
-            public void onNetworkConnected() {
-                if (storageHandler.getAuth()) {
-                    if (navController.getCurrentDestination().getId() == R.id.noNetworkFragment) {
-                        changeMenu(true);
-                        navController.navigate(R.id.homeFragment);
-                    }
-                } else changeMenu(false);
-            }
-
-            @Override
-            public void onNetworkDisconnected() {
-                changeMenu(false);
-                navController.navigate(R.id.noNetworkFragment);
-            }
-        });
+        initData();
     }
 
     @Override
@@ -76,6 +62,30 @@ public class MainActivity extends AppCompatActivity {
             NavigationUI.onNavDestinationSelected(item, navController);
 
             return true;
+        });
+    }
+
+    private void initData() {
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
+        navController = navHostFragment.getNavController();
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
+
+        networkChangeReceiver = new NetworkChangeReceiver(new NetworkChangeReceiver.NetworkChangeListener() {
+            @Override
+            public void onNetworkConnected() {
+                if (storageHandler.getAuth()) {
+                    if (navController.getCurrentDestination().getId() == R.id.noNetworkFragment) {
+                        changeMenu(true);
+                        navController.navigate(R.id.homeFragment);
+                    }
+                } else changeMenu(false);
+            }
+
+            @Override
+            public void onNetworkDisconnected() {
+                changeMenu(false);
+                navController.navigate(R.id.noNetworkFragment);
+            }
         });
     }
 }

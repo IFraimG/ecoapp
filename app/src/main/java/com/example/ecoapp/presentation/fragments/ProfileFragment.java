@@ -2,6 +2,7 @@ package com.example.ecoapp.presentation.fragments;
 
 import static android.app.Activity.RESULT_OK;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -21,12 +23,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
+import com.example.ecoapp.BuildConfig;
 import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentProfileBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
 import com.squareup.picasso.Picasso;
+import com.yandex.mapkit.MapKitFactory;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -96,9 +100,27 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             return false;
         });
 
-        binding.whiteTheme.setOnClickListener(View -> storageHandler.setTheme(0));
-        binding.blackTheme.setOnClickListener(View -> storageHandler.setTheme(1));
-        binding.greenTheme.setOnClickListener(View -> storageHandler.setTheme(2));
+        binding.whiteTheme.setOnClickListener(View -> {
+            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+            requireActivity().recreate();
+
+            storageHandler.setTheme(0);
+        });
+        binding.blackTheme.setOnClickListener(View -> {
+            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            if (nightModeFlags != Configuration.UI_MODE_NIGHT_YES) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+
+            requireActivity().recreate();
+            storageHandler.setTheme(1);
+        });
+        binding.greenTheme.setOnClickListener(View -> {
+            storageHandler.setTheme(2);
+        });
 
         return binding.getRoot();
     }
