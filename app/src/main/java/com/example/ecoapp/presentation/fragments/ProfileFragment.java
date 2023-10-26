@@ -72,6 +72,13 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         binding.profileLoader.setOnRefreshListener(this);
         loadData();
 
+        switch (storageHandler.getTheme()) {
+            case 0: binding.profileRadioList.check(R.id.white_theme);
+            case 1: binding.profileRadioList.check(R.id.black_theme);
+            case 2: binding.profileRadioList.check(R.id.green_theme);
+        }
+
+
         binding.profileImageButton.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
