@@ -50,7 +50,7 @@
                         android:background="@drawable/delete_button"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -61,7 +61,6 @@
                     android:id="@+id/task_title"
                     android:gravity="center_horizontal"
                     android:layout_height="wrap_content"
-                    android:text="Очистить городской пляж"
                     android:fontFamily="@font/montserrat_bold"
                     android:textSize="24sp"
                     android:textColor="@color/black"
@@ -76,7 +75,6 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="4dp"
                     android:ellipsize="end"
-                    android:text="Соберите мусор пжпжпжпж. Очень надо. Плачу 200 баллов!!!!!!"
                     android:fontFamily="@font/montserrat_medium"
                     android:textColor="@color/text_gray"
                     android:textSize="20sp"
@@ -93,7 +91,6 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="@color/text_gray"
                     android:textSize="20sp"
-                    android:text="Баллы в награду: 200"
                     android:layout_gravity="center_horizontal"/>
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -253,7 +250,6 @@
                         android:elevation="0dp"
                         android:background="@drawable/green_rounded_button"
                         android:stateListAnimator="@null"/>
-
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

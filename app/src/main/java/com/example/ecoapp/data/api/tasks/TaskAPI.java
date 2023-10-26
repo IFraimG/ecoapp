@@ -29,7 +29,10 @@ public interface TaskAPI {
     Call<TasksDTO> getTasksList(@Header("Authorization") String token, @Query("authorID") String authorID);
 
     @DELETE("/tasks/delete")
-    Call<User> deleteTask(@Header("Authorization") String token, @Query("userId") String userID, @Query("taskID") String taskID);
+    Call<User> makeTaskDone(@Header("Authorization") String token, @Query("userId") String userID, @Query("taskID") String taskID);
+
+    @DELETE("/tasks/deleteTask")
+    Call<ResponseBody> deleteTask(@Header("Authorization") String token, @Query("taskID") String taskID);
 
     @Multipart
     @POST("/tasks/takeTask")

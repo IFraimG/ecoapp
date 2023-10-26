@@ -115,27 +115,33 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         });
 
         binding.whiteTheme.setOnClickListener(View -> {
-            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-            requireActivity().recreate();
+            if (storageHandler.getTheme() != 0) {
+                int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+                requireActivity().recreate();
 
-            storageHandler.setTheme(0);
+                storageHandler.setTheme(0);
+            }
         });
 
         binding.blackTheme.setOnClickListener(View -> {
-            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            if (nightModeFlags != Configuration.UI_MODE_NIGHT_YES) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }
+            if (storageHandler.getTheme() != 1) {
+                int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                if (nightModeFlags != Configuration.UI_MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
 
-            requireActivity().recreate();
-            storageHandler.setTheme(1);
+                requireActivity().recreate();
+                storageHandler.setTheme(1);
+            }
         });
 
         binding.greenTheme.setOnClickListener(View -> {
-            storageHandler.setTheme(2);
+            if (storageHandler.getTheme() != 2) {
+                storageHandler.setTheme(2);
+            }
         });
 
         binding.fragmentProfileButtonAddTask.setOnClickListener(v -> {

@@ -12,6 +12,7 @@ import com.example.ecoapp.data.api.tasks.TaskAPIService;
 import com.example.ecoapp.data.api.tasks.TaskRepository;
 import com.example.ecoapp.data.api.tasks.dto.TasksDTO;
 import com.example.ecoapp.data.models.Task;
+import com.example.ecoapp.data.models.User;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 
 import org.jetbrains.annotations.NotNull;
@@ -93,6 +94,43 @@ public class TaskViewModel extends AndroidViewModel {
         });
 
         return taskData;
+    }
+
+    public LiveData<Integer> makeTaskDone(String userID, String taskID) {
+        statusCode.setValue(0);
+        taskRepository.makeTaskDone(storageHandler.getToken(), userID, taskID).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NotNull Call<User> call, @NotNull Response<User> response) {
+                statusCode.setValue(response.code());
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<User> call, @NotNull Throwable t) {
+                statusCode.setValue(400);
+                t.printStackTrace();
+            }
+        });
+
+        return statusCode;
+    }
+
+    public LiveData<Integer> deleteTask(String taskID) {
+        statusCode.setValue(0);
+        taskRepository.deleteTask(storageHandler.getToken(), taskID).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                statusCode.setValue(response.code());
+                isNavigation.setValue(true);
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                statusCode.setValue(400);
+                t.printStackTrace();
+            }
+        });
+
+        return statusCode;
     }
 
     public LiveData<Boolean> getNavigation() {

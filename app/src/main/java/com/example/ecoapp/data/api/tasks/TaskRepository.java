@@ -36,8 +36,8 @@ public class TaskRepository {
         return taskAPI.takeTask(token, taskIdBody, userIdBody, userDescriptionBody, file, file2, file3);
     }
 
-    public Call<User> deleteTask(String token, String userID, String taskID) {
-        return taskAPI.deleteTask(token, userID, taskID);
+    public Call<User> makeTaskDone(String token, String userID, String taskID) {
+        return taskAPI.makeTaskDone(token, userID, taskID);
     }
 
     public Call<TasksDTO> getTasksList(String token, String authorID) {
@@ -50,5 +50,9 @@ public class TaskRepository {
 
     public Call<Task> getTaskByID(String token, String taskID) {
         return taskAPI.getTaskByID(token, taskID);
+    }
+
+    public Call<ResponseBody> deleteTask(String token, String taskID) {
+        return taskAPI.deleteTask(token, taskID);
     }
 }
