@@ -25,7 +25,7 @@ public interface TaskAPI {
     @POST("/tasks/create")
     Call<ResponseBody> create(@Header("Authorization") String token, @Body Task taskDTO);
 
-    @POST("/tasks/getTasksList")
+    @GET("/tasks/getTasksList")
     Call<TasksDTO> getTasksList(@Header("Authorization") String token, @Query("authorID") String authorID);
 
     @DELETE("/tasks/delete")

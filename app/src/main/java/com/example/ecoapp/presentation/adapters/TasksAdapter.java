@@ -16,6 +16,16 @@ import java.util.List;
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
 
     private List<Task> taskList;
+    private OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(Task task);
+    }
+
     public TasksAdapter(List<Task> taskList){
         this.taskList = taskList;
     }
@@ -29,6 +39,9 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
     @Override
     public void onBindViewHolder(@NonNull TasksViewHolder holder, int position) {
         holder.mName.setText(taskList.get(position).getName());
+        holder.mName.setOnClickListener(View -> {
+            if (listener != null && position != RecyclerView.NO_POSITION) listener.OnItemClick(taskList.get(position));
+        });
     }
 
     @Override

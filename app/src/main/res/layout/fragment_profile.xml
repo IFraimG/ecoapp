@@ -184,6 +184,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
+                            android:background="@drawable/radio_button_selector_light"
                             style="@style/LightThemeRadioButtonStyle">
                         </RadioButton>
 
@@ -192,6 +193,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
+                            android:background="@drawable/radio_button_selector_dark"
+
                             style="@style/DarkThemeRadioButtonStyle">
                         </RadioButton>
 
@@ -200,6 +203,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
+                            android:background="@drawable/radio_button_selector_green"
                             style="@style/GreenThemeRadioButtonStyle">
                         </RadioButton>
                     </RadioGroup>

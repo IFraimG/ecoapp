@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="70dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background_gray"
     tools:context=".presentation.fragments.TaskFragment">
@@ -10,14 +11,14 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/event_loader">
+        android:id="@+id/task_loader">
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="60dp">
 
@@ -104,7 +105,7 @@
                     android:layout_marginBottom="20dp"
                     android:paddingLeft="50dp"
                     android:paddingRight="50dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:textAllCaps="false"
                     android:textColor="#FFFFFF"
                     android:fontFamily="@font/montserrat_light"
@@ -137,7 +138,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"

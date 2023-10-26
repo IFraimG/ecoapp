@@ -9,11 +9,14 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.provider.MediaStore;
@@ -23,11 +26,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
+import com.example.ecoapp.data.models.Task;
 import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentProfileBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
+import com.example.ecoapp.presentation.adapters.TasksAdapter;
 import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
+import com.example.ecoapp.presentation.viewmodels.TaskViewModel;
 import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +42,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private FragmentProfileBinding binding;
@@ -43,6 +50,8 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private Uri uri;
     private StorageHandler storageHandler;
     private ProfileViewModel viewModel;
+    private TaskViewModel taskViewModel;
+    private TasksAdapter tasksAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +67,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         storageHandler = new StorageHandler(requireContext());
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+        taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
         binding.profileLoader.setOnRefreshListener(this);
         loadData();
@@ -194,6 +204,9 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     private void loadData() {
+        binding.tasksRecyclerView.setHasFixedSize(true);
+        binding.tasksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
         binding.profileLoader.setRefreshing(true);
         viewModel.getUserData(storageHandler.getToken(), storageHandler.getUserID()).observe(requireActivity(), user -> {
             if (user != null) {
@@ -205,9 +218,52 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     String url = "https://test123-production-e08e.up.railway.app/image/" + user.getImage();
                     Picasso.get().load(url).into(binding.profileImageButton);
                 }
+
                 binding.profileLoader.setRefreshing(false);
             }
         });
+
+        taskViewModel.getTasksList().observe(requireActivity(), tasks -> {
+            if (tasks != null) {
+                ArrayList<Task> myTasks = new ArrayList<>();
+                ArrayList<Task> myTaskInProgress = new ArrayList<>();
+
+                for (Task task: tasks) {
+                    if (task.getUserID() != null) myTaskInProgress.add(task);
+                    else myTasks.add(task);
+                }
+
+                tasksAdapter = new TasksAdapter(myTasks);
+                binding.tasksRecyclerView.setAdapter(tasksAdapter);
+
+//                TasksAdapter tasksAdapter2 = new TasksAdapter(myTaskInProgress);
+//                binding.tasksRecyclerView.setAdapter(tasksAdapter2);
+
+                binding.profileLoader.setRefreshing(false);
+            }
+        });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        taskViewModel.getNavigation().observe(getViewLifecycleOwner(), isNavigation -> {
+            if (tasksAdapter != null && isNavigation) {
+                tasksAdapter.setOnItemClickListener(task -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("taskID", task.getTaskID());
+                    Navigation.findNavController(requireView()).navigate(R.id.taskFragment, bundle);
+                    taskViewModel.setCancelNavigation();
+                });
+            }
+        });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        taskViewModel.setCancelNavigation();
     }
 
     @Override

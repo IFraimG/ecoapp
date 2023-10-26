@@ -10,8 +10,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.ecoapp.data.api.RetrofitService;
 import com.example.ecoapp.data.api.tasks.TaskAPIService;
 import com.example.ecoapp.data.api.tasks.TaskRepository;
+import com.example.ecoapp.data.api.tasks.dto.TasksDTO;
 import com.example.ecoapp.data.models.Task;
 import com.example.ecoapp.domain.helpers.StorageHandler;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -24,6 +27,7 @@ public class TaskViewModel extends AndroidViewModel {
     private StorageHandler storageHandler;
     private TaskRepository taskRepository;
     private MutableLiveData<ArrayList<Task>> tasksList = new MutableLiveData<>();
+    private MutableLiveData<Task> taskData = new MutableLiveData<>();
     private MutableLiveData<Integer> statusCode = new MutableLiveData<>();
     private MutableLiveData<Boolean> isNavigation = new MutableLiveData<>(false);
 
@@ -53,6 +57,43 @@ public class TaskViewModel extends AndroidViewModel {
         return statusCode;
     }
 
+    public LiveData<ArrayList<Task>> getTasksList() {
+        isNavigation.setValue(false);
+        taskRepository.getTasksList(storageHandler.getToken(), storageHandler.getUserID()).enqueue(new Callback<TasksDTO>() {
+            @Override
+            public void onResponse(@NotNull Call<TasksDTO> call, @NotNull Response<TasksDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    tasksList.setValue(response.body().getTasks());
+                    isNavigation.setValue(true);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<TasksDTO> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return tasksList;
+    }
+
+    public LiveData<Task> getTask(String taskID) {
+        taskRepository.getTaskByID(storageHandler.getToken(), taskID).enqueue(new Callback<Task>() {
+            @Override
+            public void onResponse(@NotNull Call<Task> call, @NotNull Response<Task> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    taskData.setValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Task> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return taskData;
+    }
 
     public LiveData<Boolean> getNavigation() {
         return isNavigation;
