@@ -5,7 +5,7 @@
     android:viewportHeight="150">
   <path
       android:pathData="M0,0h150v150h-150z"
-      android:fillColor="#63D37C"/>
+      android:fillColor="@color/reglogin_text"/>
   <group>
     <clip-path
         android:pathData="M36.75,36.75h76.8v76.8h-76.8z"/>
