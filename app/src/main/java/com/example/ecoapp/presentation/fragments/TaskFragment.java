@@ -33,7 +33,6 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentTaskBinding.inflate(getLayoutInflater());
-
         storageHandler = new StorageHandler(requireContext());
         viewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
@@ -48,8 +47,13 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         });
 
-        binding.fragmentTaskBeginButton.setOnClickListener(View -> {
-
+        binding.fragmentTaskBeginButton.setOnClickListener(v -> {
+            viewModel.takeTask(taskID, "", null, null, null).observe(requireActivity(), statusCode -> {
+                if (statusCode >= 200 && statusCode < 400) {
+                    binding.fragmentTaskBeginButton.setVisibility(View.GONE);
+                    binding.fragmentTaskRefuseButton.setVisibility(View.VISIBLE);
+                }
+            });
         });
 
         binding.deleteTaskButton.setOnClickListener(View -> viewModel.deleteTask(taskID));
@@ -87,16 +91,17 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     binding.fragmentTaskBeginButton.setVisibility(View.GONE);
                     binding.fragmentTaskConfirmationSendButton.setVisibility(View.GONE);
                     binding.taskConfirmation.setVisibility(View.VISIBLE);
-                    if (task.getUserID() != null) binding.deleteTaskButton.setVisibility(View.GONE);
+                    if (task.getUserID() != null && task.getImages() != null) binding.deleteTaskButton.setVisibility(View.GONE);
                     else binding.deleteTaskButton.setVisibility(View.VISIBLE);
                 } else if (task.getUserID() != null && task.getUserID().equals(storageHandler.getUserID())) {
                     binding.fragmentTaskRefuseButton.setVisibility(View.VISIBLE);
+                    binding.taskConfirmation.setVisibility(View.VISIBLE);
                 } else {
                     binding.fragmentTaskBeginButton.setVisibility(View.VISIBLE);
                 }
 
 
-                if (task.getImages() != null && !task.getImages().isEmpty()) {
+                if (task.getImages() != null && !task.getImages().isEmpty() && task.getUserID().equals(storageHandler.getUserID())) {
                     if (task.getImages().get(0) != null) {
                         String url = "https://test123-production-e08e.up.railway.app/image/" + task.getImages().get(0);
                         Picasso.get().load(url).into(binding.confirmTaskPhoto1);
@@ -110,8 +115,6 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         String url = "https://test123-production-e08e.up.railway.app/image/" + task.getImages().get(2);
                         Picasso.get().load(url).into(binding.confirmTaskPhoto3);
                     }
-                } else {
-                    binding.taskConfirmation.setVisibility(View.GONE);
                 }
 
                 binding.taskLoader.setRefreshing(false);

@@ -20,6 +20,14 @@ public class TaskRepository {
     }
 
     public Call<ResponseBody> takeTask(String token, String taskID, String userID, String userDescription, File photo, File photo2, File photo3) {
+
+        RequestBody taskIdBody = RequestBody.create(MediaType.parse("text/plain"), taskID);
+        RequestBody userIdBody = RequestBody.create(MediaType.parse("text/plain"), userID);
+
+        if (photo == null) return taskAPI.takeTask2(token, taskIdBody, userIdBody);
+
+        RequestBody userDescriptionBody = RequestBody.create(MediaType.parse("text/plain"), userDescription);
+
         RequestBody fileReqBody = RequestBody.create(MediaType.parse("image/*"), photo);
         MultipartBody.Part file = MultipartBody.Part.createFormData("img", photo.getName(), fileReqBody);
 
@@ -28,10 +36,6 @@ public class TaskRepository {
 
         RequestBody fileReqBody3 = RequestBody.create(MediaType.parse("image/*"), photo3);
         MultipartBody.Part file3 = MultipartBody.Part.createFormData("img", photo.getName(), fileReqBody3);
-
-        RequestBody taskIdBody = RequestBody.create(MediaType.parse("text/plain"), taskID);
-        RequestBody userIdBody = RequestBody.create(MediaType.parse("text/plain"), userID);
-        RequestBody userDescriptionBody = RequestBody.create(MediaType.parse("text/plain"), userDescription);
 
         return taskAPI.takeTask(token, taskIdBody, userIdBody, userDescriptionBody, file, file2, file3);
     }

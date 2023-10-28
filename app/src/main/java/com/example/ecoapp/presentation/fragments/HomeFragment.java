@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -183,7 +182,12 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         taskViewModel.getAllTasks().observe(requireActivity(), tasks -> {
             if (tasks != null) {
-                tasksAdapter = new TasksAdapter(tasks);
+                ArrayList<Task> tasksList = new ArrayList<>();
+                for (Task task: tasks) {
+                    if (task.getAuthorID().equals(storageHandler.getUserID())) continue;
+                    tasksList.add(task);
+                }
+                tasksAdapter = new TasksAdapter(tasksList);
                 binding.tasksRecyclerView.setAdapter(tasksAdapter);
             }
         });

@@ -38,6 +38,11 @@ public interface TaskAPI {
     @POST("/tasks/takeTask")
     Call<ResponseBody> takeTask(@Header("Authorization") String token, @Part("taskID") RequestBody taskID, @Part("userID") RequestBody userID, @Part("userDescription") RequestBody userDescription, @Part MultipartBody.Part img1, @Part MultipartBody.Part img2, @Part MultipartBody.Part img3);
 
+    @Multipart
+    @POST("/tasks/takeTask")
+    Call<ResponseBody> takeTask2(@Header("Authorization") String token, @Part("taskID") RequestBody taskID, @Part("userID") RequestBody userID);
+
+
     @GET("/tasks/getAllTasks")
     Call<TasksDTO> getAllTasks(@Header("Authorization") String token);
 }

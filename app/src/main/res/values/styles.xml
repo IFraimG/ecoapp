@@ -24,19 +24,19 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="AppThemeDark" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/primaryColorDark</item>
-        <!-- Другие атрибуты стиля для темной темы -->
-    </style>
+<!--    <style name="AppThemeDark" parent="Theme.AppCompat">-->
+<!--        <item name="colorPrimary">@color/primaryColorDark</item>-->
+<!--        &lt;!&ndash; Другие атрибуты стиля для темной темы &ndash;&gt;-->
+<!--    </style>-->
 
-    <style name="AppThemeGreen" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/primaryColorGreen</item>
-        <!-- Другие атрибуты стиля для зеленой темы -->
-    </style>
+<!--    <style name="AppThemeGreen" parent="Theme.AppCompat">-->
+<!--        <item name="colorPrimary">@color/primaryColorGreen</item>-->
+<!--        &lt;!&ndash; Другие атрибуты стиля для зеленой темы &ndash;&gt;-->
+<!--    </style>-->
 
-    <style name="AppThemeLight" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/primaryColorLight</item>
-        <!-- Другие атрибуты стиля для светлой темы -->
-    </style>
+<!--    <style name="AppThemeLight" parent="Theme.AppCompat">-->
+<!--        <item name="colorPrimary">@color/primaryColorLight</item>-->
+<!--        &lt;!&ndash; Другие атрибуты стиля для светлой темы &ndash;&gt;-->
+<!--    </style>-->
 
 </resources>

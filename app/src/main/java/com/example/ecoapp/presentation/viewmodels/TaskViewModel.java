@@ -17,6 +17,7 @@ import com.example.ecoapp.domain.helpers.StorageHandler;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
@@ -150,6 +151,24 @@ public class TaskViewModel extends AndroidViewModel {
         });
 
         return tasksList;
+    }
+
+    public LiveData<Integer> takeTask(String taskID, String userDescription, File file1, File file2, File file3) {
+        statusCode.setValue(0);
+        taskRepository.takeTask(storageHandler.getToken(), taskID, storageHandler.getUserID(), userDescription, file1, file2, file3).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                statusCode.setValue(response.code());
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                statusCode.setValue(400);
+                t.printStackTrace();
+            }
+        });
+
+        return statusCode;
     }
 
     public LiveData<Boolean> getNavigation() {

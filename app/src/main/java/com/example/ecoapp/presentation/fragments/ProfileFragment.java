@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -52,6 +51,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private ProfileViewModel viewModel;
     private TaskViewModel taskViewModel;
     private TasksAdapter tasksAdapter;
+    private TasksAdapter tasksAdapter2;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -217,8 +217,8 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     private void loadData() {
-        binding.tasksRecyclerView.setHasFixedSize(true);
-        binding.tasksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        binding.myTasksRecyclerView.setHasFixedSize(true);
+        binding.myTasksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         binding.profileLoader.setRefreshing(true);
         viewModel.getUserData(storageHandler.getToken(), storageHandler.getUserID()).observe(requireActivity(), user -> {
@@ -247,10 +247,10 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 }
 
                 tasksAdapter = new TasksAdapter(myTasks);
-                binding.tasksRecyclerView.setAdapter(tasksAdapter);
+                binding.myTasksRecyclerView.setAdapter(tasksAdapter);
 
-//                TasksAdapter tasksAdapter2 = new TasksAdapter(myTaskInProgress);
-//                binding.tasksRecyclerView.setAdapter(tasksAdapter2);
+                tasksAdapter2 = new TasksAdapter(myTaskInProgress);
+                binding.needsConfirmingRecyclerView.setAdapter(tasksAdapter2);
 
                 binding.profileLoader.setRefreshing(false);
             }
@@ -263,14 +263,19 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         taskViewModel.getNavigation().observe(getViewLifecycleOwner(), isNavigation -> {
             if (tasksAdapter != null && isNavigation) {
-                tasksAdapter.setOnItemClickListener(task -> {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("taskID", task.getTaskID());
-                    Navigation.findNavController(requireView()).navigate(R.id.taskFragment, bundle);
-                    taskViewModel.setCancelNavigation();
-                });
+                tasksAdapter.setOnItemClickListener(task -> navigateOnTask(task.getTaskID()));
+            }
+            if (tasksAdapter2 != null && isNavigation) {
+                tasksAdapter2.setOnItemClickListener(task -> navigateOnTask(task.getTaskID()));
             }
         });
+    }
+
+    private void navigateOnTask(String id) {
+        Bundle bundle = new Bundle();
+        bundle.putString("taskID", id);
+        Navigation.findNavController(requireView()).navigate(R.id.taskFragment, bundle);
+        taskViewModel.setCancelNavigation();
     }
 
     @Override
