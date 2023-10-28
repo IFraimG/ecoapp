@@ -39,9 +39,7 @@
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             android:elevation="0dp"
-            app:cardBackgroundColor="@color/background_search"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:cardBackgroundColor="@color/background_search">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,6 +72,11 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
