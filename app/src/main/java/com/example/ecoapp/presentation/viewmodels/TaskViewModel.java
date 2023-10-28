@@ -97,7 +97,7 @@ public class TaskViewModel extends AndroidViewModel {
         return taskData;
     }
 
-    public LiveData<Integer> makeTaskDone(String userID, String taskID) {
+    public LiveData<Integer> makeTaskDone(String taskID, String userID) {
         statusCode.setValue(0);
         taskRepository.makeTaskDone(storageHandler.getToken(), userID, taskID).enqueue(new Callback<User>() {
             @Override
@@ -159,10 +159,29 @@ public class TaskViewModel extends AndroidViewModel {
             @Override
             public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
                 statusCode.setValue(response.code());
+                if (response.isSuccessful() && file1 != null) isNavigation.setValue(true);
             }
 
             @Override
             public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                statusCode.setValue(400);
+                t.printStackTrace();
+            }
+        });
+
+        return statusCode;
+    }
+
+    public LiveData<Integer> cancelTakeTask(String taskID) {
+        statusCode.setValue(0);
+        taskRepository.cancelTakeTask(storageHandler.getToken(), taskID).enqueue(new Callback<Task>() {
+            @Override
+            public void onResponse(@NotNull Call<Task> call, @NotNull Response<Task> response) {
+                statusCode.setValue(response.code());
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Task> call, @NotNull Throwable t) {
                 statusCode.setValue(400);
                 t.printStackTrace();
             }

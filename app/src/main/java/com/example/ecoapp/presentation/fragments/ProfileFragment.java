@@ -122,10 +122,11 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
-                requireActivity().recreate();
-
                 storageHandler.setTheme(0);
                 binding.setThemeInfo(0);
+
+                requireActivity().recreate();
+
             }
         });
 
@@ -136,9 +137,10 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 }
 
-                requireActivity().recreate();
                 storageHandler.setTheme(1);
                 binding.setThemeInfo(1);
+
+                requireActivity().recreate();
             }
         });
 

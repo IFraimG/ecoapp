@@ -43,7 +43,7 @@
                     android:layout_width="230dp"
                     android:layout_height="230dp"
                     android:layout_marginTop="20dp"
-                    app:civ_border_color="@{themeInfo == 2 ? @color/green_theme_white : @color/white}"
+                    app:civ_border_color="@color/black"
                     app:civ_border_width="6dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +98,7 @@
                     android:elevation="0dp"
                     android:layout_marginTop="12dp"
                     app:cardCornerRadius="16dp"
-                    app:cardBackgroundColor="@{themeInfo == 2 ? @color/background_card_view : @color/@color/background_card_view}"
+                    app:cardBackgroundColor="@{themeInfo == 2 ? @color/background_card_view : @color/background_card_view}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/main_title">

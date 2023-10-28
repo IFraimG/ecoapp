@@ -186,7 +186,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             if (tasks != null) {
                 ArrayList<Task> tasksList = new ArrayList<>();
                 for (Task task: tasks) {
-                    if (task.getAuthorID().equals(storageHandler.getUserID())) continue;
+                    if (task.getAuthorID().equals(storageHandler.getUserID()) || !task.getImages().isEmpty()) continue;
                     tasksList.add(task);
                 }
                 tasksAdapter = new TasksAdapter(tasksList);

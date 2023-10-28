@@ -45,4 +45,7 @@ public interface TaskAPI {
 
     @GET("/tasks/getAllTasks")
     Call<TasksDTO> getAllTasks(@Header("Authorization") String token);
+
+    @DELETE("/tasks/cancelTakeTask")
+    Call<Task> cancelTakeTask(@Header("Authorization") String token, @Query("taskID") String taskID);
 }

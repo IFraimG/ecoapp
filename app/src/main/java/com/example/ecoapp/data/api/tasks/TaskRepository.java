@@ -63,4 +63,8 @@ public class TaskRepository {
     public Call<TasksDTO> getAllTasks(String token) {
         return taskAPI.getAllTasks(token);
     }
+
+    public Call<Task> cancelTakeTask(String token, String taskID) {
+        return taskAPI.cancelTakeTask(token, taskID);
+    }
 }
