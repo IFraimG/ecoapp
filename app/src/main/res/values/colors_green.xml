@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <color name="black">#FF000000</color>
+        <color name="white">#FFFFFFFF</color>
+        <color name="background_gray">#FFFFFF</color>
+        <color name="text_gray">#FFFFFF</color>
+        <color name="home_titles_gray">#FFFFFF</color>
+        <color name="background_search">#69906D</color>
+        <color name="green">#63D37C</color>
+        <color name="reglogin_text">#FFFFFF</color>
+        <color name="background_card_view">#557C59</color>
+        <color name="top_divider">#234D2F</color>
+</resources>

@@ -5,17 +5,4 @@
     </style>
 
     <style name="Theme.EcoApp" parent="Base.Theme.EcoApp" />
-
-    <style name="GreenTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <color name="black">#FF000000</color>
-        <color name="white">#FFFFFFFF</color>
-        <color name="background_gray">#F2F2F2</color>
-        <color name="text_gray">#676767</color>
-        <color name="home_titles_gray">#898989</color>
-        <color name="background_search">#E0E0E0</color>
-        <color name="green">#63D37C</color>
-        <color name="reglogin_text">#898A8D</color>
-        <color name="background_card_view">#557C59</color>
-        <color name="top_divider">#E0E0E0</color>
-    </style>
 </resources>
