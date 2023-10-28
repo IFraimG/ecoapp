@@ -10,7 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background_gray"
+        android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/background_gray}"
         tools:context=".presentation.fragments.ProfileFragment">
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -33,7 +33,7 @@
                     android:text="Профиль"
                     android:fontFamily="@font/montserrat_bold"
                     android:textSize="28sp"
-                    android:textColor="@{themeInfo == 2 ? @color/green : @color/white}"
+                    android:textColor="@{themeInfo == 2 ? @color/green_theme_black : @color/black}"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="30dp"
                     />
@@ -43,7 +43,7 @@
                     android:layout_width="230dp"
                     android:layout_height="230dp"
                     android:layout_marginTop="20dp"
-                    app:civ_border_color="@color/white"
+                    app:civ_border_color="@{themeInfo == 2 ? @color/green_theme_white : @color/white}"
                     app:civ_border_width="6dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
                     android:layout_marginTop="20dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/montserrat_bold"
-                    android:textColor="@color/text_gray"
+                    android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                     android:textSize="24sp"
                     android:gravity="center"
                     android:background="@null"
@@ -86,7 +86,7 @@
                     android:layout_marginTop="16dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/montserrat_bold"
-                    android:textColor="@color/text_gray"
+                    android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                     android:textSize="20sp"
                     android:layout_gravity="center_horizontal" />
 
@@ -98,7 +98,7 @@
                     android:elevation="0dp"
                     android:layout_marginTop="12dp"
                     app:cardCornerRadius="16dp"
-                    app:cardBackgroundColor="@color/background_card_view"
+                    app:cardBackgroundColor="@{themeInfo == 2 ? @color/background_card_view : @color/@color/background_card_view}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/main_title">
@@ -114,7 +114,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_medium"
                             android:text="Мои задачи"
-                            android:textColor="@color/home_titles_gray"
+                            android:textColor="@{themeInfo == 2 ? @color/green_theme_home_titles_gray : @color/home_titles_gray}"
                             android:textSize="20sp"
                             android:layout_marginLeft="24dp"
                             android:layout_marginTop="16dp" />
@@ -132,7 +132,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_medium"
                             android:text="Ждет подтверждения"
-                            android:textColor="@color/home_titles_gray"
+                            android:textColor="@{themeInfo == 2 ? @color/green_theme_home_titles_gray : @color/home_titles_gray}"
                             android:textSize="20sp"
                             android:layout_marginLeft="24dp"
                             android:layout_marginTop="16dp" />
@@ -150,7 +150,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_medium"
                             android:text="Выполняю"
-                            android:textColor="@color/home_titles_gray"
+                            android:textColor="@{themeInfo == 2 ? @color/green_theme_home_titles_gray : @color/home_titles_gray}"
                             android:textSize="20sp"
                             android:layout_marginLeft="24dp"
                             android:layout_marginTop="16dp" />
@@ -191,7 +191,7 @@
                     android:elevation="0dp"
                     android:layout_marginTop="12dp"
                     app:cardCornerRadius="16dp"
-                    app:cardBackgroundColor="@color/background_card_view"
+                    app:cardBackgroundColor="@{themeInfo == 2 ? @color/background_card_view : @color/background_card_view}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/advice_card_view">

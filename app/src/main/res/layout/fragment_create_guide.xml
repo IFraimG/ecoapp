@@ -12,7 +12,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_gray"
+    android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/background_gray}"
     android:paddingBottom="80dp"
     tools:context=".presentation.fragments.AddGuideFragment"
     >
@@ -47,7 +47,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:text="Создание руководства"
-                android:textColor="@color/black"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_black : @color/black}"
                 android:textSize="28sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -63,7 +63,7 @@
                 android:elevation="0dp"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp"
-                app:cardBackgroundColor="@color/background_card_view"
+                app:cardBackgroundColor="@{themeInfo == 2 ? @color/background_card_view : @color/background_card_view}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/create_guide_title">
@@ -100,7 +100,7 @@
                 android:elevation="0dp"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp"
-                app:cardBackgroundColor="@color/background_card_view"
+                app:cardBackgroundColor="@{themeInfo == 2 ? @color/background_card_view : @color/background_card_view}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/create_guide_photo_card_view">
@@ -122,7 +122,7 @@
                         app:cardCornerRadius="12dp"
                         app:cardElevation="0dp"
                         android:elevation="0dp"
-                        app:cardBackgroundColor="@color/background_search">
+                        app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}">
 
                         <EditText
                             android:id="@+id/guide_name_edit_text"
@@ -130,11 +130,11 @@
                             android:layout_height="48dp"
                             android:layout_marginLeft="16dp"
                             android:layout_marginRight="16dp"
-                            android:background="@color/background_search"
-                            android:backgroundTint="@color/background_search"
+                            android:background="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
+                            android:backgroundTint="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
                             android:fontFamily="@font/montserrat_regular"
                             android:hint="Название гайда"
-                            android:textColorHint="@color/reglogin_text"
+                            android:textColorHint="@{themeInfo == 2 ? @color/green_theme_reglogin_text : @color/reglogin_text}"
                             android:textSize="16sp" />
 
                     </androidx.cardview.widget.CardView>
@@ -149,7 +149,7 @@
                         app:cardCornerRadius="12dp"
                         app:cardElevation="0dp"
                         android:elevation="0dp"
-                        app:cardBackgroundColor="@color/background_search">
+                        app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}">
 
                         <EditText
                             android:id="@+id/guide_article_edit_text"
@@ -161,10 +161,10 @@
                             android:layout_marginBottom="4dp"
                             android:hint="Статья"
                             android:textSize="16sp"
-                            android:textColorHint="@color/reglogin_text"
+                            android:textColorHint="@{themeInfo == 2 ? @color/green_theme_reglogin_text : @color/reglogin_text}"
                             android:fontFamily="@font/montserrat_regular"
-                            android:backgroundTint="@color/background_search"
-                            android:background="@color/background_search"
+                            android:backgroundTint="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
+                            android:background="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
                             android:inputType="textMultiLine"
                             android:minLines="40"
                             android:gravity="top|start"
@@ -183,7 +183,7 @@
                         app:cardCornerRadius="12dp"
                         app:cardElevation="0dp"
                         android:elevation="0dp"
-                        app:cardBackgroundColor="@color/background_search">
+                        app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}">
 
                         <EditText
                             android:id="@+id/guide_references_edit_text"
@@ -195,10 +195,10 @@
                             android:layout_marginBottom="4dp"
                             android:hint="Ссылки на информационные ресурсы"
                             android:textSize="16sp"
-                            android:textColorHint="@color/reglogin_text"
+                            android:textColorHint="@{themeInfo == 2 ? @color/green_theme_reglogin_text : @color/reglogin_text}"
                             android:fontFamily="@font/montserrat_regular"
-                            android:backgroundTint="@color/background_search"
-                            android:background="@color/background_search"
+                            android:backgroundTint="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
+                            android:background="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
                             android:inputType="textMultiLine"
                             android:minLines="3"
                             android:gravity="top|start"

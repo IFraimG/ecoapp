@@ -10,7 +10,7 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_gray"
+    android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/background_gray}"
     android:orientation="vertical"
     tools:context=".presentation.fragments.AddHabitFragment">
 
@@ -41,7 +41,7 @@
                 android:text="Добавить привычку"
                 android:fontFamily="@font/montserrat_bold"
                 android:textSize="28sp"
-                android:textColor="@color/black"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_black : @color/black}"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"
                 android:gravity="center"
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/background_card_view"
+                app:cardBackgroundColor="@{themeInfo == 2 ? @color/background_card_view : @color/@color/background_card_view}"
                 android:elevation="0dp"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp">
@@ -73,7 +73,7 @@
                         app:cardCornerRadius="12dp"
                         app:cardElevation="0dp"
                         android:elevation="0dp"
-                        app:cardBackgroundColor="@color/background_search">
+                        app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}">
 
                         <EditText
                             android:id="@+id/habit_name_edit_text"
@@ -82,7 +82,7 @@
                             android:layout_marginRight="16dp"
                             android:hint="Название"
                             android:textSize="16sp"
-                            android:textColorHint="@color/reglogin_text"
+                            android:textColorHint="@{themeInfo == 2 ? @color/green_theme_reglogin_text : @color/reglogin_text}"
                             android:fontFamily="@font/montserrat_regular"
                             android:backgroundTint="@color/background_search"
                             android:background="@color/background_search"
