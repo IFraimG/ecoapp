@@ -2,6 +2,7 @@ package com.example.ecoapp.presentation.fragments;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -26,14 +27,15 @@ public class AuthSignupFragment extends Fragment {
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       binding = FragmentRegistrationBinding.inflate(getLayoutInflater());
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registration, container, false);
+        binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
 
         if (new StorageHandler(requireContext()).getAuth()) pushData();
 
         viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
         binding.loginTextView.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_authSignupFragment_to_authLoginFragment));
-       binding.registrationCardView.setOnClickListener(v -> {
+        binding.registrationCardView.setOnClickListener(v -> {
 
            String name = binding.firstNameEditText.getText().toString();
            String lastname = binding.lastNameEditText.getText().toString();

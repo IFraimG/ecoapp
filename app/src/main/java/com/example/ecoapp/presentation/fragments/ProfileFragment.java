@@ -12,6 +12,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -63,9 +64,11 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentProfileBinding.inflate(getLayoutInflater());
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
 
         storageHandler = new StorageHandler(requireContext());
+        binding.setThemeInfo(storageHandler.getTheme());
+
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
@@ -123,6 +126,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 requireActivity().recreate();
 
                 storageHandler.setTheme(0);
+                binding.setThemeInfo(0);
             }
         });
 
@@ -135,12 +139,14 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
                 requireActivity().recreate();
                 storageHandler.setTheme(1);
+                binding.setThemeInfo(1);
             }
         });
 
         binding.greenTheme.setOnClickListener(View -> {
             if (storageHandler.getTheme() != 2) {
                 storageHandler.setTheme(2);
+                binding.setThemeInfo(2);
             }
         });
 

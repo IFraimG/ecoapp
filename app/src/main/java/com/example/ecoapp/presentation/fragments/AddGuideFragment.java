@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentCreateGuideBinding;
+import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.GuideViewModel;
 
@@ -61,7 +63,8 @@ public class AddGuideFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentCreateGuideBinding.inflate(getLayoutInflater());
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_guide, container, false);
+        binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
 
         viewModel = new ViewModelProvider(requireActivity()).get(GuideViewModel.class);
 

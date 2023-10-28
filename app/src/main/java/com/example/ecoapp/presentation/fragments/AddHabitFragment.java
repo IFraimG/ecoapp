@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -13,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentAddHabitBinding;
+import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.HabitViewModel;
 
@@ -43,7 +46,8 @@ public class AddHabitFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentAddHabitBinding.inflate(getLayoutInflater());
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_habit, container, false);
+        binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
 
         viewModel = new ViewModelProvider(requireActivity()).get(HabitViewModel.class);
 
