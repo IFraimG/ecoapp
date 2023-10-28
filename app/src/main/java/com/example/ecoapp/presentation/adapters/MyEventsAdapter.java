@@ -37,7 +37,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.MyEven
     public void onBindViewHolder(@NonNull MyEventsViewHolder holder, int position) {
         holder.mName.setText(myEventsList.get(position).getName());
 
-        String url = "https://test123-production-e08e.up.railway.app/image/" + myEventsList.get(position).getImage();
+        String url = "http://178.21.8.29:8080/image/" + myEventsList.get(position).getImage();
         Picasso.get().load(url).into(holder.mImageview);
 
         holder.cardView.setOnClickListener(v -> {

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -174,7 +175,8 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentMapBinding.inflate(inflater);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false);
+        binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
         mBinding = new WeakReference<>(binding);
 
         viewModel = new ViewModelProvider(requireActivity()).get(EventViewModel.class);

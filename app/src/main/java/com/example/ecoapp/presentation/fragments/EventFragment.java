@@ -3,6 +3,7 @@ package com.example.ecoapp.presentation.fragments;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -57,9 +58,9 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentEventBinding.inflate(getLayoutInflater());
-
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event, container, false);
         storageHandler = new StorageHandler(requireContext());
+        binding.setThemeInfo(storageHandler.getTheme());
 
         viewModel = new ViewModelProvider(requireActivity()).get(EventViewModel.class);
 
@@ -131,7 +132,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             if (eventCustom != null) {
                 this.eventCustom = eventCustom;
 
-                String url = "https://test123-production-e08e.up.railway.app/image/" + eventCustom.getPhoto();
+                String url = "http://178.21.8.29:8080/image/" + eventCustom.getPhoto();
 
                 binding.eventTitle.setText(eventCustom.getTitle());
                 binding.theEventDescription.setText(eventCustom.getDescription());

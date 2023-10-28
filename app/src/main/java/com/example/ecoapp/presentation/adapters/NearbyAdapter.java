@@ -37,7 +37,7 @@ public class NearbyAdapter extends RecyclerView.Adapter<NearbyAdapter.NearbyView
     public void onBindViewHolder(@NonNull NearbyViewHolder holder, int position) {
         holder.mName.setText(nearbyList.get(position).getTitle());
 
-        String url = "https://test123-production-e08e.up.railway.app/image/" + nearbyList.get(position).getPhoto();
+        String url = "http://178.21.8.29:8080/image/" + nearbyList.get(position).getPhoto();
         Picasso.get().load(url).into(holder.mImageview);
 
         holder.cardView.setOnClickListener(v -> {

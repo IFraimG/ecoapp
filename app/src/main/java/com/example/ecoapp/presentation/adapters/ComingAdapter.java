@@ -35,7 +35,7 @@ public class ComingAdapter extends RecyclerView.Adapter<ComingAdapter.ComingView
     public void onBindViewHolder(@NonNull ComingViewHolder holder, int position) {
         holder.mName.setText(comingList.get(position).getName());
 
-        String url = "https://test123-production-e08e.up.railway.app/image/" + comingList.get(position).getImage();
+        String url = "http://178.21.8.29:8080/image/" + comingList.get(position).getImage();
         Picasso.get().load(url).into(holder.mImageview);
 
         holder.cardView.setOnClickListener(v -> {

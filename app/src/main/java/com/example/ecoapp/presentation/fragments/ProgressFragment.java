@@ -2,6 +2,7 @@ package com.example.ecoapp.presentation.fragments;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -9,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ecoapp.R;
 import com.example.ecoapp.data.models.HabitStats;
 import com.example.ecoapp.databinding.ProgressLayoutBinding;
+import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.adapters.CalendarDecorator;
 import com.example.ecoapp.presentation.viewmodels.HabitViewModel;
@@ -42,7 +45,8 @@ public class ProgressFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = ProgressLayoutBinding.inflate(getLayoutInflater());
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
+        binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
 
         viewModel = new ViewModelProvider(this).get(HabitViewModel.class);
 

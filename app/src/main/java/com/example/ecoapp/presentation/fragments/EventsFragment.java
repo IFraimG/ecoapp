@@ -2,6 +2,7 @@ package com.example.ecoapp.presentation.fragments;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.adapters.ComingAdapter;
 import com.example.ecoapp.databinding.FragmentEventsBinding;
 import com.example.ecoapp.data.models.Coming;
@@ -33,7 +35,8 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        fragmentEventsBinding = FragmentEventsBinding.inflate(getLayoutInflater());
+        fragmentEventsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_events, container, false);
+        fragmentEventsBinding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
 
         viewModel = new ViewModelProvider(this).get(EventViewModel.class);
 

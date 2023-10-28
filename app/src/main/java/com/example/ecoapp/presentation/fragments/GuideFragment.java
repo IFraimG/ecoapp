@@ -2,6 +2,7 @@ package com.example.ecoapp.presentation.fragments;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -11,8 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ecoapp.R;
 import com.example.ecoapp.data.models.User;
 import com.example.ecoapp.databinding.FragmentGuideBinding;
+import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.GuideViewModel;
 import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
@@ -45,7 +48,9 @@ public class GuideFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentGuideBinding.inflate(getLayoutInflater());
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_guide, container, false);
+        binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
+
         viewModel = new ViewModelProvider(this).get(GuideViewModel.class);
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
@@ -97,7 +102,7 @@ public class GuideFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     binding.guideAuthorName.setText(guide.getAuthorID());
 
 
-                    String url = "https://test123-production-e08e.up.railway.app/image/" + guide.getPhoto();
+                    String url = "http://178.21.8.29:8080/image/" + guide.getPhoto();
                     Picasso.get().load(url).into(binding.adviceImage);
 
                     binding.guideLoader.setRefreshing(false);

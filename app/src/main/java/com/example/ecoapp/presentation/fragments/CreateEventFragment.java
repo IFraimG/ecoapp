@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -45,7 +46,6 @@ public class CreateEventFragment extends Fragment {
     private FragmentCreateEventBinding fragmentCreateEventBinding;
     private EventViewModel eventViewModel;
     private StorageHandler storageHandler;
-
     private int SELECT_PHOTO_PROFILE = 1;
     private String address;
 
@@ -73,8 +73,9 @@ public class CreateEventFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        fragmentCreateEventBinding = FragmentCreateEventBinding.inflate(getLayoutInflater());
+        fragmentCreateEventBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_event, container, false);
         storageHandler = new StorageHandler(requireContext());
+        fragmentCreateEventBinding.setThemeInfo(storageHandler.getTheme());
 
         Bundle args = getArguments();
         if (args != null) {

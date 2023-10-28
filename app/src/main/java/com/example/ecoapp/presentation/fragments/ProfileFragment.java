@@ -65,7 +65,6 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
-
         storageHandler = new StorageHandler(requireContext());
         binding.setThemeInfo(storageHandler.getTheme());
 
@@ -234,7 +233,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 if (user.getImage() != null) {
                     binding.profileImageButton.setVisibility(View.VISIBLE);
                     binding.profileLoadImage.setVisibility(View.GONE);
-                    String url = "https://test123-production-e08e.up.railway.app/image/" + user.getImage();
+                    String url = "http://178.21.8.29:8080/image/" + user.getImage();
                     Picasso.get().load(url).into(binding.profileImageButton);
                 }
 

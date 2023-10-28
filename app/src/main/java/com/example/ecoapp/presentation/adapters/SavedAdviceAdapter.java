@@ -40,7 +40,7 @@ public class SavedAdviceAdapter extends RecyclerView.Adapter<SavedAdviceAdapter.
             bundle.putString("guideID", savedAdviceList.get(position).getId());
             Navigation.findNavController(v).navigate(R.id.guideFragment, bundle);
         });
-        String url = "https://test123-production-e08e.up.railway.app/image/" + savedAdviceList.get(position).getImage();
+        String url = "http://178.21.8.29:8080/image/" + savedAdviceList.get(position).getImage();
         Picasso.get().load(url).into(holder.mImageView);
     }
 

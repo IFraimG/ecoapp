@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -31,8 +32,10 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentTaskBinding.inflate(getLayoutInflater());
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_task, container, false);
         storageHandler = new StorageHandler(requireContext());
+        binding.setThemeInfo(storageHandler.getTheme());
+
         viewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
         binding.taskLoader.setOnRefreshListener(this);
@@ -102,16 +105,16 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
                 if (task.getImages() != null && !task.getImages().isEmpty() && task.getUserID().equals(storageHandler.getUserID())) {
                     if (task.getImages().get(0) != null) {
-                        String url = "https://test123-production-e08e.up.railway.app/image/" + task.getImages().get(0);
+                        String url = "http://178.21.8.29:8080/image/" + task.getImages().get(0);
                         Picasso.get().load(url).into(binding.confirmTaskPhoto1);
                     }
                     if (task.getImages().get(1) != null) {
-                        String url = "https://test123-production-e08e.up.railway.app/image/" + task.getImages().get(1);
+                        String url = "http://178.21.8.29:8080/image/" + task.getImages().get(1);
                         Picasso.get().load(url).into(binding.confirmTaskPhoto2);
                     }
 
                     if (task.getImages().get(2) != null) {
-                        String url = "https://test123-production-e08e.up.railway.app/image/" + task.getImages().get(2);
+                        String url = "http://178.21.8.29:8080/image/" + task.getImages().get(2);
                         Picasso.get().load(url).into(binding.confirmTaskPhoto3);
                     }
                 }

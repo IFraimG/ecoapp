@@ -5,6 +5,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.ecoapp.R;
 import com.example.ecoapp.domain.helpers.PermissionHandler;
+import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.geometry.Point;
@@ -33,7 +35,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class SecondMapFragment extends Fragment {
-
     private FragmentSecondMapBinding binding;
     private WeakReference<FragmentSecondMapBinding> mBinding;
     private MapView mapView;
@@ -71,7 +72,8 @@ public class SecondMapFragment extends Fragment {
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = com.example.ecoapp.databinding.FragmentSecondMapBinding.inflate(inflater);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_second_map, container, false);
+        binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
         mBinding = new WeakReference<>(binding);
 
         Bundle args = getArguments();

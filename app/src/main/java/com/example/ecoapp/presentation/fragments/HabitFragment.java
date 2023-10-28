@@ -2,6 +2,7 @@ package com.example.ecoapp.presentation.fragments;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.ecoapp.R;
 import com.example.ecoapp.data.models.Habit;
 import com.example.ecoapp.databinding.FragmentHabitsBinding;
+import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.adapters.HabitsAdapter;
 import com.example.ecoapp.presentation.viewmodels.HabitViewModel;
 
@@ -29,7 +31,8 @@ public class HabitFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentHabitsBinding.inflate(getLayoutInflater());
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_habits, container, false);
+        binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
 
         binding.fragmentHabitsBackToPreviousFragmentButton.setOnClickListener(v -> {
             Navigation.findNavController(v).popBackStack();

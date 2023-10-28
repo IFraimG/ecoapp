@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -82,13 +83,14 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(getLayoutInflater());
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+
+        storageHandler = new StorageHandler(requireContext());
+        binding.setThemeInfo(storageHandler.getTheme());
 
         viewModel = new ViewModelProvider(this).get(EventViewModel.class);
         guideViewModel = new ViewModelProvider(this).get(GuideViewModel.class);
         taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-
-        storageHandler = new StorageHandler(requireContext());
 
         binding.homeLoader.setOnRefreshListener(this);
 
