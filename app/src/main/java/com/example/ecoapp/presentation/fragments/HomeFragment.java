@@ -155,9 +155,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
 
-            viewModel.getEventsList().observe(requireActivity(), eventCustoms -> {
-                if (eventCustoms != null) {
-                    for (EventCustom event: eventCustoms) {
+            viewModel.getEventsList().observe(requireActivity(), events -> {
+                if (events != null) {
+                    for (EventCustom event: events) {
                         if (event.getAuthorID().equals(storageHandler.getUserID())) continue;
                         eventCustoms.add(event);
                     }

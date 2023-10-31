@@ -3,6 +3,8 @@ package com.example.ecoapp.presentation.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -53,6 +55,12 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewModel.cancelNavigate();
     }
 
     @Override
@@ -112,12 +120,22 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
             });
 
-            binding.finishEvent.setOnClickListener(View -> {
-
-            });
+            binding.finishEvent.setOnClickListener(View -> viewModel.deleteEvent(eventCustom.getEventID()));
         }
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        viewModel.getNavigate().observe(getViewLifecycleOwner(), isNavigation -> {
+            if (isNavigation) {
+                Navigation.findNavController(requireView()).navigate(R.id.eventsFragment);
+                viewModel.cancelNavigate();
+            }
+        });
     }
 
     public void showButton(boolean isJoined) {
@@ -155,10 +173,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                         binding.takePartInButton.setVisibility(View.GONE);
                         binding.refuseButton.setVisibility(View.GONE);
                     }
-                    if (eventCustom.getAuthorID().equals(storageHandler.getUserID())) {
-                        binding.finishEvent.setVisibility(View.VISIBLE);
-                    }
-                }
+                } else binding.finishEvent.setVisibility(View.VISIBLE);
 
                 Picasso.get().load(url).into(binding.eventImage);
                 binding.eventLoader.setRefreshing(false);

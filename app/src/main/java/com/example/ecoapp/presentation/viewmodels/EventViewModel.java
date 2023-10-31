@@ -128,14 +128,18 @@ public class EventViewModel extends AndroidViewModel {
         eventRepository.deleteEvent(storageHandler.getToken(), eventID).enqueue(new Callback<String>() {
             @Override
             public void onResponse(@NotNull Call<String> call, @NotNull Response<String> response) {
-
+                statusCode.setValue(response.code());
+                if (response.isSuccessful()) isNavigation.setValue(true);
             }
 
             @Override
             public void onFailure(@NotNull Call<String> call, @NotNull Throwable t) {
-
+                statusCode.setValue(400);
+                t.printStackTrace();
             }
         });
+
+        return statusCode;
     }
 
     public LiveData<Integer> refusePeople(String eventID) {
