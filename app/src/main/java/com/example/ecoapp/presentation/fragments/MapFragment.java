@@ -77,7 +77,9 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
     private PermissionHandler permissionHandler;
     private Bundle bundle;
     private Geocoder geoCoder;
-    ArrayList<EventCustom> eventCustoms;
+    private ArrayList<EventCustom> eventCustoms;
+    private boolean isLoaded = false;
+
     private final InputListener listener = new InputListener() {
         @Override
         public void onMapTap(@NonNull Map map, @NonNull Point point) {
@@ -283,24 +285,27 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
     }
 
     @Override
-    public void onObjectAdded(UserLocationView userLocationView) {
-        userLocationLayer.setAnchor(
-                new PointF((float)(mapView.getWidth() * 0.5), (float)
-                        (mapView.getHeight() * 0.5)),
-                new PointF((float)(mapView.getWidth() * 0.5), (float)
-                        (mapView.getHeight() * 0.83)));
+    public void onObjectAdded(@NotNull UserLocationView userLocationView) {
+        if (!isLoaded) {
+            userLocationLayer.setAnchor(
+                    new PointF((float)(mapView.getWidth() * 0.5), (float)
+                            (mapView.getHeight() * 0.5)),
+                    new PointF((float)(mapView.getWidth() * 0.5), (float)
+                            (mapView.getHeight() * 0.83)));
 
-        userLocationView.getArrow().setIcon(ImageProvider.fromResource(
-                requireContext(), R.drawable.add_guide_icon));
+            userLocationView.getArrow().setIcon(ImageProvider.fromResource(
+                    requireContext(), R.drawable.add_guide_icon));
 
-        CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
+            CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
 
-        pinIcon.setIcon("icon", ImageProvider.fromResource(requireContext(), R.drawable.add_guide_icon),
-                new IconStyle().setAnchor(new PointF(0f, 0f))
-                        .setRotationType(RotationType.ROTATE)
-                        .setZIndex(0f)
-                        .setScale(1f)
-        );
+            pinIcon.setIcon("icon", ImageProvider.fromResource(requireContext(), R.drawable.add_guide_icon),
+                    new IconStyle().setAnchor(new PointF(0f, 0f))
+                            .setRotationType(RotationType.ROTATE)
+                            .setZIndex(0f)
+                            .setScale(1f)
+            );
+            isLoaded = true;
+        }
     }
 
     @Override

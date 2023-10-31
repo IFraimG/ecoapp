@@ -57,6 +57,7 @@ public class CreateEventFragment extends Fragment {
     private File fileImage;
     private double longt;
     private double lat;
+    private int scoresUser;
 
     @Override
     public void onResume() {
@@ -118,7 +119,10 @@ public class CreateEventFragment extends Fragment {
         fragmentCreateEventBinding.createEventBackToEventFragmentButton.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
         profileViewModel.getUserData(storageHandler.getToken(), storageHandler.getUserID()).observe(requireActivity(), user -> {
-            if (user != null) fragmentCreateEventBinding.fragmentCreateEventPersonPoints.setText("Баллы: " + Integer.toString(user.getScores()));
+            if (user != null) {
+                scoresUser = user.getScores();
+                fragmentCreateEventBinding.fragmentCreateEventPersonPoints.setText("Баллы: " + Integer.toString(user.getScores()));
+            }
         });
 
         fragmentCreateEventBinding.eventFindMap.setOnClickListener(v -> {
@@ -150,6 +154,8 @@ public class CreateEventFragment extends Fragment {
                 Toast.makeText(requireContext(), "Вы ввели время в неправильном формате", Toast.LENGTH_LONG).show();
             } else if (Integer.parseInt(scores) < 100) {
                 Toast.makeText(requireContext(), "Вы ввели слишком маленькое количество баллов", Toast.LENGTH_LONG).show();
+            } else if (scoresUser < Integer.parseInt(scores)) {
+                Toast.makeText(requireContext(), "У вас недостаточно баллов", Toast.LENGTH_LONG).show();
             } else {
                eventViewModel.sendData(title, description, date, time, fileImage, lenPeople, address, lat, longt, Integer.parseInt(scores)).observe(requireActivity(), statusCode -> {
                    if (statusCode < 400 && statusCode != 0) {
