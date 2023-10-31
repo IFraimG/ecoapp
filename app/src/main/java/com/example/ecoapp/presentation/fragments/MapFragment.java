@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,23 +18,14 @@ import android.view.ViewGroup;
 
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentMapBinding;
-import com.example.ecoapp.domain.helpers.PermissionHandler;
 import com.example.ecoapp.data.models.EventCustom;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
-import com.yandex.mapkit.directions.DirectionsFactory;
-import com.yandex.mapkit.directions.driving.DrivingRoute;
-import com.yandex.mapkit.directions.driving.DrivingRouter;
-import com.yandex.mapkit.directions.driving.DrivingSession;
 import com.yandex.mapkit.geometry.Point;
 import com.yandex.mapkit.layers.ObjectEvent;
-import com.yandex.mapkit.location.FilteringMode;
-import com.yandex.mapkit.location.LocationListener;
-import com.yandex.mapkit.location.LocationManager;
-import com.yandex.mapkit.location.LocationStatus;
 import com.yandex.mapkit.map.CameraPosition;
 import com.yandex.mapkit.map.CompositeIcon;
 import com.yandex.mapkit.map.IconStyle;
@@ -48,7 +38,6 @@ import com.yandex.mapkit.search.SearchFactory;
 import com.yandex.mapkit.user_location.UserLocationLayer;
 import com.yandex.mapkit.user_location.UserLocationObjectListener;
 import com.yandex.mapkit.user_location.UserLocationView;
-import com.yandex.runtime.Error;
 import com.yandex.runtime.image.ImageProvider;
 
 import org.jetbrains.annotations.NotNull;
@@ -59,26 +48,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MapFragment extends Fragment implements UserLocationObjectListener, DrivingSession.DrivingRouteListener {
-
+public class MapFragment extends Fragment implements UserLocationObjectListener {
     private FragmentMapBinding binding;
     private WeakReference<FragmentMapBinding> mBinding;
     private MapView mapView;
-    private LocationListener locationListener;
     private UserLocationLayer userLocationLayer;
     private MapObjectCollection mapObjects;
-    private DrivingRouter drivingRouter;
-    private boolean isAvailableLocation = false;
-    private LocationManager locationManager;
-    private final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
-    private Point myPoint;
+    private final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);;
     private EventViewModel viewModel;
     private StorageHandler storageHandler;
-    private PermissionHandler permissionHandler;
     private Bundle bundle;
     private Geocoder geoCoder;
     private ArrayList<EventCustom> eventCustoms;
-    private boolean isLoaded = false;
+    private boolean isTrue = false;
 
     private final InputListener listener = new InputListener() {
         @Override
@@ -153,11 +135,7 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        permissionHandler = new PermissionHandler();
-        if (permissionHandler != null) permissionHandler.requestMapPermissions((AppCompatActivity) requireActivity());
-
         SearchFactory.initialize(requireContext());
-        DirectionsFactory.initialize(requireContext());
     }
 
     @Override
@@ -171,7 +149,6 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
     public void onStop() {
         mapView.onStop();
         MapKitFactory.getInstance().onStop();
-        if (locationListener != null) locationManager.unsubscribe(locationListener);
         super.onStop();
     }
 
@@ -184,23 +161,6 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
         viewModel = new ViewModelProvider(requireActivity()).get(EventViewModel.class);
 
         this.mapView = binding.mapview;
-
-        if (permissionHandler != null && permissionHandler.checkPermissions((AppCompatActivity) requireActivity())) {
-            locationListener = new LocationListener() {
-                @Override
-                public void onLocationStatusUpdated(@NonNull LocationStatus locationStatus) {
-                    if (locationStatus == LocationStatus.AVAILABLE) isAvailableLocation = true;
-                }
-
-                @Override
-                public void onLocationUpdated(@NonNull com.yandex.mapkit.location.Location location) {
-                    myPoint = location.getPosition();
-                }
-            };
-
-            locationManager = MapKitFactory.getInstance().createLocationManager();
-            if (locationListener != null) locationManager.subscribeForLocationUpdates(0, 0, 0, false, FilteringMode.OFF, locationListener);
-        }
 
         initMap();
 
@@ -222,8 +182,6 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
      * Запрос на включение геолокации
      */
     private void initMap() {
-        if (permissionHandler != null) permissionHandler.requestMapPermissions((AppCompatActivity) requireActivity());
-
         storageHandler = new StorageHandler(requireContext());
         mapView.getMap().setNightModeEnabled(storageHandler.getTheme() == 1);
 
@@ -236,7 +194,6 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
 
         mapView.getMap().move(new CameraPosition(new Point(55.71989101308894, 37.5689757769603), 14, 0, 0), pingAnimation, null);
 
-        drivingRouter = DirectionsFactory.getInstance().createDrivingRouter();
 
         binding.mapButton.setOnClickListener(v -> {
             if (bundle != null) {
@@ -273,24 +230,12 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
     }
 
     @Override
-    public void onDrivingRoutes(@NonNull List<DrivingRoute> list) {
-        for (DrivingRoute route: list) {
-            mapObjects.addPolyline(route.getGeometry());
-        }
-    }
-
-    @Override
-    public void onDrivingRoutesError(@NonNull Error error) {
-
-    }
-
-    @Override
     public void onObjectAdded(@NotNull UserLocationView userLocationView) {
-        if (!isLoaded) {
+        if (!isTrue) {
             userLocationLayer.setAnchor(
-                    new PointF((float)(mapView.getWidth() * 0.5), (float)
+                    new PointF((float) (mapView.getWidth() * 0.5), (float)
                             (mapView.getHeight() * 0.5)),
-                    new PointF((float)(mapView.getWidth() * 0.5), (float)
+                    new PointF((float) (mapView.getWidth() * 0.5), (float)
                             (mapView.getHeight() * 0.83)));
 
             userLocationView.getArrow().setIcon(ImageProvider.fromResource(
@@ -304,7 +249,8 @@ public class MapFragment extends Fragment implements UserLocationObjectListener,
                             .setZIndex(0f)
                             .setScale(1f)
             );
-            isLoaded = true;
+
+            isTrue = true;
         }
     }
 
