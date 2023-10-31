@@ -13,7 +13,11 @@ public class StorageHandler {
     }
 
     public void logout() {
+        int theme = sharedPreferences.getInt("theme", 0);
         sharedPreferences.edit().clear().apply();
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt("theme", theme);
+        edit.apply();
     }
 
     public boolean getAuth() {

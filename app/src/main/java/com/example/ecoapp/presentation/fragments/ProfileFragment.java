@@ -53,6 +53,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private TaskViewModel taskViewModel;
     private TasksAdapter tasksAdapter;
     private TasksAdapter tasksAdapter2;
+    private TasksAdapter tasksAdapter3;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +71,16 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+
+        binding.myTasksRecyclerView.setHasFixedSize(true);
+        binding.myTasksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        binding.needsConfirmingRecyclerView.setHasFixedSize(true);
+        binding.needsConfirmingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        binding.inProcessRecyclerView.setHasFixedSize(true);
+        binding.inProcessRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
 
         binding.profileLoader.setOnRefreshListener(this);
         loadData();
@@ -224,9 +235,6 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     private void loadData() {
-        binding.myTasksRecyclerView.setHasFixedSize(true);
-        binding.myTasksRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-
         binding.profileLoader.setRefreshing(true);
         viewModel.getUserData(storageHandler.getToken(), storageHandler.getUserID()).observe(requireActivity(), user -> {
             if (user != null) {
@@ -262,6 +270,13 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 binding.profileLoader.setRefreshing(false);
             }
         });
+
+        taskViewModel.getTasksListWithUser().observe(requireActivity(), tasksExecute -> {
+            if (tasksExecute != null) {
+                tasksAdapter3 = new TasksAdapter(tasksExecute);
+                binding.inProcessRecyclerView.setAdapter(tasksAdapter3);
+            }
+        });
     }
 
     @Override
@@ -274,6 +289,9 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             }
             if (tasksAdapter2 != null && isNavigation) {
                 tasksAdapter2.setOnItemClickListener(task -> navigateOnTask(task.getTaskID()));
+            }
+            if (tasksAdapter3 != null && isNavigation) {
+                tasksAdapter3.setOnItemClickListener(task -> navigateOnTask(task.getTaskID()));
             }
         });
     }

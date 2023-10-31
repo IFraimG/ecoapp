@@ -98,6 +98,10 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             else viewModel.takeTask(taskID, "...", file1, file2, file3);
         });
 
+        binding.fragmentTaskAcceptButton.setOnClickListener(View -> {
+            viewModel.makeTaskDone(taskID);
+        });
+
         return binding.getRoot();
     }
 
@@ -141,7 +145,9 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 }
 
 
-                if (task.getImages() != null && !task.getImages().isEmpty() && task.getUserID().equals(storageHandler.getUserID())) {
+                if (task.getImages() != null && !task.getImages().isEmpty() && (task.getUserID().equals(storageHandler.getUserID()) || task.getAuthorID().equals(storageHandler.getUserID()))) {
+                    binding.fragmentTaskConfirmationSendButton.setVisibility(View.GONE);
+                    binding.fragmentTaskAcceptButton.setVisibility(View.VISIBLE);
                     if (task.getImages().get(0) != null) {
                         String url = "http://178.21.8.29:8080/image/" + task.getImages().get(0);
                         Picasso.get().load(url).into(binding.confirmTaskPhoto1);
