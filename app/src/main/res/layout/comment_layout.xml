@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textColor="@{themeInfo == 2 ? @color/green_theme_reglogin_text : @color/reglogin_text}"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/montserrat_bold"
                     android:ellipsize="end"
                     app:layout_constraintStart_toEndOf="@id/comment_profile_image"
@@ -50,7 +50,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/montserrat_medium"
                     android:textColor="@{themeInfo == 2 ? @color/green_theme_reglogin_text : @color/reglogin_text}"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@id/comment_profile_image"
                     app:layout_constraintTop_toBottomOf="@id/comment_profile_name_tv"/>
 
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textColor="@{themeInfo == 2 ? @color/green_theme_home_titles_gray : @color/home_titles_gray}"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:fontFamily="@font/montserrat_regular"
                     android:ellipsize="end"
                     app:layout_constraintStart_toStartOf="@id/comment_content_tv"
