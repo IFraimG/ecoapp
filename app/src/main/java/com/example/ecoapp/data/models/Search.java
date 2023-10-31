@@ -1,10 +1,18 @@
 package com.example.ecoapp.data.models;
 
-public class Search {
+import com.google.gson.annotations.SerializedName;
 
+public class Search {
+    @SerializedName("image")
     private String image;
+
+    @SerializedName("title")
     private String name;
+
+    @SerializedName("id")
     private String id;
+
+    @SerializedName("type")
     private String type;
 
     public Search(String image, String name, String id, String type) {

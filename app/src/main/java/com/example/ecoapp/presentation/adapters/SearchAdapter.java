@@ -20,6 +20,16 @@ import java.util.List;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> {
 
     private List<Search> searchList;
+    private OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(Search search);
+    }
+
 
     public SearchAdapter(List<Search> searchList) {
         this.searchList = searchList;
@@ -28,18 +38,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @NonNull
     @Override
     public SearchViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.found_layout, parent, false);
         return new SearchViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
         holder.name.setText(searchList.get(position).getName());
-        holder.itemView.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("guideID", searchList.get(position).getId());
-            Navigation.findNavController(v).navigate(R.id.guideFragment, bundle);
-        });
         String url = "http://178.21.8.29:8080/image/" + searchList.get(position).getImage();
         Picasso.get().load(url).into(holder.mImageView);
     }
@@ -58,6 +63,15 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
             name = itemView.findViewById(R.id.found_name_tv);
             mImageView = itemView.findViewById(R.id.found_image);
+
+            itemView.setOnClickListener(View -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.OnItemClick(searchList.get(position));
+                    }
+                }
+            });
         }
     }
 }

@@ -2,6 +2,7 @@ package com.example.ecoapp.data.api.events;
 
 import com.example.ecoapp.data.api.events.dto.AddUserToEventDTO;
 import com.example.ecoapp.data.api.events.dto.EventsListDTO;
+import com.example.ecoapp.data.api.events.dto.SearchDTO;
 import com.example.ecoapp.data.api.users.dto.UsersListDTO;
 import com.example.ecoapp.data.models.EventCustom;
 
@@ -47,6 +48,9 @@ public interface EventAPI {
 
     @GET("/events/findNearestEventsByAuthorCoords")
     Call<EventsListDTO> findNearestEventsByAuthorCoords(@Header("Authorization") String token, @Query("lat") double lat, @Query("longt") double longt);
+
+    @GET("/events/searchPosts")
+    Call<SearchDTO> getPosts(@Header("Authorization") String token, @Query("title") String title);
 
     @GET("/events/getUsersFromEvents")
     Call<UsersListDTO> getUsersFromEvents(@Header("Authorization") String token, @Query("authorID") String authorID, @Query("eventID") String eventID);

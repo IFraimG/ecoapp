@@ -11,7 +11,9 @@ import com.example.ecoapp.data.api.RetrofitService;
 import com.example.ecoapp.data.api.events.EventAPIService;
 import com.example.ecoapp.data.api.events.EventRepository;
 import com.example.ecoapp.data.api.events.dto.EventsListDTO;
+import com.example.ecoapp.data.api.events.dto.SearchDTO;
 import com.example.ecoapp.data.api.users.dto.UsersListDTO;
+import com.example.ecoapp.data.models.Search;
 import com.example.ecoapp.data.models.User;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.data.models.EventCustom;
@@ -36,6 +38,7 @@ public class EventViewModel extends AndroidViewModel {
     private final MutableLiveData<ArrayList<User>> usersScoresList = new MutableLiveData<>();
     private final MutableLiveData<Boolean> isGetContext = new MutableLiveData<>(false);
     private final MutableLiveData<Integer> isLoadData = new MutableLiveData<>(0);
+    private final MutableLiveData<ArrayList<Search>> searchPosts = new MutableLiveData<>();
 
     public EventViewModel(@NonNull Application application) {
         super(application);
@@ -234,6 +237,25 @@ public class EventViewModel extends AndroidViewModel {
         });
 
         return usersScoresList;
+    }
+
+    public LiveData<ArrayList<Search>> getPosts(String title) {
+        eventRepository.getPosts(storageHandler.getToken(), title).enqueue(new Callback<SearchDTO>() {
+            @Override
+            public void onResponse(@NotNull Call<SearchDTO> call, @NotNull Response<SearchDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    searchPosts.setValue(response.body().getSearches());
+                    isNavigation.setValue(true);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<SearchDTO> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return searchPosts;
     }
 
     public void clearEvents() {
