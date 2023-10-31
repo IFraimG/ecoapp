@@ -28,8 +28,8 @@
 
             <ImageView
                 android:id="@+id/my_event_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/empty_nearby"
                 android:background="@color/white"
                 android:scaleType="centerCrop"

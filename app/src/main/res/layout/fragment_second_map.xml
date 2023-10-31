@@ -18,20 +18,40 @@
         android:visibility="gone"
         android:id="@+id/map_card_view">
 
-        <TextView
-            android:id="@+id/map_coords"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:layout_marginBottom="150dp" />
-        <Button
-            android:id="@+id/map_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:layout_marginTop="50dp"
-            android:text="Перейти к объявлению" />
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/map_coords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:fontFamily="@font/montserrat_regular"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_reglogin_text : @color/reglogin_text}" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/map_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:paddingLeft="60dp"
+                android:paddingRight="60dp"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:fontFamily="@font/montserrat_light"
+                android:elevation="0dp"
+                android:background="@drawable/green_rounded_button"
+                android:stateListAnimator="@null"
+                android:text="Перейти к объявлению"/>
+
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <com.yandex.mapkit.mapview.MapView
