@@ -73,10 +73,12 @@
 
         </androidx.cardview.widget.CardView>
 
-        <ListView
-            android:id="@+id/list_view"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/foundRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="16dp"/>
 
     </LinearLayout>
 

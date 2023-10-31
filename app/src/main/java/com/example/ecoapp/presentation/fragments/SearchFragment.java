@@ -27,11 +27,8 @@ public class SearchFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
         binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
 
-        String[] items = {
-                "Apple", "Banana", "Cherry", "Date", "Fig", "Grape", "Kiwi", "Lemon", "Mango",
-                "Orange", "Papaya", "Peach", "Pear", "Pineapple", "Plum", "Raspberry", "Strawberry",
-                "Tangerine", "Watermelon"
-        };
+
+
         return binding.getRoot();
     }
 }
