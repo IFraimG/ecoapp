@@ -28,8 +28,11 @@ public interface TaskAPI {
     @GET("/tasks/getTasksList")
     Call<TasksDTO> getTasksList(@Header("Authorization") String token, @Query("authorID") String authorID);
 
+    @GET("/tasks/getTasksListWithUser")
+    Call<TasksDTO> getTasksListWithUser(@Header("Authorization") String token, @Query("userID") String userID);
+
     @DELETE("/tasks/delete")
-    Call<User> makeTaskDone(@Header("Authorization") String token, @Query("userId") String userID, @Query("taskID") String taskID);
+    Call<User> makeTaskDone(@Header("Authorization") String token, @Query("taskID") String taskID);
 
     @DELETE("/tasks/deleteTask")
     Call<ResponseBody> deleteTask(@Header("Authorization") String token, @Query("taskID") String taskID);

@@ -75,15 +75,15 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         });
 
         viewModel.findAuthorsEvents().observe(requireActivity(), eventCustoms -> {
-            if (eventCustoms != null) {
-                List<MyEvents> myEventsList = new ArrayList<>();
+        if (eventCustoms != null) {
+            List<MyEvents> myEventsList = new ArrayList<>();
 
-                for (EventCustom event: eventCustoms) myEventsList.add(new MyEvents(event.getPhoto(), event.getTitle(), event.getEventID()));
+            for (EventCustom event: eventCustoms) myEventsList.add(new MyEvents(event.getPhoto(), event.getTitle(), event.getEventID()));
 
-                MyEventsAdapter myEventsAdapter = new MyEventsAdapter(myEventsList);
-                fragmentEventsBinding.myEventsRecyclerView.setAdapter(myEventsAdapter);
-            }
-        });
+            MyEventsAdapter myEventsAdapter = new MyEventsAdapter(myEventsList);
+            fragmentEventsBinding.myEventsRecyclerView.setAdapter(myEventsAdapter);
+        }
+    });
     }
 
     @Override

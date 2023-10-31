@@ -40,13 +40,18 @@ public class TaskRepository {
         return taskAPI.takeTask(token, taskIdBody, userIdBody, userDescriptionBody, file, file2, file3);
     }
 
-    public Call<User> makeTaskDone(String token, String userID, String taskID) {
-        return taskAPI.makeTaskDone(token, userID, taskID);
+    public Call<User> makeTaskDone(String token, String taskID) {
+        return taskAPI.makeTaskDone(token, taskID);
     }
 
     public Call<TasksDTO> getTasksList(String token, String authorID) {
         return taskAPI.getTasksList(token, authorID);
     }
+
+    public Call<TasksDTO> getTasksListWithUser(String token, String userID) {
+        return taskAPI.getTasksListWithUser(token, userID);
+    }
+
 
     public Call<ResponseBody> createTask(String token, String title, int scores, String authorID, String description) {
         return taskAPI.create(token, new Task(title, description, scores, authorID));

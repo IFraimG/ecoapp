@@ -32,6 +32,7 @@ public class TaskViewModel extends AndroidViewModel {
     private MutableLiveData<Task> taskData = new MutableLiveData<>();
     private MutableLiveData<Integer> statusCode = new MutableLiveData<>();
     private MutableLiveData<Boolean> isNavigation = new MutableLiveData<>(false);
+    private MutableLiveData<ArrayList<Task>> tasksExecuteList = new MutableLiveData<>();
 
     public TaskViewModel(@NonNull Application application) {
         super(application);
@@ -79,6 +80,26 @@ public class TaskViewModel extends AndroidViewModel {
         return tasksList;
     }
 
+    public LiveData<ArrayList<Task>> getTasksListWithUser() {
+        isNavigation.setValue(false);
+        taskRepository.getTasksListWithUser(storageHandler.getToken(), storageHandler.getUserID()).enqueue(new Callback<TasksDTO>() {
+            @Override
+            public void onResponse(@NotNull Call<TasksDTO> call, @NotNull Response<TasksDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    tasksExecuteList.setValue(response.body().getTasks());
+                    isNavigation.setValue(true);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<TasksDTO> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return tasksExecuteList;
+    }
+
     public LiveData<Task> getTask(String taskID) {
         taskRepository.getTaskByID(storageHandler.getToken(), taskID).enqueue(new Callback<Task>() {
             @Override
@@ -97,12 +118,13 @@ public class TaskViewModel extends AndroidViewModel {
         return taskData;
     }
 
-    public LiveData<Integer> makeTaskDone(String taskID, String userID) {
+    public LiveData<Integer> makeTaskDone(String taskID) {
         statusCode.setValue(0);
-        taskRepository.makeTaskDone(storageHandler.getToken(), userID, taskID).enqueue(new Callback<User>() {
+        taskRepository.makeTaskDone(storageHandler.getToken(), taskID).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NotNull Call<User> call, @NotNull Response<User> response) {
                 statusCode.setValue(response.code());
+                isNavigation.setValue(true);
             }
 
             @Override
