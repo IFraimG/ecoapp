@@ -111,6 +111,10 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     dialogFragment.show(transaction, "dialog");
                 }
             });
+
+            binding.finishEvent.setOnClickListener(View -> {
+
+            });
         }
 
         return binding.getRoot();
@@ -140,13 +144,19 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 binding.theEventTime.setText(eventCustom.getTime());
                 binding.theEventAddress.setText(eventCustom.getPlace());
                 binding.theEventAwardPoints.setText(String.valueOf("Баллы в награду: " + eventCustom.getScores()));
-                binding.theEventCurrentPeopleAmount.setText(String.valueOf(eventCustom.getCurrentUsers()) + " / " + String.valueOf(eventCustom.getMaxUsers()));
+                binding.theEventCurrentPeopleAmount.setText("Участники: " + String.valueOf(eventCustom.getCurrentUsers()) + " / " + String.valueOf(eventCustom.getMaxUsers()));
                 if (!storageHandler.getUserID().equals(eventCustom.getAuthorID())) {
-                    if (eventCustom.getUsersList().contains(storageHandler.getUserID()) && Objects.equals(eventCustom.getCurrentUsers(), eventCustom.getMaxUsers())
-                            || eventCustom.getCurrentUsers() < eventCustom.getMaxUsers()) {
+                    if (eventCustom.getUsersList().contains(storageHandler.getUserID()) && Objects.equals(eventCustom.getCurrentUsers(), eventCustom.getMaxUsers())) {
                         showButton(true);
-                    } else if (eventCustom.getCurrentUsers() < eventCustom.getMaxUsers() && !eventCustom.getUsersList().contains(storageHandler.getUserID())) {
+                    } else if (!eventCustom.getUsersList().contains(storageHandler.getUserID())) {
                         showButton(false);
+                    }
+                    if (eventCustom.getCurrentUsers() >= eventCustom.getMaxUsers()) {
+                        binding.takePartInButton.setVisibility(View.GONE);
+                        binding.refuseButton.setVisibility(View.GONE);
+                    }
+                    if (eventCustom.getAuthorID().equals(storageHandler.getUserID())) {
+                        binding.finishEvent.setVisibility(View.VISIBLE);
                     }
                 }
 

@@ -18,6 +18,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.data.models.EventCustom;
 import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
+import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,6 +48,7 @@ import java.util.Locale;
 public class CreateEventFragment extends Fragment {
     private FragmentCreateEventBinding fragmentCreateEventBinding;
     private EventViewModel eventViewModel;
+    private ProfileViewModel profileViewModel;
     private StorageHandler storageHandler;
     private int SELECT_PHOTO_PROFILE = 1;
     private String address;
@@ -110,7 +114,12 @@ public class CreateEventFragment extends Fragment {
         }
 
         eventViewModel = new ViewModelProvider(requireActivity()).get(EventViewModel.class);
+        profileViewModel = new ViewModelProvider(requireActivity()).get(ProfileViewModel.class);
         fragmentCreateEventBinding.createEventBackToEventFragmentButton.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
+
+        profileViewModel.getUserData(storageHandler.getToken(), storageHandler.getUserID()).observe(requireActivity(), user -> {
+            if (user != null) fragmentCreateEventBinding.fragmentCreateEventPersonPoints.setText("Баллы: " + Integer.toString(user.getScores()));
+        });
 
         fragmentCreateEventBinding.eventFindMap.setOnClickListener(v -> {
             String title = fragmentCreateEventBinding.eventNameEditText.getText().toString();
@@ -167,6 +176,19 @@ public class CreateEventFragment extends Fragment {
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{cameraIntent});
 
             startActivityForResult(chooserIntent, SELECT_PHOTO_PROFILE);
+        });
+
+        fragmentCreateEventBinding.eventPointsToAPersonEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                fragmentCreateEventBinding.createEventRequiredPoints.setText("Требуется баллов: " + fragmentCreateEventBinding.eventPointsToAPersonEditText.getText().toString());
+            }
         });
 
         return fragmentCreateEventBinding.getRoot();

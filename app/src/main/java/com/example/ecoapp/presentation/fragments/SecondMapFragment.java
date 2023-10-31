@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.ecoapp.R;
 import com.example.ecoapp.domain.helpers.PermissionHandler;
 import com.example.ecoapp.domain.helpers.StorageHandler;
+import com.example.ecoapp.presentation.MainActivity;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.geometry.Point;
@@ -86,6 +87,23 @@ public class SecondMapFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(false);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(true);
+        }
+    }
+
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
@@ -95,6 +113,8 @@ public class SecondMapFragment extends Fragment {
     }
 
     private void initMap(Bundle args) {
+        mapView.getMap().setNightModeEnabled(new StorageHandler(requireContext()).getTheme() == 1);
+
         if (permissionHandler != null)
             permissionHandler.requestMapPermissions((AppCompatActivity) requireActivity());
 
