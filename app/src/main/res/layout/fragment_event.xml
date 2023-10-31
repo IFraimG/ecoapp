@@ -282,33 +282,31 @@
                             android:gravity="top|start"
                             android:autofillHints=""
                             android:scrollbars="vertical"/>
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/post_comment_button"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="70dp"
-                            android:paddingLeft="24dp"
-                            android:paddingRight="24dp"
-                            android:textAllCaps="false"
-                            android:textColor="#FFFFFF"
-                            android:fontFamily="@font/montserrat_light"
-                            android:text="Отправить"
-                            android:textSize="12sp"
-                            android:elevation="0dp"
-                            android:background="@drawable/green_rounded_button"
-                            android:stateListAnimator="@null"/>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/commentRecyclerView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp" />
-
                     </androidx.cardview.widget.CardView>
 
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/post_comment_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="70dp"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="24dp"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:fontFamily="@font/montserrat_light"
+                        android:text="Отправить"
+                        android:textSize="12sp"
+                        android:elevation="0dp"
+                        android:background="@drawable/green_rounded_button"
+                        android:stateListAnimator="@null"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commentRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
