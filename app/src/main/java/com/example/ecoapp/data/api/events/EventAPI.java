@@ -1,13 +1,16 @@
 package com.example.ecoapp.data.api.events;
 
 import com.example.ecoapp.data.api.events.dto.AddUserToEventDTO;
+import com.example.ecoapp.data.api.events.dto.CommentsDTO;
 import com.example.ecoapp.data.api.events.dto.EventsListDTO;
 import com.example.ecoapp.data.api.events.dto.SearchDTO;
 import com.example.ecoapp.data.api.users.dto.UsersListDTO;
+import com.example.ecoapp.data.models.Comment;
 import com.example.ecoapp.data.models.EventCustom;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -54,4 +57,14 @@ public interface EventAPI {
 
     @GET("/events/getUsersFromEvents")
     Call<UsersListDTO> getUsersFromEvents(@Header("Authorization") String token, @Query("authorID") String authorID, @Query("eventID") String eventID);
+
+    @POST("/events/create_comment")
+    Call<Comment> createComment(@Header("Authorization") String token, @Body Comment comment);
+
+    @GET("/events/get_comments")
+    Call<CommentsDTO> getComments(@Header("Authorization") String token, @Query("eventID") String eventID);
+
+    @DELETE("/events/delete_comment")
+    Call<ResponseBody> deleteComment(@Header("Authorization") String token, @Query("id") String id);
+
 }

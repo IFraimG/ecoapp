@@ -10,9 +10,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.ecoapp.data.api.RetrofitService;
 import com.example.ecoapp.data.api.events.EventAPIService;
 import com.example.ecoapp.data.api.events.EventRepository;
+import com.example.ecoapp.data.api.events.dto.CommentsDTO;
 import com.example.ecoapp.data.api.events.dto.EventsListDTO;
 import com.example.ecoapp.data.api.events.dto.SearchDTO;
 import com.example.ecoapp.data.api.users.dto.UsersListDTO;
+import com.example.ecoapp.data.models.Comment;
 import com.example.ecoapp.data.models.Search;
 import com.example.ecoapp.data.models.User;
 import com.example.ecoapp.domain.helpers.StorageHandler;
@@ -23,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.ArrayList;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -39,6 +42,7 @@ public class EventViewModel extends AndroidViewModel {
     private final MutableLiveData<Boolean> isGetContext = new MutableLiveData<>(false);
     private final MutableLiveData<Integer> isLoadData = new MutableLiveData<>(0);
     private final MutableLiveData<ArrayList<Search>> searchPosts = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<Comment>> commentsList = new MutableLiveData<>();
 
     public EventViewModel(@NonNull Application application) {
         super(application);
@@ -256,6 +260,62 @@ public class EventViewModel extends AndroidViewModel {
         });
 
         return searchPosts;
+    }
+
+    public LiveData<ArrayList<Comment>> getCommentsList(String eventId) {
+        eventRepository.getComments(storageHandler.getToken(), eventId).enqueue(new Callback<CommentsDTO>() {
+            @Override
+            public void onResponse(@NotNull Call<CommentsDTO> call, @NotNull Response<CommentsDTO> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    commentsList.setValue(response.body().getItem());
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<CommentsDTO> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return commentsList;
+    }
+
+    public LiveData<Integer> deleteComment(String id) {
+        statusCode.setValue(0);
+        eventRepository.deleteComment(storageHandler.getToken(), id).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                statusCode.setValue(response.code());
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
+                statusCode.setValue(400);
+                t.printStackTrace();
+            }
+        });
+
+        return statusCode;
+    }
+
+    public LiveData<ArrayList<Comment>> createComment(String eventID, String content) {
+        eventRepository.createComment(storageHandler.getToken(), storageHandler.getUserID(), eventID, content).enqueue(new Callback<Comment>() {
+            @Override
+            public void onResponse(@NotNull Call<Comment> call, @NotNull Response<Comment> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ArrayList<Comment> list = commentsList.getValue() == null ? new ArrayList<>() : commentsList.getValue();
+                    list.add(response.body());
+                    commentsList.setValue(list);
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<Comment> call, @NotNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        return commentsList;
     }
 
     public void clearEvents() {

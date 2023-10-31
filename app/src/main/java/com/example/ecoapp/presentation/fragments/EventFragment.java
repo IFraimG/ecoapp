@@ -9,19 +9,24 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.ecoapp.R;
+import com.example.ecoapp.data.models.Comment;
 import com.example.ecoapp.databinding.FragmentEventBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.data.models.EventCustom;
 import com.example.ecoapp.presentation.MainActivity;
+import com.example.ecoapp.presentation.adapters.CommentAdapter;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -35,6 +40,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private EventCustom eventCustom;
     private StorageHandler storageHandler;
     private Bundle args;
+    private CommentAdapter commentAdapter;
 
     @Override
     public void onResume() {
@@ -71,6 +77,9 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         binding.setThemeInfo(storageHandler.getTheme());
 
         viewModel = new ViewModelProvider(requireActivity()).get(EventViewModel.class);
+
+        binding.commentRecyclerView.setHasFixedSize(true);
+        binding.commentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         args = getArguments();
         if (args == null) Navigation.findNavController(requireView()).navigate(R.id.homeFragment);
@@ -121,6 +130,22 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             });
 
             binding.finishEvent.setOnClickListener(View -> viewModel.deleteEvent(eventCustom.getEventID()));
+
+            binding.postCommentButton.setOnClickListener(View -> {
+                String content = binding.writeEventCommentEditText.getText().toString();
+                if (content.isEmpty()) Toast.makeText(requireContext(), "Вы не написали комментарий", Toast.LENGTH_SHORT).show();
+                else {
+                    viewModel.createComment(eventCustom.getEventID(), content).observe(requireActivity(), comments -> {
+                        if (comments != null) {
+                            commentAdapter = new CommentAdapter(comments, storageHandler.getTheme());
+                            commentAdapter.setOnItemClickListener(this::deleteComment);
+                            binding.commentRecyclerView.setAdapter(commentAdapter);
+
+                            binding.writeEventCommentEditText.setText("");
+                        }
+                    });
+                }
+            });
         }
 
         return binding.getRoot();
@@ -177,6 +202,22 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
                 Picasso.get().load(url).into(binding.eventImage);
                 binding.eventLoader.setRefreshing(false);
+            }
+        });
+
+        viewModel.getCommentsList(args.getString("id", "")).observe(requireActivity(), comments -> {
+            if (comments != null) {
+                commentAdapter = new CommentAdapter(comments, storageHandler.getTheme());
+                commentAdapter.setOnItemClickListener(this::deleteComment);
+                binding.commentRecyclerView.setAdapter(commentAdapter);
+            }
+        });
+    }
+
+    private void deleteComment(String commentID) {
+        viewModel.deleteComment(commentID).observe(requireActivity(), statusCode -> {
+            if (statusCode >= 200 && statusCode < 400) {
+                commentAdapter.deleteItem(commentID);
             }
         });
     }

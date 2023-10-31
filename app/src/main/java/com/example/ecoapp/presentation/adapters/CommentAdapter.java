@@ -1,19 +1,15 @@
 package com.example.ecoapp.presentation.adapters;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.navigation.Navigation;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoapp.data.models.Comment;
 import com.example.ecoapp.R;
+import com.example.ecoapp.databinding.CommentLayoutBinding;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,28 +17,38 @@ import java.util.List;
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
 
     private List<Comment> commentList;
-    public CommentAdapter(List<Comment> commentList){
+    private int theme;
+    private OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(String commentID);
+    }
+
+
+    public CommentAdapter(List<Comment> commentList, int theme) {
         this.commentList = commentList;
+        this.theme = theme;
     }
     @NonNull
     @Override
     public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.comment_layout , parent , false);
-        return new CommentViewHolder(view);
+        CommentLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.comment_layout , parent , false);
+        binding.setThemeInfo(theme);
+        return new CommentViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
-        holder.mName.setText(commentList.get(position).getName());
+        holder.binding.commentProfileNameTv.setText(commentList.get(position).getProfileName());
+        holder.binding.commentDate.setText(commentList.get(position).getDate());
+        holder.binding.commentContentTv.setText(commentList.get(position).getContent());
 
-        String url = "http://178.21.8.29:8080/image/" + commentList.get(position).getImage();
-        Picasso.get().load(url).into(holder.mImageview);
-
-        holder.cardView.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("id", commentList.get(position).getId());
-            Navigation.findNavController(v).navigate(R.id.eventFragment, bundle);
-        });
+        String url = "http://178.21.8.29:8080/image/" + commentList.get(position).getProfileImage();
+        Picasso.get().load(url).into(holder.binding.commentProfileImage);
     }
 
     @Override
@@ -50,18 +56,30 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         return commentList.size();
     }
 
-    public class CommentViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mProfileImageview;
-        private TextView mProfileName;
-        private TextView mContentTextView;
-        private TextView mDate;
-        public CommentViewHolder(@NonNull View itemView) {
-            super(itemView);
+    public void deleteItem(String id) {
+        for (int i = 0; i < commentList.size(); i++) {
+            if (commentList.get(i).getId().equals(id)) {
+                commentList.remove(i);
+                notifyDataSetChanged();
+                break;
+            }
+        }
+    }
 
-            mProfileImageview = itemView.findViewById(R.id.comment_profile_image);
-            mProfileName = itemView.findViewById(R.id.comment_profile_name_tv);
-            mContentTextView = itemView.findViewById(R.id.comment_content_tv);
-            mDate = itemView.findViewById(R.id.comment_date);
+    public class CommentViewHolder extends RecyclerView.ViewHolder {
+        private CommentLayoutBinding binding;
+        public CommentViewHolder(@NonNull CommentLayoutBinding binding) {
+            super(binding.getRoot());
+
+            this.binding = binding;
+            binding.deleteComment.setOnClickListener(View -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(commentList.get(position).getId());
+                    }
+                }
+            });
         }
     }
 }

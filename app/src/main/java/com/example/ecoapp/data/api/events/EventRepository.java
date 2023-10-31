@@ -1,16 +1,20 @@
 package com.example.ecoapp.data.api.events;
 
 import com.example.ecoapp.data.api.events.dto.AddUserToEventDTO;
+import com.example.ecoapp.data.api.events.dto.CommentsDTO;
 import com.example.ecoapp.data.api.events.dto.EventsListDTO;
 import com.example.ecoapp.data.api.events.dto.SearchDTO;
 import com.example.ecoapp.data.api.users.dto.UsersListDTO;
+import com.example.ecoapp.data.models.Comment;
 import com.example.ecoapp.data.models.EventCustom;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 public class EventRepository {
@@ -76,5 +80,17 @@ public class EventRepository {
 
     public Call<SearchDTO> getPosts(String token, String title) {
         return eventAPI.getPosts(token, title);
+    }
+
+    public Call<CommentsDTO> getComments(String token, String eventID) {
+        return eventAPI.getComments(token, eventID);
+    }
+
+    public Call<Comment> createComment(String token, String authorID, String eventID, String content) {
+        return eventAPI.createComment(token, new Comment(authorID, eventID, content));
+    }
+
+    public Call<ResponseBody> deleteComment(String token, String id) {
+        return eventAPI.deleteComment(token, id);
     }
 }
