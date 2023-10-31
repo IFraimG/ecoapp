@@ -54,12 +54,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         private ImageView mProfileImageview;
         private TextView mProfileName;
         private TextView mContentTextView;
+        private TextView mDate;
         public CommentViewHolder(@NonNull View itemView) {
             super(itemView);
 
             mProfileImageview = itemView.findViewById(R.id.comment_profile_image);
             mProfileName = itemView.findViewById(R.id.comment_profile_name_tv);
             mContentTextView = itemView.findViewById(R.id.comment_content_tv);
+            mDate = itemView.findViewById(R.id.comment_date);
         }
     }
 }
