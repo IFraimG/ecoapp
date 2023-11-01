@@ -54,7 +54,7 @@ public class MapFragment extends Fragment implements UserLocationObjectListener 
     private MapView mapView;
     private UserLocationLayer userLocationLayer;
     private MapObjectCollection mapObjects;
-    private final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);;
+    private final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
     private EventViewModel viewModel;
     private StorageHandler storageHandler;
     private Bundle bundle;
@@ -81,11 +81,11 @@ public class MapFragment extends Fragment implements UserLocationObjectListener 
                     String fullAddress = address.getAddressLine(0);
                     bundle.putString("address", fullAddress);
 
-                    boolean isTrue = false;
+                    boolean isTrueTrue = false;
 
                     for (EventCustom eventCustom: eventCustoms) {
                         if (eventCustom.getPlace().equals(fullAddress)) {
-                            isTrue = true;
+                            isTrueTrue = true;
                             bundle.putString("id", eventCustom.getEventID());
                             break;
                         }
@@ -94,9 +94,10 @@ public class MapFragment extends Fragment implements UserLocationObjectListener 
                     binding.mapCardView.setVisibility(View.VISIBLE);
                     binding.mapCoords.setText(fullAddress);
 
-                    if (isTrue) {
+                    if (isTrueTrue) {
                         binding.mapButtonOneEvent.setOnClickListener(v -> {
                             Navigation.findNavController(v).navigate(R.id.eventFragment, bundle);
+                            isTrue = false;
                         });
                         binding.mapButton.setVisibility(View.GONE);
                         binding.mapButtonOneEvent.setVisibility(View.VISIBLE);
@@ -167,11 +168,12 @@ public class MapFragment extends Fragment implements UserLocationObjectListener 
         return binding.getRoot();
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mBinding.clear();
-
+        isTrue = false;
 //        if (mapView != null) mapView.getMap().getMapObjects().clear();
     }
 
@@ -198,6 +200,7 @@ public class MapFragment extends Fragment implements UserLocationObjectListener 
         binding.mapButton.setOnClickListener(v -> {
             if (bundle != null) {
                 Navigation.findNavController(v).navigate(R.id.createEventFragment, bundle);
+                isTrue = false;
             }
         });
 
@@ -238,17 +241,17 @@ public class MapFragment extends Fragment implements UserLocationObjectListener 
                     new PointF((float) (mapView.getWidth() * 0.5), (float)
                             (mapView.getHeight() * 0.83)));
 
-            userLocationView.getArrow().setIcon(ImageProvider.fromResource(
-                    requireContext(), R.drawable.add_guide_icon));
+//            userLocationView.getArrow().setIcon(ImageProvider.fromResource(
+//                    requireContext(), R.drawable.add_guide_icon));
 
-            CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
+//            CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
 
-            pinIcon.setIcon("icon", ImageProvider.fromResource(requireContext(), R.drawable.add_guide_icon),
-                    new IconStyle().setAnchor(new PointF(0f, 0f))
-                            .setRotationType(RotationType.ROTATE)
-                            .setZIndex(0f)
-                            .setScale(1f)
-            );
+//            pinIcon.setIcon("icon", ImageProvider.fromResource(requireContext(), R.drawable.add_guide_icon),
+//                    new IconStyle().setAnchor(new PointF(0f, 0f))
+//                            .setRotationType(RotationType.ROTATE)
+//                            .setZIndex(0f)
+//                            .setScale(1f)
+//            );
 
             isTrue = true;
         }

@@ -44,6 +44,7 @@ public class SecondMapFragment extends Fragment {
     private final Animation pingAnimation = new Animation(Animation.Type.SMOOTH, 0);
     private PermissionHandler permissionHandler;
     private Geocoder geoCoder;
+    private boolean isTrue = false;
 
 
     @Override
@@ -100,6 +101,8 @@ public class SecondMapFragment extends Fragment {
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) requireActivity()).changeMenu(true);
         }
+
+        isTrue = true;
     }
 
 
@@ -125,7 +128,6 @@ public class SecondMapFragment extends Fragment {
         mapObjects = mapView.getMap().getMapObjects().addCollection();
 
         geoCoder = new Geocoder(requireContext(), Locale.getDefault());
-
 
         if (args != null) {
             double longt = args.getDouble("longt");
