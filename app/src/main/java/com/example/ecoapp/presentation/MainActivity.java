@@ -36,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
         storageHandler = new StorageHandler(getApplicationContext());
+        binding.setThemeInfo(storageHandler.getTheme());
+
           if (storageHandler.getTheme() == 0) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             } else if (storageHandler.getTheme() == 1) {
