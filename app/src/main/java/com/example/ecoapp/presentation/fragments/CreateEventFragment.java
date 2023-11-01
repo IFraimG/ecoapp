@@ -205,8 +205,17 @@ public class CreateEventFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         eventViewModel.getNavigate().observe(getViewLifecycleOwner(), isNavigate -> {
-            if (isNavigate) Navigation.findNavController(requireView()).navigate(R.id.eventsFragment);
+            if (isNavigate) {
+                Navigation.findNavController(requireView()).navigate(R.id.eventsFragment);
+                eventViewModel.cancelNavigate();
+            }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        eventViewModel.cancelNavigate();
     }
 
     @Override
