@@ -69,7 +69,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
                 for (EventCustom event: eventsList) comingList.add(new Coming(event.getPhoto(), event.getTitle(), event.getEventID()));
 
-                ComingAdapter comingAdapter = new ComingAdapter(comingList);
+                ComingAdapter comingAdapter = new ComingAdapter(comingList, new StorageHandler(requireContext()).getTheme());
                 fragmentEventsBinding.comingRecyclerView.setAdapter(comingAdapter);
                 fragmentEventsBinding.eventsLoader.setRefreshing(false);
             }
