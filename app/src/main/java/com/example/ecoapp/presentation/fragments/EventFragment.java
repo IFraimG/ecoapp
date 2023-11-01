@@ -187,16 +187,11 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 binding.theEventTime.setText(eventCustom.getTime());
                 binding.theEventAddress.setText(eventCustom.getPlace());
                 binding.theEventAwardPoints.setText(String.valueOf("Баллы в награду: " + eventCustom.getScores()));
-                binding.theEventCurrentPeopleAmount.setText("Участники: " + String.valueOf(eventCustom.getCurrentUsers()) + " / " + String.valueOf(eventCustom.getMaxUsers()));
+                binding.theEventCurrentPeopleAmount.setText("Участники: " + String.valueOf(eventCustom.getUsersList().size()) + " / " + String.valueOf(eventCustom.getMaxUsers()));
                 if (!storageHandler.getUserID().equals(eventCustom.getAuthorID())) {
-                    if (eventCustom.getUsersList().contains(storageHandler.getUserID()) && Objects.equals(eventCustom.getCurrentUsers(), eventCustom.getMaxUsers())) {
-                        showButton(true);
-                    } else if (!eventCustom.getUsersList().contains(storageHandler.getUserID())) {
-                        showButton(false);
-                    }
+                    showButton(eventCustom.getUsersList().contains(storageHandler.getUserID()));
                     if (eventCustom.getCurrentUsers() >= eventCustom.getMaxUsers()) {
                         binding.takePartInButton.setVisibility(View.GONE);
-                        binding.refuseButton.setVisibility(View.GONE);
                     }
                 } else binding.finishEvent.setVisibility(View.VISIBLE);
 

@@ -1,21 +1,20 @@
 package com.example.ecoapp.presentation.adapters;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoapp.data.models.Task;
 import com.example.ecoapp.R;
+import com.example.ecoapp.databinding.TasksLayoutBinding;
 
 import java.util.List;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
-
     private List<Task> taskList;
+    private int theme;
     private OnItemClickListener listener;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -26,20 +25,23 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
         void OnItemClick(Task task);
     }
 
-    public TasksAdapter(List<Task> taskList){
+    public TasksAdapter(List<Task> taskList, int theme){
         this.taskList = taskList;
+        this.theme = theme;
     }
+
     @NonNull
     @Override
     public TasksViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tasks_layout , parent , false);
-        return new TasksViewHolder(view);
+        TasksLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.tasks_layout , parent , false);
+        binding.setThemeInfo(theme);
+        return new TasksViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TasksViewHolder holder, int position) {
-        holder.mName.setText(taskList.get(position).getName());
-        holder.mName.setOnClickListener(View -> {
+        holder.binding.taskTv.setText(taskList.get(position).getName());
+        holder.binding.taskTv.setOnClickListener(View -> {
             if (listener != null && position != RecyclerView.NO_POSITION) listener.OnItemClick(taskList.get(position));
         });
     }
@@ -50,12 +52,11 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
     }
 
     public class TasksViewHolder extends RecyclerView.ViewHolder{
+        private TasksLayoutBinding binding;
 
-        private TextView mName;
-        public TasksViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            mName = itemView.findViewById(R.id.task_tv);
+        public TasksViewHolder(@NonNull TasksLayoutBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

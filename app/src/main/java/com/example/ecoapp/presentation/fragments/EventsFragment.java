@@ -71,6 +71,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
                 ComingAdapter comingAdapter = new ComingAdapter(comingList);
                 fragmentEventsBinding.comingRecyclerView.setAdapter(comingAdapter);
+                fragmentEventsBinding.eventsLoader.setRefreshing(false);
             }
         });
 
@@ -82,20 +83,16 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
             MyEventsAdapter myEventsAdapter = new MyEventsAdapter(myEventsList);
             fragmentEventsBinding.myEventsRecyclerView.setAdapter(myEventsAdapter);
+            fragmentEventsBinding.eventsLoader.setRefreshing(false);
+
         }
     });
     }
 
     @Override
     public void onRefresh() {
-        viewModel.clearLoadData().observe(requireActivity(), result -> {
-            if (result == 0) {
-                loadData();
-                viewModel.getIsLoadData().observe(requireActivity(), count -> {
-                    if (count == 2) fragmentEventsBinding.eventsLoader.setRefreshing(false);
-                });
-            }
-        });
+        viewModel.clearLoadData();
+        loadData();
     }
 
     @Override

@@ -261,10 +261,10 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                     else myTasks.add(task);
                 }
 
-                tasksAdapter = new TasksAdapter(myTasks);
+                tasksAdapter = new TasksAdapter(myTasks, storageHandler.getTheme());
                 binding.myTasksRecyclerView.setAdapter(tasksAdapter);
 
-                tasksAdapter2 = new TasksAdapter(myTaskInProgress);
+                tasksAdapter2 = new TasksAdapter(myTaskInProgress, storageHandler.getTheme());
                 binding.needsConfirmingRecyclerView.setAdapter(tasksAdapter2);
 
                 binding.profileLoader.setRefreshing(false);
@@ -273,7 +273,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
         taskViewModel.getTasksListWithUser().observe(requireActivity(), tasksExecute -> {
             if (tasksExecute != null) {
-                tasksAdapter3 = new TasksAdapter(tasksExecute);
+                tasksAdapter3 = new TasksAdapter(tasksExecute, storageHandler.getTheme());
                 binding.inProcessRecyclerView.setAdapter(tasksAdapter3);
             }
         });

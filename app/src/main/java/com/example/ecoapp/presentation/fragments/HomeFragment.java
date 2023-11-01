@@ -189,7 +189,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     if (task.getAuthorID().equals(storageHandler.getUserID()) || !task.getImages().isEmpty()) continue;
                     tasksList.add(task);
                 }
-                tasksAdapter = new TasksAdapter(tasksList);
+                tasksAdapter = new TasksAdapter(tasksList, storageHandler.getTheme());
                 binding.tasksRecyclerView.setAdapter(tasksAdapter);
             }
         });
