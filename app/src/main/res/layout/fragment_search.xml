@@ -10,7 +10,8 @@
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:paddingBottom="600dp"
+    android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/white}"
     tools:context=".presentation.fragments.SearchFragment">
 
     <LinearLayout
@@ -39,7 +40,7 @@
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             android:elevation="0dp"
-            app:cardBackgroundColor="@color/background_search">
+            app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}">
 
             <LinearLayout
                 android:layout_width="match_parent"

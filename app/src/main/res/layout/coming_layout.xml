@@ -36,8 +36,8 @@
 
             <ImageView
                 android:id="@+id/coming_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/empty_nearby"
                 android:background="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                 android:scaleType="centerCrop"

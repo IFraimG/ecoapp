@@ -120,11 +120,10 @@
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/adviceRecyclerView"
-                            android:background="@color/background_card_view"
+                            android:background="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0dp"
-                            android:layout_marginBottom="8dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/advice_title"
                             />
@@ -147,7 +146,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="0dp"
-                            android:layout_marginBottom="8dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/saved_advice_title"

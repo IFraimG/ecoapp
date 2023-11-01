@@ -9,8 +9,7 @@
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@{themeInfo == 2 ? @color/green_theme_white : @color/white}">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/task_tv"
@@ -20,8 +19,8 @@
         android:paddingBottom="8dp"
         android:layout_marginLeft="8dp"
         android:text=""
-        android:textColor="@color/text_gray"
-        android:textSize="24sp"
+        android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
+        android:textSize="20sp"
         android:fontFamily="@font/montserrat_regular"
         android:maxLines="1"
         android:ellipsize="end"

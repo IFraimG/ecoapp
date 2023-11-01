@@ -27,14 +27,15 @@
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
             android:elevation="0dp"
+            android:background="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
                 android:id="@+id/saved_advice_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:src="@drawable/empty_nearby"
                 android:background="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                 android:scaleType="centerCrop"

@@ -81,8 +81,8 @@
 
                     <ImageButton
                         android:id="@+id/create_guide_photo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
                         android:src="@drawable/default_photo_event"
                         android:contentDescription="Обложка события"
                         app:layout_constraintEnd_toEndOf="parent"
