@@ -191,11 +191,34 @@ public class CreateEventFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                fragmentCreateEventBinding.createEventRequiredPoints.setText("Требуется баллов: " + fragmentCreateEventBinding.eventPointsToAPersonEditText.getText().toString());
+                executeEditTexts();
+            }
+        });
+
+        fragmentCreateEventBinding.eventPeopleEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                executeEditTexts();
             }
         });
 
         return fragmentCreateEventBinding.getRoot();
+    }
+
+    private void executeEditTexts() {
+        String peopleLen = fragmentCreateEventBinding.eventPeopleEditText.getText().toString();
+        String scores = fragmentCreateEventBinding.eventPointsToAPersonEditText.getText().toString();
+        if (!peopleLen.isEmpty() && !scores.isEmpty()) {
+            fragmentCreateEventBinding.createEventRequiredPoints.setText("Требуется баллов: " + Integer.toString(Integer.parseInt(peopleLen) * Integer.parseInt(scores)));
+        } else {
+            fragmentCreateEventBinding.createEventRequiredPoints.setText("");
+        }
     }
 
     @Override
