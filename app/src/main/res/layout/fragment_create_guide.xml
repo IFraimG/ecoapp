@@ -47,7 +47,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:text="Создание руководства"
-                android:textColor="@{themeInfo == 2 ? @color/green_theme_black : @color/black}"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_white : @color/black}"
                 android:textSize="28sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -63,7 +63,7 @@
                 android:elevation="0dp"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp"
-                app:cardBackgroundColor="@{themeInfo == 2 ? @color/background_card_view : @color/background_card_view}"
+                app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/create_guide_title">
@@ -100,7 +100,7 @@
                 android:elevation="0dp"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp"
-                app:cardBackgroundColor="@{themeInfo == 2 ? @color/background_card_view : @color/background_card_view}"
+                app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/create_guide_photo_card_view">

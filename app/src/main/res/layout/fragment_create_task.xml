@@ -45,7 +45,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:text="Создание задачи"
-                android:textColor="@{themeInfo == 2 ? @color/green_theme_black : @color/black}"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_white : @color/black}"
                 android:textSize="28sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -75,7 +75,7 @@
                 android:elevation="0dp"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp"
-                app:cardBackgroundColor="@{themeInfo == 2 ? @color/background_card_view : @color/background_card_view}"
+                app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fragment_create_task_person_points">
@@ -210,7 +210,7 @@
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
                 android:elevation="0dp"
-                app:cardBackgroundColor="@color/green"
+                app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_green : @color/green}"
                 app:layout_constraintTop_toBottomOf="@id/create_task_required_points"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -223,14 +223,12 @@
                     android:textSize="20sp"
                     android:textColorHint="#FFFFFF"
                     android:fontFamily="@font/montserrat_light"
-                    android:backgroundTint="@color/green"
-                    android:background="@color/green"
+                    android:backgroundTint="@{themeInfo == 2 ? @color/green_theme_green : @color/green}"
+                    android:background="@{themeInfo == 2 ? @color/green_theme_green : @color/green}"
                     android:layout_height="match_parent" />
 
             </androidx.cardview.widget.CardView>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

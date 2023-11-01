@@ -2,8 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
         <data>
                 <variable
                     name="themeInfo"
@@ -11,7 +10,7 @@
         </data>
 <LinearLayout
     android:layout_width="match_parent"
-    android:background="#FFFFFF"
+    android:background="@{themeInfo == 2 ? @color/green_theme_comment_background : @color/comment_background}"
     android:layout_marginLeft="0dp"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -24,8 +23,6 @@
                     android:id="@+id/comment_profile_image"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    app:civ_border_color="#FFFFFF"
-                    app:civ_border_width="2dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginLeft="4dp"
                     app:layout_constraintStart_toStartOf="parent"

@@ -10,6 +10,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/background_gray}"
     tools:context=".presentation.fragments.AuthLoginFragment">
 
     <TextView
@@ -20,7 +21,7 @@
         android:layout_margin="20dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Вход"
-        android:textColor="@color/black"
+        android:textColor="@{themeInfo == 2 ? @color/green_theme_white : @color/black}"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/email_card_view"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +41,7 @@
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp"
         android:elevation="0dp"
-        app:cardBackgroundColor="@color/background_search"
+        app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
         app:layout_constraintTop_toBottomOf="@id/registration_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -58,10 +59,10 @@
                 android:layout_marginLeft="16dp"
                 android:hint="Электронная почта"
                 android:textSize="20dp"
-                android:textColorHint="@color/reglogin_text"
+                android:textColorHint="@{themeInfo == 2 ? @color/green_theme_reglogin_text : @color/reglogin_text}"
                 android:fontFamily="@font/montserrat_regular"
-                android:backgroundTint="@color/background_search"
-                android:background="@color/background_search"
+                android:backgroundTint="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
+                android:background="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
                 android:inputType="textEmailAddress"
                 android:layout_weight="1"
                 android:layout_height="48dp" />
@@ -81,7 +82,7 @@
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp"
         android:elevation="0dp"
-        app:cardBackgroundColor="@color/background_search"
+        app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
         app:layout_constraintTop_toBottomOf="@id/email_card_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -99,10 +100,10 @@
                 android:layout_marginLeft="16dp"
                 android:hint="Пароль"
                 android:textSize="20dp"
-                android:textColorHint="@color/reglogin_text"
+                android:textColorHint="@{themeInfo == 2 ? @color/green_theme_reglogin_text : @color/reglogin_text}"
                 android:fontFamily="@font/montserrat_regular"
-                android:backgroundTint="@color/background_search"
-                android:background="@color/background_search"
+                android:backgroundTint="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
+                android:background="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
                 android:inputType="textPassword"
                 android:layout_weight="1"
                 android:layout_height="48dp" />
@@ -122,7 +123,7 @@
         app:cardCornerRadius="24dp"
         app:cardElevation="0dp"
         android:elevation="0dp"
-        app:cardBackgroundColor="@color/green"
+        app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_green : @color/green}"
         app:layout_constraintTop_toBottomOf="@id/password_card_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -135,8 +136,8 @@
             android:textSize="20sp"
             android:textColorHint="#FFFFFF"
             android:fontFamily="@font/montserrat_light"
-            android:backgroundTint="@color/green"
-            android:background="@color/green"
+            android:backgroundTint="@{themeInfo == 2 ? @color/green_theme_green : @color/green}"
+            android:background="@{themeInfo == 2 ? @color/green_theme_green : @color/green}"
             android:layout_height="match_parent" />
 
     </androidx.cardview.widget.CardView>
@@ -148,7 +149,7 @@
         android:layout_margin="20dp"
         android:fontFamily="@font/montserrat_medium"
         android:text="Регистрация"
-        android:textColor="@color/home_titles_gray"
+        android:textColor="@{themeInfo == 2 ? @color/green_theme_home_titles_gray : @color/home_titles_gray}"
         android:textSize="24sp"
         app:layout_constraintTop_toBottomOf="@id/login_card_view"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -159,7 +160,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:text=""
-        android:textColorHint="@color/black"
+        android:textColorHint="@{themeInfo == 2 ? @color/green_theme_black : @color/black}"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/login_card_view"
         app:layout_constraintTop_toTopOf="@+id/login_card_view" />

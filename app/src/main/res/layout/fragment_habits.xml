@@ -10,7 +10,7 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_gray"
+    android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/background_gray}"
     android:orientation="vertical"
     tools:context=".presentation.fragments.HabitFragment">
 
@@ -43,7 +43,7 @@
                 android:visibility="gone"
                 app:cardElevation="0dp"
                 android:layout_gravity="right"
-                app:cardBackgroundColor="@color/background_card_view"
+                app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                 android:layout_marginBottom="-80dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="16dp">
@@ -64,7 +64,7 @@
                 android:text="Привычки"
                 android:fontFamily="@font/montserrat_bold"
                 android:textSize="28sp"
-                android:textColor="@color/black"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_white : @color/black}"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="28dp"
                 />
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
                 android:textSize="20sp"
-                android:textColor="@color/text_gray"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 />
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 app:cardElevation="0dp"
                 android:elevation="0dp"
-                app:cardBackgroundColor="@color/background_card_view"
+                app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp">
 

@@ -11,7 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".presentation.fragments.GuideFragment"
-    android:background="@color/background_gray">
+    android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/background_gray}">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                 android:maxWidth="300dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:textSize="24sp"
-                android:textColor="@color/black"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_white : @color/black}"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
@@ -90,7 +90,7 @@
                 android:layout_marginRight="16dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/montserrat_medium"
-                android:textColor="@color/text_gray"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                 android:textSize="20sp" />
 
             <TextView
@@ -101,7 +101,7 @@
                 android:ellipsize="end"
                 android:text="Автор"
                 android:fontFamily="@font/montserrat_bold"
-                android:textColor="@color/text_gray"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                 android:textSize="20sp"
                 android:layout_marginLeft="36dp"/>
 
@@ -112,7 +112,7 @@
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/montserrat_regular"
-                android:textColor="@color/text_gray"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                 android:textSize="20sp"
                 android:layout_marginLeft="36dp"/>
 
@@ -124,7 +124,7 @@
                 android:ellipsize="end"
                 android:text="Первоисточники"
                 android:fontFamily="@font/montserrat_bold"
-                android:textColor="@color/text_gray"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                 android:textSize="20sp"
                 android:layout_marginLeft="36dp"/>
 
@@ -135,7 +135,7 @@
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/montserrat_regular"
-                android:textColor="@color/text_gray"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                 android:textSize="20sp"
                 android:layout_marginLeft="36dp"
                 android:layout_marginBottom="24dp"/>
@@ -148,7 +148,7 @@
                 android:ellipsize="end"
                 android:text="Оцените статью"
                 android:fontFamily="@font/montserrat_bold"
-                android:textColor="@color/text_gray"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                 android:textSize="20sp"
                 android:layout_gravity="center_horizontal"/>
 

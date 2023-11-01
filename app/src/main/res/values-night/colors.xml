@@ -10,6 +10,7 @@
     <color name="reglogin_text">#D0D0D0</color>
     <color name="background_card_view">#1F1F1F</color>
     <color name="top_divider">#4E4E4E</color>
+    <color name="comment_background">#000000</color>
 
     <color name="green_theme_black">#FF000000</color>
     <color name="green_theme_white">#FFFFFFFF</color>
@@ -21,4 +22,5 @@
     <color name="green_theme_reglogin_text">#FFFFFF</color>
     <color name="green_theme_background_card_view">#557C59</color>
     <color name="green_theme_top_divider">#234D2F</color>
+    <color name="green_theme_comment_background">#224836</color>
 </resources>

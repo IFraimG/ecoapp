@@ -33,7 +33,7 @@
                     android:text="Профиль"
                     android:fontFamily="@font/montserrat_bold"
                     android:textSize="28sp"
-                    android:textColor="@{themeInfo == 2 ? @color/green_theme_black : @color/black}"
+                    android:textColor="@{themeInfo == 2 ? @color/green_theme_white : @color/black}"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     />
@@ -55,7 +55,7 @@
                     android:visibility="gone"
                     android:layout_height="230dp"
                     android:layout_marginTop="20dp"
-                    android:indeterminateTint="@color/green"
+                    android:indeterminateTint="@{themeInfo == 2 ? @color/green_theme_green : @color/green}"
                     />
 
                 <EditText
@@ -107,7 +107,7 @@
                     android:elevation="0dp"
                     android:layout_marginTop="12dp"
                     app:cardCornerRadius="16dp"
-                    app:cardBackgroundColor="@{themeInfo == 2 ? @color/background_card_view : @color/background_card_view}"
+                    app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/main_title">
@@ -200,7 +200,7 @@
                     android:elevation="0dp"
                     android:layout_marginTop="12dp"
                     app:cardCornerRadius="16dp"
-                    app:cardBackgroundColor="@{themeInfo == 2 ? @color/background_card_view : @color/background_card_view}"
+                    app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/advice_card_view">
@@ -216,7 +216,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_medium"
                             android:text="Настроить интерфейс"
-                            android:textColor="@color/home_titles_gray"
+                            android:textColor="@{themeInfo == 2 ? @color/green_theme_home_titles_gray : @color/home_titles_gray}"
                             android:textSize="20sp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
