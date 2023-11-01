@@ -42,7 +42,7 @@ public class SearchFragment extends Fragment {
             if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                 viewModel.getPosts(binding.searchBarEditText.getText().toString()).observe(requireActivity(), searches -> {
                     if (searches != null) {
-                        searchAdapter = new SearchAdapter(searches);
+                        searchAdapter = new SearchAdapter(searches, new StorageHandler(requireContext()).getTheme());
                         binding.foundRecyclerView.setAdapter(searchAdapter);
                     }
                 });
