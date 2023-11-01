@@ -45,7 +45,7 @@ public class ProgressFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.progress_layout, container, false);
         binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
 
         viewModel = new ViewModelProvider(this).get(HabitViewModel.class);
