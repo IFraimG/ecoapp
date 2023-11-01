@@ -28,11 +28,13 @@ public class SearchFragment extends Fragment {
     private FragmentSearchBinding binding;
     private EventViewModel viewModel;
     private SearchAdapter searchAdapter;
+    private int theme;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false);
-        binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
+        theme = new StorageHandler(requireContext()).getTheme();
+        binding.setThemeInfo(theme);
         viewModel = new ViewModelProvider(this).get(EventViewModel.class);
 
         binding.foundRecyclerView.setHasFixedSize(true);
@@ -42,7 +44,7 @@ public class SearchFragment extends Fragment {
             if (actionId == EditorInfo.IME_ACTION_DONE || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                 viewModel.getPosts(binding.searchBarEditText.getText().toString()).observe(requireActivity(), searches -> {
                     if (searches != null) {
-                        searchAdapter = new SearchAdapter(searches, new StorageHandler(requireContext()).getTheme());
+                        searchAdapter = new SearchAdapter(searches, theme);
                         binding.foundRecyclerView.setAdapter(searchAdapter);
                     }
                 });

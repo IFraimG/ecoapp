@@ -157,7 +157,6 @@ public class CreateEventFragment extends Fragment {
             } else {
                eventViewModel.sendData(title, description, date, time, fileImage, lenPeople, address, lat, longt, Integer.parseInt(scores)).observe(requireActivity(), statusCode -> {
                    if (statusCode < 400 && statusCode != 0) {
-                       Toast.makeText(requireContext(), "Успешно!", Toast.LENGTH_SHORT).show();
                        fragmentCreateEventBinding.eventNameEditText.setText("");
                        fragmentCreateEventBinding.eventDescriptionEditText.setText("");
                        fragmentCreateEventBinding.eventDateEditText.setText("");
@@ -191,11 +190,34 @@ public class CreateEventFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                fragmentCreateEventBinding.createEventRequiredPoints.setText("Требуется баллов: " + fragmentCreateEventBinding.eventPointsToAPersonEditText.getText().toString());
+                executeEditTexts();
+            }
+        });
+
+        fragmentCreateEventBinding.eventPeopleEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                executeEditTexts();
             }
         });
 
         return fragmentCreateEventBinding.getRoot();
+    }
+
+    private void executeEditTexts() {
+        String peopleLen = fragmentCreateEventBinding.eventPeopleEditText.getText().toString();
+        String scores = fragmentCreateEventBinding.eventPointsToAPersonEditText.getText().toString();
+        if (!peopleLen.isEmpty() && !scores.isEmpty()) {
+            fragmentCreateEventBinding.createEventRequiredPoints.setText("Требуется баллов: " + Integer.toString(Integer.parseInt(peopleLen) * Integer.parseInt(scores)));
+        } else {
+            fragmentCreateEventBinding.createEventRequiredPoints.setText("");
+        }
     }
 
     @Override

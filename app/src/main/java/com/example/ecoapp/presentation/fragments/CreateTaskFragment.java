@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentCreateTaskBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
+import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
 import com.example.ecoapp.presentation.viewmodels.TaskViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +27,8 @@ import org.jetbrains.annotations.NotNull;
 public class CreateTaskFragment extends Fragment {
     private FragmentCreateTaskBinding binding;
     private TaskViewModel viewModel;
-    private int userScores = 1000;
+    private ProfileViewModel profileViewModel;
+    private int userScores;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -32,6 +36,14 @@ public class CreateTaskFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_task, container, false);
         binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
         viewModel = new ViewModelProvider(this).get(TaskViewModel.class);
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
+
+        profileViewModel.getUserData("", "").observe(requireActivity(), user -> {
+            if (user != null) {
+                userScores = user.getScores();
+                binding.fragmentCreateTaskPersonPoints.setText("Баллы: " + Integer.toString(userScores));
+            }
+        });
 
         binding.createTaskBackToProfileFragmentButton.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
@@ -47,6 +59,20 @@ public class CreateTaskFragment extends Fragment {
                 viewModel.createTask(title, description, Integer.parseInt(scores));
             }
         });
+
+        binding.taskPointsToAPersonEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                binding.createTaskRequiredPoints.setText("Требуется баллов: " + binding.taskPointsToAPersonEditText.getText().toString());
+            }
+        });
+
 
         return binding.getRoot();
     }
