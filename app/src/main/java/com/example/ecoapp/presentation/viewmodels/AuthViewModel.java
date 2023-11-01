@@ -23,6 +23,7 @@ public class AuthViewModel extends AndroidViewModel {
     private final MutableLiveData<Integer> statusCode = new MutableLiveData<>(0);
     private final AuthRepository authRepository;
     private final StorageHandler storageHandler;
+    private final MutableLiveData<Boolean> isNavigation = new MutableLiveData<>(false);
 
     public AuthViewModel(@NonNull Application application) {
         super(application);
@@ -31,6 +32,7 @@ public class AuthViewModel extends AndroidViewModel {
     }
 
     public LiveData<Integer> signup(String name, String password, String email) {
+
         authRepository.signup(name, password, email).enqueue(new Callback<AuthResponseDTO>() {
             @Override
             public void onResponse(@NotNull Call<AuthResponseDTO> call, @NotNull Response<AuthResponseDTO> response) {
@@ -39,6 +41,7 @@ public class AuthViewModel extends AndroidViewModel {
                     userData.setValue(response.body());
                     storageHandler.setToken(response.body().getToken());
                     storageHandler.saveUserID(response.body().getShortUser().getId());
+                    isNavigation.setValue(true);
                 }
             }
 
@@ -62,6 +65,7 @@ public class AuthViewModel extends AndroidViewModel {
                     userData.setValue(response.body());
                     storageHandler.setToken(response.body().getToken());
                     storageHandler.saveUserID(response.body().getShortUser().getId());
+                    isNavigation.setValue(true);
                 }
             }
 
@@ -76,4 +80,11 @@ public class AuthViewModel extends AndroidViewModel {
         return statusCode;
     }
 
+    public LiveData<Boolean> getNavigate() {
+        return isNavigation;
+    }
+
+    public void cancelNavigate() {
+        isNavigation.setValue(false);
+    }
 }

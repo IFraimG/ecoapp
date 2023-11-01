@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -52,7 +51,6 @@ public class CreateEventFragment extends Fragment {
     private StorageHandler storageHandler;
     private int SELECT_PHOTO_PROFILE = 1;
     private String address;
-
     private Uri uri;
     private File fileImage;
     private double longt;
