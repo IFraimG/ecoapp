@@ -142,7 +142,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     eventCustoms.add(event);
                 }
 
-                NearbyAdapter nearbyAdapter = new NearbyAdapter(eventCustoms);
+                NearbyAdapter nearbyAdapter = new NearbyAdapter(eventCustoms, storageHandler.getTheme());
                 binding.nearbyRecyclerView.setAdapter(nearbyAdapter);
 
                 isLoad = true;
