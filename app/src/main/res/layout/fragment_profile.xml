@@ -35,7 +35,7 @@
                     android:textSize="28sp"
                     android:textColor="@{themeInfo == 2 ? @color/green_theme_black : @color/black}"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     />
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -45,9 +45,6 @@
                     android:layout_marginTop="20dp"
                     app:civ_border_color="#FFFFFF"
                     app:civ_border_width="6dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:src="@drawable/default_photo_profile"
                     android:layout_gravity="center_horizontal"
                     />
@@ -58,25 +55,37 @@
                     android:visibility="gone"
                     android:layout_height="230dp"
                     android:layout_marginTop="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:indeterminateTint="@color/green"
                     />
 
                 <EditText
+                    android:id="@+id/person_nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:background="@null"
+                    android:maxLines="1"
+                    android:layout_gravity="center_horizontal" />
+
+                <EditText
                     android:id="@+id/person_name"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="20dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:gravity="center"
                     android:background="@null"
+                    android:maxLines="2"
                     android:layout_gravity="center_horizontal" />
 
                 <TextView
@@ -87,7 +96,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:layout_gravity="center_horizontal" />
 
                 <androidx.cardview.widget.CardView
