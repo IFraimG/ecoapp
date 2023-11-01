@@ -77,7 +77,7 @@ public class HabitFragment extends Fragment {
 
                     this.habitsList = habitsNewList;
 
-                    HabitsAdapter habitsAdapter = new HabitsAdapter(habitsNewList);
+                    HabitsAdapter habitsAdapter = new HabitsAdapter(habitsNewList, new StorageHandler(requireContext()).getTheme());
                     habitsAdapter.setOnItemClickListener(position -> {
                         if (!habitsList.get(position).isDone()) {
                             viewModel.makeHabitDone(habitsList.get(position).getHabitID());

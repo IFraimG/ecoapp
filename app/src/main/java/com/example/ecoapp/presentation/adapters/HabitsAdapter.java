@@ -7,10 +7,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoapp.data.models.Habit;
 import com.example.ecoapp.R;
+import com.example.ecoapp.databinding.ComingLayoutBinding;
+import com.example.ecoapp.databinding.HabitsLayoutBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,7 @@ public class HabitsAdapter extends RecyclerView.Adapter<HabitsAdapter.HabitsView
 
     private List<Habit> habitsList;
     private OnItemClickListener listener;
+    private int theme;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
@@ -28,8 +32,9 @@ public class HabitsAdapter extends RecyclerView.Adapter<HabitsAdapter.HabitsView
         void onItemClick(int position);
     }
 
-    public HabitsAdapter(List<Habit> habitsList) {
+    public HabitsAdapter(List<Habit> habitsList, int theme) {
         this.habitsList = habitsList;
+        this.theme = theme;
     }
 
     public void updateList(ArrayList<Habit> habitsList) {
@@ -40,8 +45,9 @@ public class HabitsAdapter extends RecyclerView.Adapter<HabitsAdapter.HabitsView
     @NonNull
     @Override
     public HabitsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.habits_layout , parent , false);
-        return new HabitsViewHolder(view);
+        HabitsLayoutBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.habits_layout , parent , false);
+        binding.setThemeInfo(theme);
+        return new HabitsViewHolder(binding);
     }
 
     @Override
@@ -51,9 +57,9 @@ public class HabitsAdapter extends RecyclerView.Adapter<HabitsAdapter.HabitsView
 
     @Override
     public void onBindViewHolder(@NonNull HabitsViewHolder holder, int position) {
-        holder.mName.setText(habitsList.get(position).getTitle());
-        if (habitsList.get(position).isDone()) holder.circle.setImageResource(R.drawable.green_check);
-        else holder.circle.setImageResource(R.drawable.grey_circle);
+        holder.binding.habitTv.setText(habitsList.get(position).getTitle());
+        if (habitsList.get(position).isDone()) holder.binding.habitCircleCheck.setImageResource(R.drawable.green_check);
+        else holder.binding.habitCircleCheck.setImageResource(R.drawable.grey_circle);
     }
 
     @Override
@@ -62,17 +68,14 @@ public class HabitsAdapter extends RecyclerView.Adapter<HabitsAdapter.HabitsView
     }
 
     public class HabitsViewHolder extends RecyclerView.ViewHolder{
+        private HabitsLayoutBinding binding;
 
-        private TextView mName;
-        private ImageView circle;
+        public HabitsViewHolder(@NonNull HabitsLayoutBinding binding) {
+            super(binding.getRoot());
 
-        public HabitsViewHolder(@NonNull View itemView) {
-            super(itemView);
+            this.binding = binding;
 
-            mName = itemView.findViewById(R.id.habit_tv);
-            circle = itemView.findViewById(R.id.habit_circle_check);
-
-            circle.setOnClickListener(v -> {
+            binding.habitCircleCheck.setOnClickListener(v -> {
                 if (listener != null) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
