@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.adapters.UserScoresAdapter;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
@@ -34,7 +35,7 @@ public class UserListDialogFragment extends DialogFragment {
             String eventID = args.getString("eventID");
             viewModel.getUsersScores(eventID).observe(requireActivity(), users -> {
                 if (users != null) {
-                    UserScoresAdapter adapter = new UserScoresAdapter(users);
+                    UserScoresAdapter adapter = new UserScoresAdapter(users, new StorageHandler(requireContext()).getTheme());
                     adapter.setOnItemClickListener((position, scores) -> {
                        if (!scores.isEmpty()) {
                             profileViewModel.updateUserScores(users.get(position).getId(), Integer.parseInt(scores)).observe(requireActivity(), statusCode -> {
