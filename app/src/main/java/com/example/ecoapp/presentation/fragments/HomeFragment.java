@@ -130,57 +130,39 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         return binding.getRoot();
     }
 
-    private void loadEvents() {
-        NearbyAdapter nearbyAdapter = new NearbyAdapter(eventCustoms);
-        binding.nearbyRecyclerView.setAdapter(nearbyAdapter);
-    }
-
     private void loadNearbyEvents(double lat, double longt) {
         viewModel.findNearestEventsByAuthorCoords(lat, longt).observe(activity, events -> {
             isLoad = true;
 
             if (events != null) {
                 if (eventCustoms == null) eventCustoms = new ArrayList<>();
+                else eventCustoms.clear();
+
                 for (EventCustom event: events) {
                     if (event == null || event.getAuthorID().equals(storageHandler.getUserID())) continue;
                     eventCustoms.add(event);
                 }
-                loadEvents();
+
+                NearbyAdapter nearbyAdapter = new NearbyAdapter(eventCustoms);
+                binding.nearbyRecyclerView.setAdapter(nearbyAdapter);
             }
         });
     }
 
     private void loadData() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-
-            viewModel.getEventsList().observe(requireActivity(), events -> {
-                if (events != null) {
-                    for (EventCustom event: events) {
-                        if (event.getAuthorID().equals(storageHandler.getUserID())) continue;
-                        eventCustoms.add(event);
-                    }
-                    loadEvents();
-                    binding.homeLoader.setRefreshing(false);
-                }
-            });
-        } else {
             LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
 
             if (ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {}
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30, 30, new LocationListener() {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60, 60, new LocationListener() {
                 @Override
                 public void onLocationChanged(@NonNull Location location) {
                     if (activity != null && !isLoad) loadNearbyEvents(location.getLatitude(), location.getLongitude());
                 }
 
                 @Override
-                public void onProviderDisabled(@NonNull String provider) {
-                    loadNearbyEvents(0, 0);
-                }
+                public void onProviderDisabled(@NonNull String provider) {}
             });
-        }
+//        }
 
         taskViewModel.getAllTasks().observe(requireActivity(), tasks -> {
             if (tasks != null) {
