@@ -24,6 +24,9 @@ public class User {
     @SerializedName("id")
     private String id;
 
+    @SerializedName("login")
+    private String login;
+
     @SerializedName("habitsList")
     private ArrayList<String> habitsList;
 
@@ -42,6 +45,22 @@ public class User {
     public User(String image, String name) {
         this.photo = image;
         this.name = name;
+    }
+
+    public User(String login) {
+        this.login = login;
+    }
+
+    public User(String photo, int scores, String name, String email, String password, String id, String login, ArrayList<String> habitsList, ArrayList<String> guidesList) {
+        this.photo = photo;
+        this.scores = scores;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.id = id;
+        this.login = login;
+        this.habitsList = habitsList;
+        this.guidesList = guidesList;
     }
 
     public String getImage() {
@@ -102,5 +121,13 @@ public class User {
 
     public void setGuidesList(ArrayList<String> guidesList) {
         this.guidesList = guidesList;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPhoto() {
+        return photo;
     }
 }

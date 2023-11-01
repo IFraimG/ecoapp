@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -89,7 +90,7 @@ public class ProfileViewModel extends AndroidViewModel {
 
     public LiveData<Integer> updateUserScores(String userID, int scores) {
         statusCode.setValue(0);
-        userRepository.changeScores(storageHandler.getToken(), userID, scores).enqueue(new Callback<User>() {
+        userRepository.changeScores(storageHandler.getToken(), storageHandler.getUserID(), userID, scores).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NotNull Call<User> call, @NotNull Response<User> response) {
                 statusCode.setValue(response.code());
@@ -115,6 +116,24 @@ public class ProfileViewModel extends AndroidViewModel {
 
             @Override
             public void onFailure(@NotNull Call<User> call, @NotNull Throwable t) {
+                statusCode.setValue(400);
+                t.printStackTrace();
+            }
+        });
+
+        return statusCode;
+    }
+
+    public LiveData<Integer> editLogin(String login) {
+        statusCode.setValue(0);
+        userRepository.updateLogin(storageHandler.getToken(), login).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                statusCode.setValue(response.code());
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
                 statusCode.setValue(400);
                 t.printStackTrace();
             }

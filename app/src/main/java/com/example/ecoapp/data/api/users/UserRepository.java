@@ -11,6 +11,7 @@ import java.io.File;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 public class UserRepository {
@@ -24,8 +25,8 @@ public class UserRepository {
         return userAPI.editProfile(token, new EditProfileDTO(id, name, old_password, new_password));
     }
 
-    public Call<User> changeScores(String token, String id, Integer scores) {
-        return userAPI.changeScores(token, new ChangeScoresDTO(id, scores));
+    public Call<User> changeScores(String token, String authorID, String id, Integer scores) {
+        return userAPI.changeScores(token, new ChangeScoresDTO(id, scores, authorID));
     }
 
     public Call<User> getUser(String token, String id) {
@@ -53,5 +54,9 @@ public class UserRepository {
 
     public Call<User> updateGuideToUser(String token, String userID, String guideID) {
         return userAPI.updateGuideToUser(token, new AddGuideToUserDTO(userID, guideID));
+    }
+
+    public Call<ResponseBody> updateLogin(String token, String login) {
+        return userAPI.editLogin(token, new User(login));
     }
 }

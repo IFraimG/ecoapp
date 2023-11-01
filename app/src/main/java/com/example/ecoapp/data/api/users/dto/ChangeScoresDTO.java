@@ -9,9 +9,13 @@ public class ChangeScoresDTO {
     @SerializedName("scores")
     private Integer scores;
 
-    public ChangeScoresDTO(String id, Integer scores) {
+    @SerializedName("authorID")
+    private String authorID;
+
+    public ChangeScoresDTO(String id, Integer scores, String authorID) {
         this.id = id;
         this.scores = scores;
+        this.authorID = authorID;
     }
 
     public String getId() {

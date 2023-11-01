@@ -48,4 +48,7 @@ public interface UserAPI {
 
     @PUT("/users/update_guide_to_user")
     Call<User> updateGuideToUser(@Header("Authorization") String token, @Body AddGuideToUserDTO addGuideToUserDTO);
+
+    @PUT("/users/edit_login")
+    Call<ResponseBody> editLogin(@Header("Authorization") String token, @Body User login);
 }
