@@ -10,7 +10,6 @@
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="600dp"
     android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/white}"
     tools:context=".presentation.fragments.SearchFragment">
 

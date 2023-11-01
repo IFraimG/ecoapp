@@ -79,10 +79,15 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        binding.searchBarEditText.setText("");
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
-        binding.searchBarEditText.setText("");
         viewModel.cancelNavigate();
     }
 }

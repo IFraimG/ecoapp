@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -35,6 +36,7 @@ import com.example.ecoapp.data.models.Advice;
 import com.example.ecoapp.data.models.EventCustom;
 import com.example.ecoapp.data.models.Task;
 import com.example.ecoapp.R;
+import com.example.ecoapp.presentation.services.MyLocationListener;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 import com.example.ecoapp.presentation.viewmodels.GuideViewModel;
 import com.example.ecoapp.presentation.viewmodels.TaskViewModel;
@@ -70,6 +72,14 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        if (MyLocationListener.imHere != null && !isLoad) loadNearbyEvents(MyLocationListener.imHere.getLatitude(), MyLocationListener.imHere.getLongitude());
+
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         activity = null;
@@ -88,6 +98,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         storageHandler = new StorageHandler(requireContext());
         binding.setThemeInfo(storageHandler.getTheme());
+
+        MyLocationListener.SetUpLocationListener(requireContext());
+
 
         viewModel = new ViewModelProvider(this).get(EventViewModel.class);
         guideViewModel = new ViewModelProvider(this).get(GuideViewModel.class);
@@ -109,6 +122,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         binding.savedAdviceRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         loadData();
+
 
         binding.dailyHabits.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
@@ -151,23 +165,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void loadData() {
-            LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
-
-            if (ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30, 30, new LocationListener() {
-                    @Override
-                    public void onLocationChanged(@NonNull Location location) {
-                        if (activity != null && !isLoad) loadNearbyEvents(location.getLatitude(), location.getLongitude());
-                    }
-
-                    @Override
-                    public void onProviderDisabled(@NonNull String provider) {}
-                });
-            } else {
-                new PermissionHandler().requestMapPermissions((AppCompatActivity) requireActivity());
-            }
-//        }
-
         taskViewModel.getAllTasks().observe(requireActivity(), tasks -> {
             if (tasks != null) {
                 ArrayList<Task> tasksList = new ArrayList<>();
@@ -205,6 +202,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 binding.homeLoader.setRefreshing(false);
             }
         });
+
     }
 
     @Override
