@@ -41,7 +41,7 @@
                 android:text="Добавить привычку"
                 android:fontFamily="@font/montserrat_bold"
                 android:textSize="28sp"
-                android:textColor="@{themeInfo == 2 ? @color/green_theme_black : @color/black}"
+                android:textColor="@{themeInfo == 2 ? @color/green_theme_white : @color/black}"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp"
                 android:gravity="center"
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="@{themeInfo == 2 ? @color/background_card_view : @color/background_card_view}"
+                app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                 android:elevation="0dp"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="16dp">
@@ -84,8 +84,8 @@
                             android:textSize="16sp"
                             android:textColorHint="@{themeInfo == 2 ? @color/green_theme_reglogin_text : @color/reglogin_text}"
                             android:fontFamily="@font/montserrat_regular"
-                            android:backgroundTint="@color/background_search"
-                            android:background="@color/background_search"
+                            android:backgroundTint="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
+                            android:background="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
                             android:inputType="textCapWords"
                             android:layout_height="48dp" />
 
@@ -104,19 +104,25 @@
                             android:id="@+id/daily_radio_button"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Ежедневная" />
+                            android:text="Ежедневная"
+                            android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
+                            android:fontFamily="@font/montserrat_regular"/>
 
                         <RadioButton
                             android:id="@+id/weekly_radio_button"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Еженедельная" />
+                            android:text="Еженедельная"
+                            android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
+                            android:fontFamily="@font/montserrat_regular"/>
 
                         <RadioButton
                             android:id="@+id/monthly_radio_button"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Ежемесячная" />
+                            android:text="Ежемесячная"
+                            android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
+                            android:fontFamily="@font/montserrat_regular"/>
 
                     </RadioGroup>
 
