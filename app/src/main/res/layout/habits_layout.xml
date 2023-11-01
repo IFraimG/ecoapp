@@ -28,7 +28,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginLeft="4dp"
         android:text="Разумные покупки"
-        android:textColor="@color/text_gray"
+        android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
         android:textSize="16sp"
         android:fontFamily="@font/montserrat_regular"
         android:maxLines="1"
