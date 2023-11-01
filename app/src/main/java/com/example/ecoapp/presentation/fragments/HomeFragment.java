@@ -200,7 +200,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     guidesList.add(new Advice(guide.getPhoto(), guide.getTitle(), guide.getGuideID()));
                 }
 
-                SavedAdviceAdapter adviceAdapter = new SavedAdviceAdapter(guidesList);
+                SavedAdviceAdapter adviceAdapter = new SavedAdviceAdapter(guidesList, storageHandler.getTheme());
                 binding.savedAdviceRecyclerView.setAdapter(adviceAdapter);
                 binding.homeLoader.setRefreshing(false);
             }
