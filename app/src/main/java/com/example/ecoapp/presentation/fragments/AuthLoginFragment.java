@@ -2,21 +2,22 @@ package com.example.ecoapp.presentation.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentLoginBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
+import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.AuthViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -34,9 +35,6 @@ public class AuthLoginFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
         binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
-
-        if (new StorageHandler(requireContext()).getAuth()) pushData();
-
 
         viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
@@ -59,8 +57,6 @@ public class AuthLoginFragment extends Fragment {
                     } else {
                         binding.emailEditText.setText("");
                         binding.passwordEditText.setText("");
-
-                        pushData();
                     }
                 });
             }
@@ -69,11 +65,26 @@ public class AuthLoginFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void pushData() {
-        if (getActivity() instanceof MainActivity) {
-            ((MainActivity) requireActivity()).changeMenu(true);
-            NavHostFragment navHostFragment = (NavHostFragment) requireActivity().getSupportFragmentManager().findFragmentById(R.id.nav_host_main_fragment);
-            navHostFragment.getNavController().navigate(R.id.homeFragment);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewModel.cancelNavigate();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewModel.getNavigate().observe(getViewLifecycleOwner(), isNavigate -> {
+            if (isNavigate) {
+                if (getActivity() instanceof MainActivity) ((MainActivity) requireActivity()).changeMenu(true);
+                Navigation.findNavController(requireView()).navigate(R.id.homeFragment);
+                viewModel.cancelNavigate();
+            }
+        });
+
+        if (new StorageHandler(requireContext()).getAuth()) {
+            if (getActivity() instanceof MainActivity) ((MainActivity) requireActivity()).changeMenu(true);
+            Navigation.findNavController(requireView()).navigate(R.id.homeFragment);
         }
     }
 }
