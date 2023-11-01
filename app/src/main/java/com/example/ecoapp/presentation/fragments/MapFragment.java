@@ -196,13 +196,14 @@ public class MapFragment extends Fragment implements UserLocationObjectListener 
 
         mapView.getMap().move(new CameraPosition(new Point(55.71989101308894, 37.5689757769603), 14, 0, 0), pingAnimation, null);
 
-
         binding.mapButton.setOnClickListener(v -> {
             if (bundle != null) {
                 Navigation.findNavController(v).navigate(R.id.createEventFragment, bundle);
                 isTrue = false;
             }
         });
+
+        binding.fragmentMapBackToPreviousFragmentButton.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
         geoCoder = new Geocoder(requireContext(), Locale.getDefault());
 

@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ecoapp.data.models.Guide;
+import com.example.ecoapp.domain.helpers.PermissionHandler;
 import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.adapters.AdviceAdapter;
 import com.example.ecoapp.presentation.adapters.NearbyAdapter;
@@ -132,8 +133,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private void loadNearbyEvents(double lat, double longt) {
         viewModel.findNearestEventsByAuthorCoords(lat, longt).observe(activity, events -> {
-            isLoad = true;
-
             if (events != null) {
                 if (eventCustoms == null) eventCustoms = new ArrayList<>();
                 else eventCustoms.clear();
@@ -145,6 +144,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
                 NearbyAdapter nearbyAdapter = new NearbyAdapter(eventCustoms);
                 binding.nearbyRecyclerView.setAdapter(nearbyAdapter);
+
+                isLoad = true;
             }
         });
     }
@@ -152,16 +153,19 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private void loadData() {
             LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
 
-            if (ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {}
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60, 60, new LocationListener() {
-                @Override
-                public void onLocationChanged(@NonNull Location location) {
-                    if (activity != null && !isLoad) loadNearbyEvents(location.getLatitude(), location.getLongitude());
-                }
+            if (ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30, 30, new LocationListener() {
+                    @Override
+                    public void onLocationChanged(@NonNull Location location) {
+                        if (activity != null && !isLoad) loadNearbyEvents(location.getLatitude(), location.getLongitude());
+                    }
 
-                @Override
-                public void onProviderDisabled(@NonNull String provider) {}
-            });
+                    @Override
+                    public void onProviderDisabled(@NonNull String provider) {}
+                });
+            } else {
+                new PermissionHandler().requestMapPermissions((AppCompatActivity) requireActivity());
+            }
 //        }
 
         taskViewModel.getAllTasks().observe(requireActivity(), tasks -> {
@@ -183,7 +187,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 guidesList.add(new Advice(guide.getPhoto(), guide.getTitle(), guide.getGuideID()));
             }
 
-            AdviceAdapter adviceAdapter = new AdviceAdapter(guidesList);
+            AdviceAdapter adviceAdapter = new AdviceAdapter(guidesList, storageHandler.getTheme());
             binding.adviceRecyclerView.setAdapter(adviceAdapter);
             binding.homeLoader.setRefreshing(false);
         });
