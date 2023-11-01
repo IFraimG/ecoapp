@@ -12,6 +12,7 @@
     app:cardElevation="0dp"
     android:layout_marginLeft="0dp"
     android:layout_marginTop="8dp"
+    android:background="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
     android:layout_marginBottom="10dp"
     android:layout_height="180dp">
 
@@ -35,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/empty_nearby"
-                android:background="@color/white"
+                android:background="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                 android:scaleType="centerCrop"
                 />
         </androidx.cardview.widget.CardView>
@@ -46,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text=""
-            android:textColor="@color/text_gray"
+            android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
             android:textSize="16sp"
             android:fontFamily="@font/montserrat_regular"
             android:layout_gravity="center"
