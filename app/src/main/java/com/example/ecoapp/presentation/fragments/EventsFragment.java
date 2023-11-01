@@ -22,6 +22,7 @@ import com.example.ecoapp.data.models.EventCustom;
 import com.example.ecoapp.data.models.MyEvents;
 import com.example.ecoapp.R;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
+import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -31,6 +32,8 @@ import java.util.List;
 public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private FragmentEventsBinding fragmentEventsBinding;
     private EventViewModel viewModel;
+    private ProfileViewModel profileViewModel;
+    private int theme;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -38,7 +41,10 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         fragmentEventsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_events, container, false);
         fragmentEventsBinding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
 
+        theme = new StorageHandler(requireContext()).getTheme();
+
         viewModel = new ViewModelProvider(this).get(EventViewModel.class);
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
         fragmentEventsBinding.comingRecyclerView.setHasFixedSize(true);
         fragmentEventsBinding.comingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -69,23 +75,29 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
                 for (EventCustom event: eventsList) comingList.add(new Coming(event.getPhoto(), event.getTitle(), event.getEventID()));
 
-                ComingAdapter comingAdapter = new ComingAdapter(comingList, new StorageHandler(requireContext()).getTheme());
+                ComingAdapter comingAdapter = new ComingAdapter(comingList, theme);
                 fragmentEventsBinding.comingRecyclerView.setAdapter(comingAdapter);
                 fragmentEventsBinding.eventsLoader.setRefreshing(false);
             }
         });
 
         viewModel.findAuthorsEvents().observe(requireActivity(), eventCustoms -> {
-        if (eventCustoms != null) {
-            List<MyEvents> myEventsList = new ArrayList<>();
+            if (eventCustoms != null) {
+                List<MyEvents> myEventsList = new ArrayList<>();
 
-            for (EventCustom event: eventCustoms) myEventsList.add(new MyEvents(event.getPhoto(), event.getTitle(), event.getEventID()));
+                for (EventCustom event: eventCustoms) myEventsList.add(new MyEvents(event.getPhoto(), event.getTitle(), event.getEventID()));
 
-            MyEventsAdapter myEventsAdapter = new MyEventsAdapter(myEventsList, new StorageHandler(requireContext()).getTheme());
-            fragmentEventsBinding.myEventsRecyclerView.setAdapter(myEventsAdapter);
-            fragmentEventsBinding.eventsLoader.setRefreshing(false);
-        }
-    });
+                MyEventsAdapter myEventsAdapter = new MyEventsAdapter(myEventsList, theme);
+                fragmentEventsBinding.myEventsRecyclerView.setAdapter(myEventsAdapter);
+                fragmentEventsBinding.eventsLoader.setRefreshing(false);
+            }
+        });
+
+        profileViewModel.getUserData("", "").observe(requireActivity(), user -> {
+            if (user != null) {
+                fragmentEventsBinding.personPoints.setText("Баллы: " + Integer.toString(user.getScores()));
+            }
+        });
     }
 
     @Override

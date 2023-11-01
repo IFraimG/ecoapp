@@ -27,12 +27,17 @@ public class HabitFragment extends Fragment {
     private FragmentHabitsBinding binding;
     private HabitViewModel viewModel;
     private ArrayList<Habit> habitsList;
+    private int theme;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_habits, container, false);
-        binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
+        theme = new StorageHandler(requireContext()).getTheme();
+
+        binding.setThemeInfo(theme);
+
+
 
         binding.fragmentHabitsBackToPreviousFragmentButton.setOnClickListener(v -> {
             Navigation.findNavController(v).popBackStack();
@@ -77,7 +82,7 @@ public class HabitFragment extends Fragment {
 
                     this.habitsList = habitsNewList;
 
-                    HabitsAdapter habitsAdapter = new HabitsAdapter(habitsNewList, new StorageHandler(requireContext()).getTheme());
+                    HabitsAdapter habitsAdapter = new HabitsAdapter(habitsNewList, theme);
                     habitsAdapter.setOnItemClickListener(position -> {
                         if (!habitsList.get(position).isDone()) {
                             viewModel.makeHabitDone(habitsList.get(position).getHabitID());

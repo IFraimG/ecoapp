@@ -28,6 +28,8 @@ public class UserListDialogFragment extends DialogFragment {
         ProfileViewModel profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         Bundle args = getArguments();
 
+        int theme = new StorageHandler(requireContext()).getTheme();
+
         RecyclerView recyclerView = new RecyclerView(requireContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -35,7 +37,7 @@ public class UserListDialogFragment extends DialogFragment {
             String eventID = args.getString("eventID");
             viewModel.getUsersScores(eventID).observe(requireActivity(), users -> {
                 if (users != null) {
-                    UserScoresAdapter adapter = new UserScoresAdapter(users, new StorageHandler(requireContext()).getTheme());
+                    UserScoresAdapter adapter = new UserScoresAdapter(users, theme);
                     adapter.setOnItemClickListener((position, scores) -> {
                        if (!scores.isEmpty()) {
                             profileViewModel.updateUserScores(users.get(position).getId(), Integer.parseInt(scores)).observe(requireActivity(), statusCode -> {

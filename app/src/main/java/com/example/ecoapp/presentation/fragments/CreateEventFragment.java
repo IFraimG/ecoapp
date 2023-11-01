@@ -157,7 +157,6 @@ public class CreateEventFragment extends Fragment {
             } else {
                eventViewModel.sendData(title, description, date, time, fileImage, lenPeople, address, lat, longt, Integer.parseInt(scores)).observe(requireActivity(), statusCode -> {
                    if (statusCode < 400 && statusCode != 0) {
-                       Toast.makeText(requireContext(), "Успешно!", Toast.LENGTH_SHORT).show();
                        fragmentCreateEventBinding.eventNameEditText.setText("");
                        fragmentCreateEventBinding.eventDescriptionEditText.setText("");
                        fragmentCreateEventBinding.eventDateEditText.setText("");
