@@ -19,7 +19,7 @@ import com.example.ecoapp.presentation.services.NetworkChangeReceiver;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
-    private NavController navController;
+    public NavController navController;
     private StorageHandler storageHandler;
     private NetworkChangeReceiver networkChangeReceiver;
 

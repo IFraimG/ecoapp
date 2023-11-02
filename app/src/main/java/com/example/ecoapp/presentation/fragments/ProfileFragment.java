@@ -9,12 +9,14 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -111,7 +113,10 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 ((MainActivity) requireActivity()).changeMenu(false);
             }
 
-            Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_authSignupFragment);
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("isLogout", true);
+
+            Navigation.findNavController(v).navigate(R.id.action_profileFragment_to_authSignupFragment, bundle);
         });
 
         binding.personName.setOnEditorActionListener((textView, actionId, keyEvent) -> {

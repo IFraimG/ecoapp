@@ -2,11 +2,13 @@ package com.example.ecoapp.presentation.fragments;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -26,6 +28,7 @@ import org.jetbrains.annotations.NotNull;
 public class AuthSignupFragment extends Fragment {
     private FragmentRegistrationBinding binding;
     private AuthViewModel viewModel;
+    private Bundle bundle;
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +36,12 @@ public class AuthSignupFragment extends Fragment {
         binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
 
         viewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+
+        bundle = getArguments();
+
+        if (getActivity() instanceof MainActivity && bundle != null && bundle.getBoolean("isLogout", false)) {
+            ((MainActivity) requireActivity()).navController.popBackStack(R.id.profileFragment, true);
+        }
 
         binding.loginTextView.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_authSignupFragment_to_authLoginFragment));
         binding.registrationCardView.setOnClickListener(v -> {
@@ -93,6 +102,5 @@ public class AuthSignupFragment extends Fragment {
             if (getActivity() instanceof MainActivity) ((MainActivity) requireActivity()).changeMenu(true);
             Navigation.findNavController(requireView()).navigate(R.id.homeFragment);
         }
-
     }
 }

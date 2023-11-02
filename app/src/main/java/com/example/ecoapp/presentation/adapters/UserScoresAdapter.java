@@ -43,6 +43,7 @@ public class UserScoresAdapter extends RecyclerView.Adapter<UserScoresAdapter.Us
     public UserScoresAdapter.UserScoresViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         UsersScoresItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.users_scores_item , parent , false);
         binding.setThemeInfo(theme);
+        
         return new UserScoresAdapter.UserScoresViewHolder(binding);
     }
 

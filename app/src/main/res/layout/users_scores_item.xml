@@ -24,6 +24,7 @@
         android:textSize="24sp"
         android:layout_gravity="end"
         android:gravity="end"
+        android:focusableInTouchMode="true"
         android:hint="Количество баллов" />
 </LinearLayout>
 </layout>
