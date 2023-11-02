@@ -137,22 +137,24 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void loadNearbyEvents(double lat, double longt) {
-        viewModel.findNearestEventsByAuthorCoords(lat, longt).observe(activity, events -> {
-            if (events != null) {
-                if (eventCustoms == null) eventCustoms = new ArrayList<>();
-                else eventCustoms.clear();
+        if (activity != null) {
+            viewModel.findNearestEventsByAuthorCoords(lat, longt).observe(activity, events -> {
+                if (events != null) {
+                    if (eventCustoms == null) eventCustoms = new ArrayList<>();
+                    else eventCustoms.clear();
 
-                for (EventCustom event: events) {
-                    if (event == null || event.getAuthorID().equals(storageHandler.getUserID())) continue;
-                    eventCustoms.add(event);
+                    for (EventCustom event: events) {
+                        if (event == null || event.getAuthorID().equals(storageHandler.getUserID())) continue;
+                        eventCustoms.add(event);
+                    }
+
+                    NearbyAdapter nearbyAdapter = new NearbyAdapter(eventCustoms, storageHandler.getTheme());
+                    binding.nearbyRecyclerView.setAdapter(nearbyAdapter);
+
+                    isLoad = true;
                 }
-
-                NearbyAdapter nearbyAdapter = new NearbyAdapter(eventCustoms, storageHandler.getTheme());
-                binding.nearbyRecyclerView.setAdapter(nearbyAdapter);
-
-                isLoad = true;
-            }
-        });
+            });
+        }
     }
 
     private void loadData() {

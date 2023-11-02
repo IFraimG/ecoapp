@@ -145,6 +145,18 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             return false;
         });
 
+        binding.personNickname.setOnEditorActionListener((textView, actionId, keyEvent) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
+                if (!textView.getText().toString().isEmpty()) {
+                    viewModel.editLogin(textView.getText().toString());
+                }
+
+                return true;
+            }
+
+            return false;
+        });
+
         binding.whiteTheme.setOnClickListener(View -> {
             if (storageHandler.getTheme() != 0) {
                 int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -258,6 +270,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             if (user != null) {
                 binding.personName.setText(user.getName());
                 binding.personPoints.setText("Баллы: " + user.getScores());
+                binding.personNickname.setText(user.getLogin());
                 if (user.getImage() != null) {
                     binding.profileImageButton.setVisibility(View.VISIBLE);
                     binding.profileLoadImage.setVisibility(View.GONE);
