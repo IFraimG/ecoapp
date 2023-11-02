@@ -115,7 +115,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         loadData();
 
-
         binding.dailyHabits.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString("type", "daily");
