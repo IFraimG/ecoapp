@@ -179,11 +179,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:gravity="center_horizontal"
-                    android:maxWidth="150dp"
                     android:ellipsize="end"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:layout_gravity="center_horizontal"/>
 
                 <androidx.appcompat.widget.AppCompatButton
