@@ -82,6 +82,31 @@
                     android:layout_gravity="center_horizontal" />
 
                 <TextView
+                    android:id="@+id/task_author_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:ellipsize="end"
+                    android:text="Автор"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="16dp"/>
+
+                <TextView
+                    android:id="@+id/task_author_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="16dp"/>
+
+                <TextView
                     android:id="@+id/the_task_award_points"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -217,8 +242,9 @@
 
                             <ImageButton
                                 android:id="@+id/confirm_task_photo1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="250dp"
+                                android:layout_height="250dp"
+                                android:background="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                                 android:src="@drawable/default_photo_event"
                                 android:contentDescription="Фото-подтверждение"/>
 
@@ -245,8 +271,9 @@
 
                             <ImageButton
                                 android:id="@+id/confirm_task_photo2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="250dp"
+                                android:layout_height="250dp"
+                                android:background="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                                 android:src="@drawable/default_photo_event"
                                 android:contentDescription="Фото-подтверждение"/>
 
@@ -273,8 +300,10 @@
 
                             <ImageButton
                                 android:id="@+id/confirm_task_photo3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="250dp"
+                                android:layout_height="250dp"
+                                android:scaleType="center"
+                                android:background="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                                 android:src="@drawable/default_photo_event"
                                 android:contentDescription="Фото-подтверждение"/>
 
