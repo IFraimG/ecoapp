@@ -32,23 +32,21 @@ public class UserListDialogFragment extends DialogFragment {
         int theme = new StorageHandler(requireContext()).getTheme();
 
         RecyclerView recyclerView = new RecyclerView(requireContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
 
         if (args != null) {
             String eventID = args.getString("eventID");
             viewModel.getUsersScores(eventID).observe(requireActivity(), users -> {
                 if (users != null) {
                     UserScoresAdapter adapter = new UserScoresAdapter(users, theme, requireContext());
-                    adapter.setOnItemClickListener((position, scores) -> {
-                       if (!scores.isEmpty()) {
-                            profileViewModel.updateUserScores(users.get(position).getId(), Integer.parseInt(scores)).observe(requireActivity(), statusCode -> {
-                                if (statusCode >= 200 && statusCode < 400) {
-                                    Toast.makeText(requireContext(), "Успешно!", Toast.LENGTH_SHORT).show();
-                                } else if (statusCode == 418) {
-                                    Toast.makeText(requireContext(), "У вас не хватает очков", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
+                    adapter.setOnItemClickListener((position) -> {
+                        profileViewModel.updateUserScores(users.get(position).getId(), eventID).observe(requireActivity(), statusCode -> {
+                            if (statusCode >= 200 && statusCode < 400) {
+                                adapter.deleteItem(users.get(position).getId());
+                                Toast.makeText(requireContext(), "Успешно!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     });
                     recyclerView.setAdapter(adapter);
                 }

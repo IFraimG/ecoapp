@@ -2,12 +2,7 @@ package com.example.ecoapp.presentation.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -15,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ecoapp.R;
 import com.example.ecoapp.data.models.User;
-import com.example.ecoapp.databinding.FoundLayoutBinding;
 import com.example.ecoapp.databinding.UsersScoresItemBinding;
 
 import java.util.List;
@@ -31,7 +25,7 @@ public class UserScoresAdapter extends RecyclerView.Adapter<UserScoresAdapter.Us
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position, String scores);
+        void onItemClick(int position);
     }
 
 
@@ -41,12 +35,22 @@ public class UserScoresAdapter extends RecyclerView.Adapter<UserScoresAdapter.Us
         this.ctx = ctx;
     }
 
+    public void deleteItem(String id) {
+        for (int i = 0; i < userScoresList.size(); i++) {
+            if (userScoresList.get(i).getId().equals(id)) {
+                userScoresList.remove(i);
+                notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+
     @NonNull
     @Override
     public UserScoresAdapter.UserScoresViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         UsersScoresItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.users_scores_item , parent , false);
         binding.setThemeInfo(theme);
-        
+
         return new UserScoresAdapter.UserScoresViewHolder(binding);
     }
 
@@ -68,19 +72,13 @@ public class UserScoresAdapter extends RecyclerView.Adapter<UserScoresAdapter.Us
 
             this.binding = binding;
 
-            binding.usersScoresInput.setOnEditorActionListener((textView, actionId, keyEvent) -> {
-                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position, binding.usersScoresInput.getText().toString());
-                        }
+            binding.usersScoresConfirm.setOnClickListener(V -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(position);
                     }
-
-                    return true;
                 }
-
-                return false;
             });
         }
     }
