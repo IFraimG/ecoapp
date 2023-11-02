@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.provider.MediaStore;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,7 +135,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         });
 
         binding.personName.setOnEditorActionListener((textView, actionId, keyEvent) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
                 if (!textView.getText().toString().isEmpty()) {
                     viewModel.updateName(textView.getText().toString());
                 }
@@ -146,7 +147,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         });
 
         binding.personNickname.setOnEditorActionListener((textView, actionId, keyEvent) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_NULL) {
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
                 if (!textView.getText().toString().isEmpty()) {
                     viewModel.editLogin(textView.getText().toString());
                 }
@@ -156,6 +157,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
             return false;
         });
+
 
         binding.whiteTheme.setOnClickListener(View -> {
             if (storageHandler.getTheme() != 0) {
