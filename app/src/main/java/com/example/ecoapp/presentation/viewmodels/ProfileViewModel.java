@@ -88,9 +88,9 @@ public class ProfileViewModel extends AndroidViewModel {
         return user;
     }
 
-    public LiveData<Integer> updateUserScores(String userID, int scores) {
+    public LiveData<Integer> updateUserScores(String userID, String eventID) {
         statusCode.setValue(0);
-        userRepository.changeScores(storageHandler.getToken(), storageHandler.getUserID(), userID, scores).enqueue(new Callback<User>() {
+        userRepository.changeScores(storageHandler.getToken(), storageHandler.getUserID(), userID, eventID).enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NotNull Call<User> call, @NotNull Response<User> response) {
                 statusCode.setValue(response.code());
