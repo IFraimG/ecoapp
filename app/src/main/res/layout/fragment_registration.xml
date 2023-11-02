@@ -256,7 +256,7 @@
             android:layout_width="match_parent"
             android:hint="Зарегистрироваться"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColorHint="#FFFFFF"
             android:fontFamily="@font/montserrat_light"
             android:backgroundTint="@{themeInfo == 2 ? @color/green_theme_green : @color/green}"
