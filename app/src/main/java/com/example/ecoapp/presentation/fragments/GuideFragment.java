@@ -97,7 +97,7 @@ public class GuideFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     });
 
                     binding.guideSourceName.setText(guide.getSource());
-                    binding.articleTv.setText(guide.getSource());
+                    binding.articleTv.setText(guide.getDescription());
                     binding.guideTitleTitle.setText(guide.getTitle());
                     binding.guideAuthorName.setText(guide.getAuthorID());
 

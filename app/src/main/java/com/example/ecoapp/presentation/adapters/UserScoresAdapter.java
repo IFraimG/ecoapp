@@ -1,9 +1,11 @@
 package com.example.ecoapp.presentation.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ public class UserScoresAdapter extends RecyclerView.Adapter<UserScoresAdapter.Us
     private List<User> userScoresList;
     private OnItemClickListener listener;
     private int theme;
+    private Context ctx;
 
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -33,9 +36,10 @@ public class UserScoresAdapter extends RecyclerView.Adapter<UserScoresAdapter.Us
     }
 
 
-    public UserScoresAdapter(List<User> userScoresList, int theme) {
+    public UserScoresAdapter(List<User> userScoresList, int theme, Context ctx) {
         this.userScoresList = userScoresList;
         this.theme = theme;
+        this.ctx = ctx;
     }
 
     @NonNull
@@ -50,6 +54,11 @@ public class UserScoresAdapter extends RecyclerView.Adapter<UserScoresAdapter.Us
     @Override
     public void onBindViewHolder(@NonNull UserScoresViewHolder holder, int position) {
         holder.binding.usersScoresName.setText(userScoresList.get(position).getName());
+        holder.binding.usersScoresInput.setOnClickListener(v -> {
+            holder.binding.usersScoresInput.requestFocus();
+            InputMethodManager imm = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(holder.binding.usersScoresInput, InputMethodManager.SHOW_IMPLICIT);
+        });
     }
 
     @Override

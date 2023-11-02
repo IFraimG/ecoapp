@@ -16,6 +16,7 @@ import com.example.ecoapp.R;
 import com.example.ecoapp.data.models.Habit;
 import com.example.ecoapp.databinding.FragmentHabitsBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
+import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.adapters.HabitsAdapter;
 import com.example.ecoapp.presentation.viewmodels.HabitViewModel;
 
@@ -28,6 +29,23 @@ public class HabitFragment extends Fragment {
     private HabitViewModel viewModel;
     private ArrayList<Habit> habitsList;
     private int theme;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(false);
+        }
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(true);
+        }
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,

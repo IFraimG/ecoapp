@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,7 +38,7 @@ public class UserListDialogFragment extends DialogFragment {
             String eventID = args.getString("eventID");
             viewModel.getUsersScores(eventID).observe(requireActivity(), users -> {
                 if (users != null) {
-                    UserScoresAdapter adapter = new UserScoresAdapter(users, theme);
+                    UserScoresAdapter adapter = new UserScoresAdapter(users, theme, requireContext());
                     adapter.setOnItemClickListener((position, scores) -> {
                        if (!scores.isEmpty()) {
                             profileViewModel.updateUserScores(users.get(position).getId(), Integer.parseInt(scores)).observe(requireActivity(), statusCode -> {
