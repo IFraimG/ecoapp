@@ -183,7 +183,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             if (guides != null) {
                 List<Advice> guidesList = new ArrayList<>();
                 for (Guide guide: guides) {
-                    if (guide.getAuthorID().equals(storageHandler.getUserID())) continue;
                     guidesList.add(new Advice(guide.getPhoto(), guide.getTitle(), guide.getGuideID()));
                 }
 
