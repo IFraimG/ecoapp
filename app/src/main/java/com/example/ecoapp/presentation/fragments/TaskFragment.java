@@ -18,10 +18,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -43,7 +41,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class TaskFragment extends Fragment {
     private FragmentTaskBinding binding;
     private TaskViewModel viewModel;
     private StorageHandler storageHandler;
@@ -65,7 +63,6 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         viewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
-        binding.taskLoader.setOnRefreshListener(this);
         binding.theTaskBackToPreviousFragmentButton.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
 
@@ -99,12 +96,24 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         binding.confirmTaskPhoto3.setOnClickListener(v -> loadPhoto(3));
 
         binding.fragmentTaskConfirmationSendButton.setOnClickListener(v -> {
+            String text = binding.taskReportEditText.getText().toString().isEmpty() ? "" : binding.taskReportEditText.getText().toString();
             if (file1 == null || file2 == null || file3 == null) Toast.makeText(requireContext(), "Вы должны загрузить 3 изображения", Toast.LENGTH_SHORT).show();
-            else viewModel.takeTask(taskID, "...", file1, file2, file3);
+            else viewModel.takeTask(taskID, text, file1, file2, file3);
         });
 
         binding.fragmentTaskAcceptButton.setOnClickListener(View -> {
             viewModel.makeTaskDone(taskID);
+        });
+
+        binding.fragmentTaskDeclineButton.setOnClickListener(v -> {
+            viewModel.cancelTakeTask(taskID).observe(requireActivity(), statusCode -> {
+                if (statusCode >= 200 && statusCode < 400) {
+                    binding.fragmentTaskAcceptButton.setVisibility(View.GONE);
+                    binding.fragmentTaskDeclineButton.setVisibility(View.GONE);
+                    binding.taskConfirmation.setVisibility(View.GONE);
+                    binding.taskReportEditText.setVisibility(View.GONE);
+                }
+            });
         });
 
         return binding.getRoot();
@@ -139,21 +148,39 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                     binding.fragmentTaskRefuseButton.setVisibility(View.GONE);
                     binding.fragmentTaskBeginButton.setVisibility(View.GONE);
                     binding.fragmentTaskConfirmationSendButton.setVisibility(View.GONE);
-                    binding.taskConfirmation.setVisibility(View.VISIBLE);
+                    binding.taskConfirmation.setVisibility(View.GONE);
                     if (task.getUserID() != null && task.getImages() != null) binding.deleteTaskButton.setVisibility(View.GONE);
                     else binding.deleteTaskButton.setVisibility(View.VISIBLE);
+
+                    if (task.getUserDescription() == null) binding.taskReportEditText.setVisibility(View.GONE);
+                    else {
+                        binding.taskReportEditText.setVisibility(View.VISIBLE);
+                        binding.taskReportEditText.setText(task.getUserDescription());
+                        binding.taskReportEditText.setEnabled(false);
+                    }
                 } else if (task.getUserID() != null && task.getUserID().equals(storageHandler.getUserID())) {
                     binding.fragmentTaskRefuseButton.setVisibility(View.VISIBLE);
                     binding.taskConfirmation.setVisibility(View.VISIBLE);
+                    binding.theTaskDescription.setEnabled(false);
                 } else {
                     binding.fragmentTaskBeginButton.setVisibility(View.VISIBLE);
                 }
 
+                binding.taskReportEditText.setVisibility(View.VISIBLE);
+                if (task.getUserDescription() != null) {
+                    binding.taskReportEditText.setText(task.getUserDescription());
+                    binding.taskReportEditText.setEnabled(false);
+                }
 
                 if (task.getImages() != null && !task.getImages().isEmpty() && (task.getUserID().equals(storageHandler.getUserID()) || task.getAuthorID().equals(storageHandler.getUserID()))) {
                     binding.fragmentTaskConfirmationSendButton.setVisibility(View.GONE);
-                    binding.fragmentTaskAcceptButton.setVisibility(View.VISIBLE);
+                    if (task.getAuthorID().equals(storageHandler.getUserID())) {
+                        binding.fragmentTaskAcceptButton.setVisibility(View.VISIBLE);
+                        binding.fragmentTaskDeclineButton.setVisibility(View.VISIBLE);
+                    }
+
                     if (task.getImages().get(0) != null) {
+                        binding.taskConfirmation.setVisibility(View.VISIBLE);
                         String url = "http://178.21.8.29:8080/image/" + task.getImages().get(0);
                         Picasso.get().load(url).into(binding.confirmTaskPhoto1);
                     }
@@ -161,21 +188,13 @@ public class TaskFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                         String url = "http://178.21.8.29:8080/image/" + task.getImages().get(1);
                         Picasso.get().load(url).into(binding.confirmTaskPhoto2);
                     }
-
                     if (task.getImages().get(2) != null) {
                         String url = "http://178.21.8.29:8080/image/" + task.getImages().get(2);
                         Picasso.get().load(url).into(binding.confirmTaskPhoto3);
                     }
                 }
-
-                binding.taskLoader.setRefreshing(false);
             }
         });
-    }
-
-    @Override
-    public void onRefresh() {
-        if (args != null) loadData();
     }
 
     @Override

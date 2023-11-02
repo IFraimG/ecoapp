@@ -288,7 +288,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 ArrayList<Task> myTaskInProgress = new ArrayList<>();
 
                 for (Task task: tasks) {
-                    if (task.getUserID() != null) myTaskInProgress.add(task);
+                    if (task.getUserID() != null && !task.getUserID().isEmpty()) myTaskInProgress.add(task);
                     else myTasks.add(task);
                 }
 

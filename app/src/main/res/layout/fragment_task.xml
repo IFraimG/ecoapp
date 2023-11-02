@@ -13,11 +13,6 @@
     android:paddingBottom="70dp"
     android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/background_gray}"
     tools:context=".presentation.fragments.TaskFragment">
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/task_loader">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -342,6 +337,5 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </FrameLayout>
 </layout>
