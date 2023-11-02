@@ -103,7 +103,8 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                 android:textSize="20sp"
-                android:layout_marginLeft="36dp"/>
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"/>
 
             <TextView
                 android:id="@+id/guide_author_name"
@@ -114,7 +115,8 @@
                 android:fontFamily="@font/montserrat_regular"
                 android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                 android:textSize="20sp"
-                android:layout_marginLeft="36dp"/>
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"/>
 
             <TextView
                 android:id="@+id/guide_references_title"
@@ -126,7 +128,8 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                 android:textSize="20sp"
-                android:layout_marginLeft="36dp"/>
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"/>
 
             <TextView
                 android:id="@+id/guide_source_name"
@@ -138,8 +141,9 @@
                 android:fontFamily="@font/montserrat_regular"
                 android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                 android:textSize="20sp"
-                android:layout_marginLeft="36dp"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"/>
 
             <TextView
                 android:id="@+id/guide_rating_title"
