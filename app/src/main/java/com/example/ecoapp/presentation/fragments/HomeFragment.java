@@ -144,7 +144,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 else eventCustoms.clear();
 
                 for (EventCustom event: events) {
-                    if (event == null) continue;
+                    if (event == null || event.getAuthorID().equals(storageHandler.getUserID())) continue;
                     eventCustoms.add(event);
                 }
 
@@ -161,7 +161,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             if (tasks != null) {
                 ArrayList<Task> tasksList = new ArrayList<>();
                 for (Task task: tasks) {
-                    if (!task.getImages().isEmpty()) continue;
+                    if (task.getAuthorID().equals(storageHandler.getUserID()) || !task.getImages().isEmpty()) continue;
                     tasksList.add(task);
                 }
                 tasksAdapter = new TasksAdapter(tasksList, storageHandler.getTheme());
@@ -184,6 +184,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             if (guides != null) {
                 List<Advice> guidesList = new ArrayList<>();
                 for (Guide guide: guides) {
+                    if (guide.getAuthorID().equals(storageHandler.getUserID())) continue;
                     guidesList.add(new Advice(guide.getPhoto(), guide.getTitle(), guide.getGuideID()));
                 }
 
