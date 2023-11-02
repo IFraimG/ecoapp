@@ -262,6 +262,13 @@
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit"/>
+        <action
+            android:id="@+id/action_eventFragment_to_userListDialogFragment"
+            app:destination="@id/userListDialogFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"/>
     </fragment>
     <fragment
         android:id="@+id/secondMapFragment"
@@ -412,4 +419,20 @@
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit"/>
     </fragment>
+    <dialog
+        android:id="@+id/userListDialogFragment"
+        android:name="com.example.ecoapp.presentation.fragments.UserListDialogFragment"
+        android:label="UserListDialogFragment"
+        app:enterAnim="@anim/nav_enter"
+        app:exitAnim="@anim/nav_exit"
+        app:popEnterAnim="@anim/nav_pop_enter"
+        app:popExitAnim="@anim/nav_pop_exit">
+        <action
+            android:id="@+id/action_userListDialogFragment_to_eventFragment"
+            app:destination="@id/eventFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"/>
+    </dialog>
 </navigation>

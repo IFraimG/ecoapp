@@ -53,11 +53,6 @@ public class UserScoresAdapter extends RecyclerView.Adapter<UserScoresAdapter.Us
     @Override
     public void onBindViewHolder(@NonNull UserScoresViewHolder holder, int position) {
         holder.binding.usersScoresName.setText(userScoresList.get(position).getName());
-        holder.binding.usersScoresInput.setOnClickListener(v -> {
-            holder.binding.usersScoresInput.requestFocus();
-            InputMethodManager imm = (InputMethodManager) ctx.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(holder.binding.usersScoresInput, InputMethodManager.SHOW_IMPLICIT);
-        });
     }
 
     @Override

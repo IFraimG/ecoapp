@@ -55,8 +55,6 @@ public class HabitFragment extends Fragment {
 
         binding.setThemeInfo(theme);
 
-
-
         binding.fragmentHabitsBackToPreviousFragmentButton.setOnClickListener(v -> {
             Navigation.findNavController(v).popBackStack();
         });

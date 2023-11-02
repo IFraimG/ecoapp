@@ -119,13 +119,9 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
             binding.theEventCurrentPeopleAmount.setOnClickListener(v -> {
                 if (eventCustom != null && storageHandler.getUserID().equals(eventCustom.getAuthorID())) {
-                    FragmentManager manager = requireActivity().getSupportFragmentManager();
-                    UserListDialogFragment dialogFragment = new UserListDialogFragment();
                     Bundle args2 = new Bundle();
                     args2.putString("eventID", eventCustom.getEventID());
-                    dialogFragment.setArguments(args2);
-                    FragmentTransaction transaction = manager.beginTransaction();
-                    dialogFragment.show(transaction, "dialog");
+                    Navigation.findNavController(v).navigate(R.id.userListDialogFragment, args2);
                 }
             });
 

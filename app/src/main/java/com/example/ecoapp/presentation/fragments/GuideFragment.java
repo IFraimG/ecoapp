@@ -91,15 +91,15 @@ public class GuideFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     private void loadData() {
         if (guideID != null) {
-            viewModel.getGuideByID(guideID).observe(requireActivity(), guide -> {
+            viewModel.getGuideByID(guideID).observe(getViewLifecycleOwner(), guide -> {
                 if (guide != null) {
-                    profileViewModel.getUserData("", "").observe(requireActivity(), user -> {
+                    profileViewModel.getUserData("", "").observe(getViewLifecycleOwner(), user -> {
                         if (user != null) {
                             showBookmark(user);
                             binding.guideAuthorName.setText(user.getName());
                         }
                     });
-                    viewModel.getRating(guideID).observe(requireActivity(), rating -> {
+                    viewModel.getRating(guideID).observe(getViewLifecycleOwner(), rating -> {
                         if (rating != null) binding.guideRatingBar.setRating(rating.getMark());
                     });
 
