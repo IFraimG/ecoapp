@@ -26,7 +26,6 @@ public class UserScoresAdapter extends RecyclerView.Adapter<UserScoresAdapter.Us
     private int theme;
     private Context ctx;
 
-
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }

@@ -70,7 +70,7 @@
                     android:gravity="center"
                     android:background="@null"
                     android:layout_weight="1"
-                    android:singleLine="true"
+                    android:maxLines="2"
                     android:layout_gravity="center_horizontal" />
 
                 <EditText
