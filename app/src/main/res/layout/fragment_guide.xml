@@ -88,6 +88,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginRight="16dp"
                 android:ellipsize="end"
+                android:textIsSelectable="true"
                 android:fontFamily="@font/montserrat_medium"
                 android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                 android:textSize="20sp" />
@@ -133,6 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
+                android:textIsSelectable="true"
                 android:fontFamily="@font/montserrat_regular"
                 android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                 android:textSize="20sp"
