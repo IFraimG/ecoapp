@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentTaskBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
+import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
 import com.example.ecoapp.presentation.viewmodels.TaskViewModel;
 import com.squareup.picasso.Picasso;
 
@@ -64,7 +65,6 @@ public class TaskFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
         binding.theTaskBackToPreviousFragmentButton.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
-
 
         args = getArguments();
         if (args != null) loadData();
@@ -144,6 +144,8 @@ public class TaskFragment extends Fragment {
                 binding.taskTitle.setText(task.getName());
                 binding.theTaskDescription.setText(task.getDescription());
                 binding.theTaskAwardPoints.setText("Баллы в награду: " + Integer.toString(task.getScores()));
+                binding.taskAuthorName.setText(task.getAuthorName());
+
                 if (task.getAuthorID().equals(storageHandler.getUserID())) {
                     binding.fragmentTaskRefuseButton.setVisibility(View.GONE);
                     binding.fragmentTaskBeginButton.setVisibility(View.GONE);
