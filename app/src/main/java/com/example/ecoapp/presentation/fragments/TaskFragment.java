@@ -85,6 +85,7 @@ public class TaskFragment extends Fragment {
                     binding.fragmentTaskBeginButton.setVisibility(View.GONE);
                     binding.fragmentTaskRefuseButton.setVisibility(View.VISIBLE);
                     binding.taskConfirmation.setVisibility(View.VISIBLE);
+                    binding.theTaskDescription.setEnabled(true);
                 }
             });
         });
