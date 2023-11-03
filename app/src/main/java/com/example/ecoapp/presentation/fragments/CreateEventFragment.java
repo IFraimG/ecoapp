@@ -303,8 +303,8 @@ public class CreateEventFragment extends Fragment {
                     fos.close();
 
 
-                    int newWidth = 600;
-                    int newHeight = 600;
+                    int newWidth = 800;
+                    int newHeight = 800;
                     if (bitmap.getWidth() > bitmap.getHeight()) newHeight = (int) (bitmap.getHeight() * ((float) newWidth / bitmap.getWidth()));
                     else newWidth = (int) (bitmap.getWidth() * ((float) newHeight / bitmap.getHeight()));
 
