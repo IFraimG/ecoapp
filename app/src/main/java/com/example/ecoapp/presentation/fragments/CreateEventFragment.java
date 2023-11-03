@@ -275,8 +275,7 @@ public class CreateEventFragment extends Fragment {
                     cursor.close();
 
                     fileImage = new File(imagePath);
-                    Bitmap optimizeBitmap = Bitmap.createScaledBitmap(originalBitmap, 500, 500, true);
-                    fragmentCreateEventBinding.createEventPhoto.setImageBitmap(optimizeBitmap);
+                    fragmentCreateEventBinding.createEventPhoto.setImageBitmap(originalBitmap);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -296,8 +295,7 @@ public class CreateEventFragment extends Fragment {
                     fos.flush();
                     fos.close();
 
-                    Bitmap optimizeBitmap = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
-                    fragmentCreateEventBinding.createEventPhoto.setImageBitmap(optimizeBitmap);
+                    fragmentCreateEventBinding.createEventPhoto.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
