@@ -141,9 +141,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="Ждет подтверждения"
+                            android:text="Ждет вашего подтверждения"
                             android:textColor="@{themeInfo == 2 ? @color/green_theme_home_titles_gray : @color/home_titles_gray}"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:layout_marginLeft="24dp"
                             android:layout_marginTop="16dp" />
 

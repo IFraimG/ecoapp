@@ -183,6 +183,7 @@
                             android:layout_marginLeft="24dp"
                             android:layout_marginRight="24dp"
                             android:layout_marginBottom="16dp"
+                            android:layout_marginTop="16dp"
                             app:cardCornerRadius="12dp"
                             app:cardElevation="0dp"
                             android:elevation="0dp"
