@@ -42,6 +42,7 @@
                     android:ellipsize="end"
                     app:layout_constraintStart_toEndOf="@id/comment_profile_image"
                     android:layout_marginStart="12dp"
+                    android:layout_marginRight="8dp"
                     app:layout_constraintTop_toTopOf="@id/comment_profile_image"
                     />
 
@@ -51,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/montserrat_medium"
                     android:textColor="@{themeInfo == 2 ? @color/green_theme_reglogin_text : @color/reglogin_text}"
