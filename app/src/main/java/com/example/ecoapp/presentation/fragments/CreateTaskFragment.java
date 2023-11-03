@@ -55,6 +55,8 @@ public class CreateTaskFragment extends Fragment {
                 Toast.makeText(requireContext(), "Вы не заполнили все поля", Toast.LENGTH_SHORT).show();
             } else if (Integer.parseInt(scores) > userScores) {
                 Toast.makeText(requireContext(), "У вас не хватает очков", Toast.LENGTH_SHORT).show();
+            } else if (Integer.parseInt(scores) < 50) {
+                Toast.makeText(requireContext(), "Вы ввели слишком мало очков: меньше 50", Toast.LENGTH_SHORT).show();
             } else {
                 viewModel.createTask(title, description, Integer.parseInt(scores));
             }
