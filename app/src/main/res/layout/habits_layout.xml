@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         app:layout_constraintBottom_toBottomOf="@id/habit_tv"
+        app:layout_constraintTop_toTopOf="@id/habit_tv"
         app:layout_constraintStart_toStartOf="parent">
     </ImageView>
 
@@ -25,11 +26,11 @@
         android:id="@+id/habit_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginLeft="4dp"
-        android:text="Разумные покупки"
+        android:text=""
         android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
-        android:textSize="16sp"
+        android:textSize="20sp"
         android:fontFamily="@font/montserrat_regular"
         android:maxLines="1"
         android:ellipsize="end"

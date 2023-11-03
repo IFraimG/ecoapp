@@ -210,7 +210,6 @@
                     app:cardElevation="0dp"
                     android:elevation="0dp"
                     android:layout_marginTop="12dp"
-                    android:paddingBottom="60dp"
                     app:cardCornerRadius="16dp"
                     app:cardBackgroundColor="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                     app:layout_constraintStart_toStartOf="parent"
@@ -220,7 +219,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="8dp">
+                        android:paddingBottom="12dp">
 
                         <TextView
                             android:id="@+id/habits_title"
