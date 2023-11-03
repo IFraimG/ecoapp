@@ -125,7 +125,7 @@ public class TaskFragment extends Fragment {
 
         viewModel.getNavigation().observe(getViewLifecycleOwner(), isNavigation -> {
             if (isNavigation) {
-                Navigation.findNavController(requireView()).navigate(R.id.profileFragment);
+                Navigation.findNavController(requireView()).navigate(R.id.homeFragment);
                 viewModel.setCancelNavigation();
             }
         });
