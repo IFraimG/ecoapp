@@ -98,6 +98,7 @@
                         android:layout_height="250dp"
                         android:src="@drawable/default_photo_event"
                         android:contentDescription="Обложка события"
+                        android:background="@{themeInfo == 2 ? @color/green_theme_background_card_view : @color/background_card_view}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/fragment_create_event_person_points"/>
