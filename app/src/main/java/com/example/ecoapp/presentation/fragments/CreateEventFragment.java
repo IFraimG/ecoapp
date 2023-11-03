@@ -275,7 +275,14 @@ public class CreateEventFragment extends Fragment {
                     cursor.close();
 
                     fileImage = new File(imagePath);
-                    fragmentCreateEventBinding.createEventPhoto.setImageBitmap(originalBitmap);
+
+                    int newWidth = 500;
+                    int newHeight = 500;
+                    if (originalBitmap.getWidth() > originalBitmap.getHeight()) newHeight = (int) (originalBitmap.getHeight() * ((float) newWidth / originalBitmap.getWidth()));
+                    else newWidth = (int) (originalBitmap.getWidth() * ((float) newHeight / originalBitmap.getHeight()));
+
+                    Bitmap optimizeBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+                    fragmentCreateEventBinding.createEventPhoto.setImageBitmap(optimizeBitmap);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -295,7 +302,14 @@ public class CreateEventFragment extends Fragment {
                     fos.flush();
                     fos.close();
 
-                    fragmentCreateEventBinding.createEventPhoto.setImageBitmap(bitmap);
+
+                    int newWidth = 600;
+                    int newHeight = 600;
+                    if (bitmap.getWidth() > bitmap.getHeight()) newHeight = (int) (bitmap.getHeight() * ((float) newWidth / bitmap.getWidth()));
+                    else newWidth = (int) (bitmap.getWidth() * ((float) newHeight / bitmap.getHeight()));
+
+                    Bitmap optimizeBitmap = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true);
+                    fragmentCreateEventBinding.createEventPhoto.setImageBitmap(optimizeBitmap);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
