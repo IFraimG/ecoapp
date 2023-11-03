@@ -11,7 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/background_gray}"
-    android:paddingBottom="50dp"
+    android:paddingBottom="66dp"
     tools:context=".presentation.fragments.HomeFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
