@@ -91,7 +91,9 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                     android:textSize="20sp"
-                    android:layout_marginLeft="8dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"/>
 
                 <TextView
@@ -103,6 +105,8 @@
                     android:fontFamily="@font/montserrat_regular"
                     android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                     android:textSize="20sp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="16dp"/>
 
