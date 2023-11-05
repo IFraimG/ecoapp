@@ -84,7 +84,7 @@ public class CreateTaskFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel.getNavigation().observe(getViewLifecycleOwner(), isNavigation -> {
             if (isNavigation) {
-                Navigation.findNavController(requireView()).navigate(R.id.profileFragment);
+                Navigation.findNavController(requireView()).navigate(R.id.homeFragment);
                 viewModel.setCancelNavigation();
             }
         });
