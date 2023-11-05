@@ -10,7 +10,6 @@
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="70dp"
     android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/background_gray}"
     tools:context=".presentation.fragments.TaskFragment">
         <ScrollView
@@ -20,8 +19,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="60dp">
+                android:orientation="vertical">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

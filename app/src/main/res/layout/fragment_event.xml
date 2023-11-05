@@ -80,6 +80,31 @@
                     android:layout_gravity="center_horizontal" />
 
                 <TextView
+                    android:id="@+id/event_author_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:ellipsize="end"
+                    android:text="Автор"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"/>
+
+                <TextView
+                    android:id="@+id/event_author_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"/>
+
+                <TextView
                     android:id="@+id/the_event_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
