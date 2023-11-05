@@ -12,7 +12,6 @@
     android:layout_height="wrap_content"
     android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/background_gray}"
     tools:context=".presentation.fragments.CreateEventFragment"
-    android:paddingBottom="80dp"
     >
 
     <ScrollView

@@ -9,15 +9,18 @@
     </data>
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/background_gray}"
     android:orientation="vertical"
     tools:context=".presentation.fragments.HabitFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="280dp"
             android:orientation="vertical">
 
             <ImageButton
@@ -116,6 +119,6 @@
                 android:stateListAnimator="@null"/>
 
         </LinearLayout>
-
+    </ScrollView>
 </LinearLayout>
 </layout>
