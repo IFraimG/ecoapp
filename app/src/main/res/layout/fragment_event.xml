@@ -115,6 +115,7 @@
                     android:fontFamily="@font/montserrat_medium"
                     android:textColor="@{themeInfo == 2 ? @color/green_theme_text_gray : @color/text_gray}"
                     android:textSize="20sp"
+                    android:textIsSelectable="true"
                     android:layout_gravity="center_horizontal" />
 
                 <androidx.cardview.widget.CardView

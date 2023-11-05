@@ -9,7 +9,7 @@
     </data>
 <FrameLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@{themeInfo == 2 ? @color/green_theme_background_gray : @color/background_gray}"
     tools:context=".presentation.fragments.TaskFragment">
         <ScrollView
@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="70dp"
                     android:paddingLeft="50dp"
                     android:paddingRight="50dp"
                     android:visibility="gone"
@@ -319,7 +319,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="40dp"
+                        android:layout_marginBottom="70dp"
                         android:paddingLeft="50dp"
                         android:paddingRight="50dp"
                         android:textAllCaps="false"
@@ -336,7 +336,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="40dp"
+                        android:layout_marginBottom="70dp"
                         android:paddingLeft="50dp"
                         android:paddingRight="50dp"
                         android:textAllCaps="false"
@@ -354,7 +354,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="40dp"
+                        android:layout_marginBottom="70dp"
                         android:paddingLeft="50dp"
                         android:paddingRight="50dp"
                         android:textAllCaps="false"

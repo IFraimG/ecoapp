@@ -135,6 +135,7 @@
                             android:backgroundTint="@{themeInfo == 2 ? @color/green_theme_background_search : @color/background_search}"
                             android:fontFamily="@font/montserrat_regular"
                             android:hint="Название гайда"
+                            android:inputType="textCapSentences"
                             android:textColorHint="@{themeInfo == 2 ? @color/green_theme_reglogin_text : @color/reglogin_text}"
                             android:textSize="16sp" />
 
