@@ -157,7 +157,12 @@
             />
         <action
             android:id="@+id/action_profileFragment_to_taskFragment"
-            app:destination="@id/taskFragment" />
+            app:destination="@id/taskFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit"
+            />
         <action
             android:id="@+id/action_profileFragment_to_createTaskFragment"
             app:destination="@id/createTaskFragment"

@@ -191,6 +191,8 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             if (storageHandler.getTheme() != 2) {
                 storageHandler.setTheme(2);
                 binding.setThemeInfo(2);
+
+                requireActivity().recreate();
             }
         });
 
