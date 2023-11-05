@@ -25,6 +25,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ecoapp.R;
@@ -91,6 +92,15 @@ public class TaskFragment extends Fragment {
         });
 
         binding.deleteTaskButton.setOnClickListener(View -> viewModel.deleteTask(taskID));
+
+        binding.confirmTaskPhoto1.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        binding.confirmTaskPhoto1.setAdjustViewBounds(true);
+
+        binding.confirmTaskPhoto2.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        binding.confirmTaskPhoto2.setAdjustViewBounds(true);
+
+        binding.confirmTaskPhoto3.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        binding.confirmTaskPhoto3.setAdjustViewBounds(true);
 
         binding.confirmTaskPhoto1.setOnClickListener(v -> loadPhoto(1));
         binding.confirmTaskPhoto2.setOnClickListener(v -> loadPhoto(2));

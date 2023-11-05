@@ -25,6 +25,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ecoapp.R;
@@ -72,6 +73,9 @@ public class AddGuideFragment extends Fragment {
         binding.setThemeInfo(new StorageHandler(requireContext()).getTheme());
 
         viewModel = new ViewModelProvider(requireActivity()).get(GuideViewModel.class);
+
+        binding.createGuidePhoto.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        binding.createGuidePhoto.setAdjustViewBounds(true);
 
         binding.createEventBackToEventFragmentButton.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 

@@ -27,6 +27,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.ecoapp.databinding.FragmentCreateEventBinding;
@@ -84,6 +85,9 @@ public class CreateEventFragment extends Fragment {
         fragmentCreateEventBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_event, container, false);
         storageHandler = new StorageHandler(requireContext());
         fragmentCreateEventBinding.setThemeInfo(storageHandler.getTheme());
+
+        fragmentCreateEventBinding.createEventPhoto.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        fragmentCreateEventBinding.createEventPhoto.setAdjustViewBounds(true);
 
         Bundle args = getArguments();
         if (args != null) {
