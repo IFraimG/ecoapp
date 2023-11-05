@@ -1,11 +1,6 @@
 package com.example.ecoapp.presentation.fragments;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -94,11 +89,9 @@ public class GuideFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             viewModel.getGuideByID(guideID).observe(getViewLifecycleOwner(), guide -> {
                 if (guide != null) {
                     profileViewModel.getUserData("", "").observe(getViewLifecycleOwner(), user -> {
-                        if (user != null) {
-                            showBookmark(user);
-                            binding.guideAuthorName.setText(user.getName());
-                        }
+                        if (user != null) showBookmark(user);
                     });
+
                     viewModel.getRating(guideID).observe(getViewLifecycleOwner(), rating -> {
                         if (rating != null) binding.guideRatingBar.setRating(rating.getMark());
                     });
@@ -106,6 +99,7 @@ public class GuideFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     binding.guideSourceName.setText(guide.getSource());
                     binding.articleTv.setText(guide.getDescription());
                     binding.guideTitleTitle.setText(guide.getTitle());
+                    binding.guideAuthorName.setText(guide.getAuthorName());
 
                     String url = "http://178.21.8.29:8080/image/" + guide.getPhoto();
                     Picasso.get().load(url).into(binding.adviceImage);

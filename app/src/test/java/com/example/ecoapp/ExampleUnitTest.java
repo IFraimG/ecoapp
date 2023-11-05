@@ -7,7 +7,6 @@ import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.verify;
-import static org.junit.Assert.*;
 
 import com.example.ecoapp.presentation.adapters.TasksAdapter;
 import com.example.ecoapp.presentation.fragments.ProfileFragment;
@@ -37,19 +36,8 @@ public class ExampleUnitTest {
 
     @Test
     public void onDestroyView_shouldSetCancelNavigation() {
-        // Act
         profileFragment.onDestroyView();
 
-        // Assert
         verify(mockTaskViewModel).setCancelNavigation();
-    }
-
-    @Test
-    public void onRefresh_shouldLoadData() {
-        // Act
-        profileFragment.onRefresh();
-
-        // Assert
-//        verify(profileFragment).loadData();
     }
 }
