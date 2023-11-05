@@ -336,7 +336,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="70dp"
                         android:paddingLeft="50dp"
                         android:paddingRight="50dp"
                         android:textAllCaps="false"
