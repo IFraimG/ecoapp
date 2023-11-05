@@ -25,10 +25,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class HabitFragment extends Fragment {
-    private FragmentHabitsBinding binding;
-    private HabitViewModel viewModel;
-    private ArrayList<Habit> habitsList;
-    private int theme;
+    public FragmentHabitsBinding binding;
+    public HabitViewModel viewModel;
+    public ArrayList<Habit> habitsList;
+    public int theme;
+    public HabitsAdapter habitsAdapter;
+    public StorageHandler storageHandler;
 
     @Override
     public void onResume() {
@@ -98,7 +100,7 @@ public class HabitFragment extends Fragment {
 
                     this.habitsList = habitsNewList;
 
-                    HabitsAdapter habitsAdapter = new HabitsAdapter(habitsNewList, theme);
+                    habitsAdapter = new HabitsAdapter(habitsNewList, theme);
                     habitsAdapter.setOnItemClickListener(position -> {
                         if (!habitsList.get(position).isDone()) {
                             viewModel.makeHabitDone(habitsList.get(position).getHabitID());

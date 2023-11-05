@@ -18,10 +18,10 @@ import com.example.ecoapp.domain.helpers.StorageHandler;
 import com.example.ecoapp.presentation.services.NetworkChangeReceiver;
 
 public class MainActivity extends AppCompatActivity {
-    private ActivityMainBinding binding;
+    public ActivityMainBinding binding;
     public NavController navController;
-    private StorageHandler storageHandler;
-    private NetworkChangeReceiver networkChangeReceiver;
+    public StorageHandler storageHandler;
+    public NetworkChangeReceiver networkChangeReceiver;
 
     @Override
     protected void onRestart() {
