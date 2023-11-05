@@ -61,6 +61,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private TasksAdapter tasksAdapter2;
     private TasksAdapter tasksAdapter3;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
