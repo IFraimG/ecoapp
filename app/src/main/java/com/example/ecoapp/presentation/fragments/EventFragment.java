@@ -184,6 +184,7 @@ public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 binding.theEventAddress.setText(eventCustom.getPlace());
                 binding.theEventAwardPoints.setText(String.valueOf("Баллы в награду: " + eventCustom.getScores()));
                 binding.theEventCurrentPeopleAmount.setText("Участники: " + String.valueOf(eventCustom.getUsersList().size()) + " / " + String.valueOf(eventCustom.getMaxUsers()));
+                binding.eventAuthorName.setText("Автор: " + eventCustom.getAuthorName());
                 if (!storageHandler.getUserID().equals(eventCustom.getAuthorID())) {
                     showButton(eventCustom.getUsersList().contains(storageHandler.getUserID()));
                     if (eventCustom.getCurrentUsers() >= eventCustom.getMaxUsers()) {

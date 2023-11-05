@@ -54,7 +54,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
         fragmentEventsBinding.mapOpenOpen.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_mapFragment);
         });
-        fragmentEventsBinding.addEventCardView.setOnClickListener(v -> {
+        fragmentEventsBinding.linearLayoutAddEvent.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_createEventFragment);
         });
 
@@ -63,7 +63,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         loadData();
 
-        fragmentEventsBinding.addGuideCardView.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.addGuideFragment));
+        fragmentEventsBinding.linearLayoutAddGuide.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.addGuideFragment));
 
         return fragmentEventsBinding.getRoot();
     }
