@@ -1,6 +1,5 @@
 package com.example.ecoapp.presentation.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -18,7 +17,6 @@ public class UserScoresAdapter extends RecyclerView.Adapter<UserScoresAdapter.Us
     private List<User> userScoresList;
     private OnItemClickListener listener;
     private int theme;
-    private Context ctx;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
@@ -29,10 +27,9 @@ public class UserScoresAdapter extends RecyclerView.Adapter<UserScoresAdapter.Us
     }
 
 
-    public UserScoresAdapter(List<User> userScoresList, int theme, Context ctx) {
+    public UserScoresAdapter(List<User> userScoresList, int theme) {
         this.userScoresList = userScoresList;
         this.theme = theme;
-        this.ctx = ctx;
     }
 
     public void deleteItem(String id) {
@@ -62,6 +59,10 @@ public class UserScoresAdapter extends RecyclerView.Adapter<UserScoresAdapter.Us
     @Override
     public int getItemCount() {
         return userScoresList.size();
+    }
+
+    public User getItem(int position) {
+        return userScoresList.get(position);
     }
 
     public class UserScoresViewHolder extends RecyclerView.ViewHolder {

@@ -51,15 +51,15 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    private FragmentProfileBinding binding;
-    private int SELECT_PHOTO_PROFILE = 1;
-    private Uri uri;
-    private StorageHandler storageHandler;
-    private ProfileViewModel viewModel;
-    private TaskViewModel taskViewModel;
-    private TasksAdapter tasksAdapter;
-    private TasksAdapter tasksAdapter2;
-    private TasksAdapter tasksAdapter3;
+    public FragmentProfileBinding binding;
+    public int SELECT_PHOTO_PROFILE = 1;
+    public Uri uri;
+    public StorageHandler storageHandler;
+    public ProfileViewModel viewModel;
+    public TaskViewModel taskViewModel;
+    public TasksAdapter tasksAdapter;
+    public TasksAdapter tasksAdapter2;
+    public TasksAdapter tasksAdapter3;
 
 
     @Override
