@@ -3,7 +3,6 @@ package com.example.ecoapp.presentation.fragments;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,7 +16,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,13 +32,11 @@ import com.example.ecoapp.data.models.Advice;
 import com.example.ecoapp.data.models.EventCustom;
 import com.example.ecoapp.data.models.Task;
 import com.example.ecoapp.R;
-import com.example.ecoapp.presentation.services.MyLocationListener;
 import com.example.ecoapp.presentation.viewmodels.EventViewModel;
 import com.example.ecoapp.presentation.viewmodels.GuideViewModel;
 import com.example.ecoapp.presentation.viewmodels.TaskViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.jetbrains.annotations.NotNull;
 

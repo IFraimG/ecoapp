@@ -51,7 +51,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         fragmentEventsBinding.eventsLoader.setOnRefreshListener(this);
 
-        fragmentEventsBinding.mapOpen.setOnClickListener(v -> {
+        fragmentEventsBinding.mapOpenOpen.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_mapFragment);
         });
         fragmentEventsBinding.addEventCardView.setOnClickListener(v -> {
