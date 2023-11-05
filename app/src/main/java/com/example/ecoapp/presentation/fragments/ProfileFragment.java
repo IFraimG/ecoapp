@@ -269,7 +269,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         });
     }
 
-    private void loadData() {
+    public void loadData() {
         binding.profileLoader.setRefreshing(true);
         viewModel.getUserData(storageHandler.getToken(), storageHandler.getUserID()).observe(requireActivity(), user -> {
             if (user != null) {
