@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentTaskBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
+import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
 import com.example.ecoapp.presentation.viewmodels.TaskViewModel;
 import com.squareup.picasso.Picasso;
@@ -55,6 +56,23 @@ public class TaskFragment extends Fragment {
     private File file2;
     private File file3;
     private int currentFile = 1;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(false);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(true);
+        }
+    }
+
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -136,7 +154,7 @@ public class TaskFragment extends Fragment {
 
         viewModel.getNavigation().observe(getViewLifecycleOwner(), isNavigation -> {
             if (isNavigation) {
-                Navigation.findNavController(requireView()).navigate(R.id.homeFragment);
+                Navigation.findNavController(requireView()).navigate(R.id.action_taskFragment_to_profileFragment);
                 viewModel.setCancelNavigation();
             }
         });

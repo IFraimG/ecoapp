@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.ecoapp.R;
 import com.example.ecoapp.databinding.FragmentCreateTaskBinding;
 import com.example.ecoapp.domain.helpers.StorageHandler;
+import com.example.ecoapp.presentation.MainActivity;
 import com.example.ecoapp.presentation.viewmodels.ProfileViewModel;
 import com.example.ecoapp.presentation.viewmodels.TaskViewModel;
 
@@ -29,6 +30,22 @@ public class CreateTaskFragment extends Fragment {
     private TaskViewModel viewModel;
     private ProfileViewModel profileViewModel;
     private int userScores;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(false);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) requireActivity()).changeMenu(true);
+        }
+    }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
@@ -84,7 +101,7 @@ public class CreateTaskFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewModel.getNavigation().observe(getViewLifecycleOwner(), isNavigation -> {
             if (isNavigation) {
-                Navigation.findNavController(requireView()).navigate(R.id.homeFragment);
+                Navigation.findNavController(requireView()).navigate(R.id.action_createTaskFragment_to_profileFragment);
                 viewModel.setCancelNavigation();
             }
         });

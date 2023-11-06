@@ -63,7 +63,7 @@ public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRef
 
         loadData();
 
-        fragmentEventsBinding.linearLayoutAddGuide.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.addGuideFragment));
+        fragmentEventsBinding.linearLayoutAddGuide.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_eventsFragment_to_addGuideFragment));
 
         return fragmentEventsBinding.getRoot();
     }
