@@ -100,7 +100,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
         binding.profileImageButton.setOnClickListener(v -> {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(requireActivity(),
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
@@ -110,26 +110,15 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                         new String[]{Manifest.permission.READ_MEDIA_IMAGES},
                         1);
             } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-                    Intent galleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    galleryIntent.setType("image/*");
-                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
 
-                    Intent chooserIntent = Intent.createChooser(galleryIntent, "Choose Photo");
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{cameraIntent});
+                Intent chooserIntent = Intent.createChooser(intent, "Choose Photo");
 
-                    startActivityForResult(chooserIntent, SELECT_PHOTO_PROFILE);
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType("image/*");
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{cameraIntent});
 
-                    Intent chooserIntent = Intent.createChooser(intent, "Choose Photo");
-
-                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{cameraIntent});
-
-                    startActivityForResult(chooserIntent, SELECT_PHOTO_PROFILE);
-                }
+                startActivityForResult(chooserIntent, SELECT_PHOTO_PROFILE);
             }
         });
 
