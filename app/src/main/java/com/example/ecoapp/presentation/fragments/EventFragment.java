@@ -32,7 +32,7 @@ import java.util.Objects;
 
 public class EventFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private FragmentEventBinding binding;
-    private EventViewModel viewModel;
+    public EventViewModel viewModel;
     private EventCustom eventCustom;
     private StorageHandler storageHandler;
     private Bundle args;
