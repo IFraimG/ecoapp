@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class AuthSignupFragment extends Fragment {
     private FragmentRegistrationBinding binding;
-    private AuthViewModel viewModel;
+    public AuthViewModel viewModel;
     private Bundle bundle;
 
     @Override

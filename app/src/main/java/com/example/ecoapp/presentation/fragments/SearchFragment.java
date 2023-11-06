@@ -49,6 +49,7 @@ public class SearchFragment extends Fragment {
                         binding.foundRecyclerView.setAdapter(searchAdapter);
                     }
                 });
+
                 return true;
             }
             return false;

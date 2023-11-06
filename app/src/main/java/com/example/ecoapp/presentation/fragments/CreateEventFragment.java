@@ -52,8 +52,8 @@ import java.util.Locale;
 
 public class CreateEventFragment extends Fragment {
     private FragmentCreateEventBinding fragmentCreateEventBinding;
-    private EventViewModel eventViewModel;
-    private ProfileViewModel profileViewModel;
+    public EventViewModel eventViewModel;
+    public ProfileViewModel profileViewModel;
     private StorageHandler storageHandler;
     private int SELECT_PHOTO_PROFILE = 1;
     private String address;

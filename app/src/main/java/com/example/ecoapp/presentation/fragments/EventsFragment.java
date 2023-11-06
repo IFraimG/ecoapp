@@ -31,7 +31,7 @@ import java.util.List;
 
 public class EventsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private FragmentEventsBinding fragmentEventsBinding;
-    private EventViewModel viewModel;
+    public EventViewModel viewModel;
     private ProfileViewModel profileViewModel;
     private int theme;
 

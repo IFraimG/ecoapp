@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class CreateTaskFragment extends Fragment {
     private FragmentCreateTaskBinding binding;
-    private TaskViewModel viewModel;
+    public TaskViewModel viewModel;
     private ProfileViewModel profileViewModel;
     private int userScores;
 
